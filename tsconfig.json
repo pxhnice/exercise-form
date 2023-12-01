@@ -1,0 +1,24 @@
+{
+  "include": [
+    "packages",
+  ],
+  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "removeComments": false,
+    "target": "ES2018",
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": ".",
+    "paths": {
+      "@exercise-form/*":["packages/*"]
+    }
+  }
+}

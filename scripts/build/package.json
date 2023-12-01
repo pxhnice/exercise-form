@@ -1,0 +1,10 @@
+{
+  "name": "@exercise-form/build",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "vite build",
+    "start": "gulp -f build-file.ts"
+  },
+  "license": "ISC"
+}

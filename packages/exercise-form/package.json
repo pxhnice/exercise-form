@@ -1,0 +1,9 @@
+{
+  "name": "exercise-form_dev",
+  "version": "0.0.0-dev.1",
+  "description": "exercise-form",
+  "main": "lib/index.cjs",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
+  "license": "ISC"
+}

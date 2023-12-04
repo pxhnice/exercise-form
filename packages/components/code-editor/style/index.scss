@@ -1,0 +1,13 @@
+:deep(.cm-editor) {
+  outline: none;
+}
+
+:deep(.cm-focused) {
+  border: none !important;
+}
+
+:deep(.cm-scroller) {
+  font-family: inherit;
+  line-height: 1.6;
+  font-size: 12px;
+}

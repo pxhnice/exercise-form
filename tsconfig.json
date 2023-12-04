@@ -2,7 +2,7 @@
   "include": [
     "packages",
   ],
-  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
+  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist",],
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
@@ -16,7 +16,6 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "rootDir": ".",
     "paths": {
       "@exercise-form/*":["packages/*"]
     }

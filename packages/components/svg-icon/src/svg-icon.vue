@@ -1,9 +1,18 @@
 <template>
-  <div></div>
+  <svg :class="svgClass" aria-hidden="true">
+    <use :xlink:href="iconName" />
+  </svg>
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: "ex-svg-icon" });
-</script>
+import { computed } from "vue";
+import { svgIconProps } from "./svg-iocn";
 
-<style scoped></style>
+defineOptions({ name: "ex-svg-icon" });
+const props = defineProps(svgIconProps);
+
+const iconName = computed(() => `#icon-${props.name}`);
+const svgClass = computed(() => {
+  return props.className ? `svg-icon ${props.className}` : "svg-icon";
+});
+</script>

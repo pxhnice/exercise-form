@@ -23,7 +23,18 @@ export default defineConfig({
     outDir: "es",
     sourcemap: true,
     rollupOptions: {
-      external: ["vue", "element-plus", /\.scss/],
+      external: [
+        "vue",
+        "element-plus",
+        "vue-codemirror",
+        "codemirror",
+        "@codemirror/lang-css",
+        "@codemirror/lang-html",
+        "@codemirror/lang-javascript",
+        "@codemirror/lang-json",
+        "@codemirror/lang-vue",
+        /\.scss/
+      ],
       input: "../../packages/index.ts",
       output: [
         {

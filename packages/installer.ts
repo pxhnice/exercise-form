@@ -1,5 +1,4 @@
 import type { App, Plugin } from "vue";
-import { version } from "./exercise-form/package.json";
 
 export const makeInstaller = (components: Plugin[] = []) => {
   const install = (app: App) => {
@@ -7,6 +6,6 @@ export const makeInstaller = (components: Plugin[] = []) => {
   };
   return {
     install,
-    version
+    version: "0.0.0-dev.1"
   };
 };

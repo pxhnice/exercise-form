@@ -15,6 +15,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.7",
+    "@codemirror/lang-javascript": "^6.2.1",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-vue": "^0.1.2",
     "@types/gulp": "^4.0.17",
     "@types/gulp-autoprefixer": "^0.0.37",
     "@types/gulp-sass": "^5.0.4",
@@ -28,12 +33,12 @@
     "@vue/test-utils": "^2.4.3",
     "@vue/tsconfig": "^0.4.0",
     "c8": "^8.0.1",
+    "codemirror": "^6.0.1",
     "element-plus": "^2.4.3",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
-    "exercise-form_dev": "workspace:^",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.1.0",
@@ -56,7 +61,8 @@
     "vite": "^5.0.2",
     "vite-plugin-dts": "^3.6.3",
     "vitest": "^0.34.6",
-    "vue": "^3.2.36"
+    "vue": "^3.2.36",
+    "vue-codemirror": "^6.1.1"
   },
   "dependencies": {
     "@exercise-form/components": "workspace:^",

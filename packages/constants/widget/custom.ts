@@ -1,4 +1,4 @@
-export const customOptions = [
+export const customs = [
   {
     name: "图片",
     iconName: "image",
@@ -22,7 +22,7 @@ export const customOptions = [
   },
   {
     name: "富文本",
-    iconName: "fuwenben",
+    iconName: "rich-text",
     type: "richText",
     options: {
       disabled: false,

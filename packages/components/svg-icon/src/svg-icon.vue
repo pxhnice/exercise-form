@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { svgIconProps } from "./svg-iocn";
+import "../style/index.scss";
 
 defineOptions({ name: "ex-svg-icon" });
 const props = defineProps(svgIconProps);

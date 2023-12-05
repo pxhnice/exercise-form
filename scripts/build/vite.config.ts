@@ -1,7 +1,9 @@
 import { defineConfig } from "vite";
+import path from "node:path";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import DefineOptions from "unplugin-vue-define-options/vite";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import { exPackage, exPath } from "./src";
 
 console.log(111111, exPackage, exPath);
@@ -17,7 +19,11 @@ export default defineConfig({
       ],
       tsconfigPath: "../../tsconfig.json"
     }),
-    DefineOptions()
+    DefineOptions(),
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), "../../packages/icons/svg")],
+      symbolId: "icon-[name]"
+    })
   ],
   build: {
     outDir: "es",

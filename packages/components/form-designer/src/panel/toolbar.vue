@@ -55,7 +55,7 @@
           <el-input v-model="form.importName" />
         </el-form-item>
       </el-form>
-      <code-edit
+      <ex-code-editor
         v-model="codeValue"
         :height="500"
         :disabled="true"
@@ -89,7 +89,7 @@
           </el-radio-group>
         </el-form-item>
       </el-form>
-      <code-edit
+      <ex-code-editor
         v-model="codeValue"
         :height="500"
         :disabled="true"
@@ -116,7 +116,7 @@
     >
       <template> </template>
       <div style="height: calc(100vh - 176px)">
-        <v-form-render ref="vFormRenderRef" :designer="designer" />
+        <ex-form-render ref="vFormRenderRef" :designer="designer" />
       </div>
       <template #footer>
         <div class="footer-btns">
@@ -136,7 +136,7 @@
         </div>
       </template>
     </el-dialog>
-    <widget-tree ref="widgetTreeRef" :designer="designer" />
+    <!-- <widget-tree ref="widgetTreeRef" :designer="designer" /> -->
   </div>
 </template>
 

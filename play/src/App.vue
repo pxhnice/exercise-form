@@ -4,7 +4,10 @@
   <ex-form-designer></ex-form-designer>
   <!-- <ex-code-editor :height="500" lang="html"></ex-code-editor> -->
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ExFormDesigner } from "../../packages";
+console.log(ExFormDesigner);
+</script>
 <style>
 body {
   height: 100%;

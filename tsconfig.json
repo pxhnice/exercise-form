@@ -9,13 +9,14 @@
     "allowJs": false,
     "noUnusedLocals": true,
     "removeComments": false,
-    "target": "ES2018",
+    "target": "ESNext",
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["node","vite/client"],
     "paths": {
       "@exercise-form/*":["packages/*"]
     }

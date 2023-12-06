@@ -20,6 +20,7 @@
     "@codemirror/lang-javascript": "^6.2.1",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-vue": "^0.1.2",
+    "@element-plus/icons-vue": "^2.3.1",
     "@types/gulp": "^4.0.17",
     "@types/gulp-autoprefixer": "^0.0.37",
     "@types/gulp-sass": "^5.0.4",
@@ -69,6 +70,8 @@
   "dependencies": {
     "@exercise-form/components": "workspace:^",
     "@exercise-form/constants": "workspace:^",
-    "@exercise-form/utils": "workspace:^"
+    "@exercise-form/hooks": "workspace:^",
+    "@exercise-form/utils": "workspace:^",
+    "@exercise-form/widget": "workspace:^"
   }
 }

@@ -23,6 +23,7 @@ module.exports = {
   plugins: ["vue", "@typescript-eslint"],
   rules: {
     // "prettier/prettier": "error",
+    "prefer-const": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",

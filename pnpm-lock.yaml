@@ -14,9 +14,15 @@ importers:
       '@exercise-form/constants':
         specifier: workspace:^
         version: link:packages/constants
+      '@exercise-form/hooks':
+        specifier: workspace:^
+        version: link:packages/hooks
       '@exercise-form/utils':
         specifier: workspace:^
         version: link:packages/utils
+      '@exercise-form/widget':
+        specifier: workspace:^
+        version: link:packages/widget
     devDependencies:
       '@codemirror/lang-css':
         specifier: ^6.2.1
@@ -33,6 +39,9 @@ importers:
       '@codemirror/lang-vue':
         specifier: ^0.1.2
         version: 0.1.2
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.2.36)
       '@types/gulp':
         specifier: ^4.0.17
         version: 4.0.17
@@ -175,7 +184,11 @@ importers:
 
   packages/exercise-form: {}
 
+  packages/hooks: {}
+
   packages/utils: {}
+
+  packages/widget: {}
 
   play:
     devDependencies:

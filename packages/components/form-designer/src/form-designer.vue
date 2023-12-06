@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import ExFormWidget from "./widget/form.vue";
+import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";
 import ExWidgetPanel from "./panel/widget.vue";

@@ -1,4 +1,5 @@
-import { getRegExp } from "@exercise-form/constants";
+import { getRegExp, MODEL_TYPE_LIST } from "@exercise-form/constants";
+
 type WidgetConfigType = {
   name: string;
   iconName?: string;
@@ -13,21 +14,6 @@ interface DesignerFormConfigType {
   cssCode: string;
   [key: string]: any;
 }
-
-export const modelTypeList = [
-  "input",
-  "input-number",
-  "radio",
-  "checkbox",
-  "select",
-  "date-picker",
-  "time-picker",
-  "switch",
-  "cascader",
-  "rate",
-  "slider",
-  "color-picker"
-];
 
 export function traverseFieldWidget(
   widgetList: WidgetConfigType[],
@@ -44,7 +30,7 @@ export function traverseFieldWidget(
 
 export function buildDefalutValueListFn(defaultValueList: [string]) {
   return function (widget: WidgetConfigType) {
-    if (modelTypeList.includes(widget.type)) {
+    if (MODEL_TYPE_LIST.includes(widget.type)) {
       let modelFefaultValue = widget.options.modelFefaultValue;
       defaultValueList.push(
         `${widget.id}:${modelFefaultValue ? `"${modelFefaultValue}"` : "null"},`

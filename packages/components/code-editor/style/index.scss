@@ -1,13 +1,18 @@
-:deep(.cm-editor) {
-  outline: none;
-}
+.ex-codemirror {
+  width: 100%;
+  outline: 1px solid #ddd;
 
-:deep(.cm-focused) {
-  border: none !important;
-}
+  .cm-editor {
+    outline: none;
+  }
 
-:deep(.cm-scroller) {
-  font-family: inherit;
-  line-height: 1.6;
-  font-size: 12px;
+  .cm-focused {
+    border: none !important;
+  }
+
+  .cm-scroller {
+    font-family: inherit;
+    line-height: 1.6;
+    font-size: 12px;
+  }
 }

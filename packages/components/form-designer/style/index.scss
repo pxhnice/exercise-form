@@ -234,3 +234,24 @@
   text-align: center;
   color: var(--el-color-primary-light-3);
 }
+
+.ex-dialog-box {
+  .name-front,
+  .name-back {
+    padding: 10px;
+    background-color: #f4f4f5;
+    outline: 1px solid #ddd;
+  }
+
+  .name-front {
+    border-radius: 5px 5px 0 0;
+
+    .lang {
+      font-weight: bold;
+    }
+  }
+
+  .name-back {
+    border-radius: 0 0 5px 5px;
+  }
+}

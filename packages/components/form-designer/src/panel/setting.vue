@@ -172,7 +172,7 @@
       destroy-on-close
       :close-on-click-modal="false"
     >
-      <div class="box">
+      <div class="ex-dialog-box">
         <div class="name-front">{{ firstName }}</div>
         <ex-code-editor v-model="code" />
         <div class="name-back">{{ lastName }}</div>
@@ -222,11 +222,12 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
+import { desPanelProps } from "./panel";
 import "../../style/index.scss";
 
-const formConfig: any = {};
-const selectWidget: any = ref({});
-const designer: any = {};
+const props = defineProps(desPanelProps);
+
+const formConfig = props.formConfig;
 
 const groupValue = ref("bd");
 const activeNames = ref(["1", "2"]);
@@ -238,10 +239,10 @@ const title = ref("");
 const fnName = ref("");
 const codeName = ref("");
 const globalCss = computed(() => {
-  // let str = props.formConfig.cssCode.replaceAll("\n", "");
-  // let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
-  // rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
-  // rules = Array.from(new Set([...rules])) as RegExpMatchArray;
+  let str = formConfig.cssCode.replaceAll("\n", "");
+  let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
+  rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
+  rules = Array.from(new Set([...rules])) as RegExpMatchArray;
   return [];
 });
 const firstName = computed(() => {
@@ -253,7 +254,7 @@ const lastName = computed(() => {
 
 const formComRef = ref();
 const hideCollapseEvent = () => {
-  let options = selectWidget.value.options || {};
+  let options = props.selectWidget.options || {};
   for (const key in EVENT_PROPERTIES) {
     if (key in options) {
       return true;
@@ -264,7 +265,7 @@ const hideCollapseEvent = () => {
 
 const hasPropName = (name: string) => {
   if (!name) return false;
-  let options = selectWidget.value.options || {};
+  let options = props.selectWidget.options || {};
   if (name in options) {
     return true;
   } else {
@@ -273,7 +274,8 @@ const hasPropName = (name: string) => {
 };
 
 const handelEventCode = (name: string) => {
-  // code.value = props.formConfig[name];
+  console.log(props.formConfig, formConfig[name]);
+  code.value = formConfig[name];
   fnName.value = `${name}(){}`;
   codeName.value = name;
   title.value = "表单处理事件函数";
@@ -281,21 +283,22 @@ const handelEventCode = (name: string) => {
 };
 
 const handelFunctiontCode = (name: string) => {
-  // code.value = props.formConfig[name];
+  code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局函数";
   isShowFunction.value = true;
 };
 
 const handelCsstCode = (name: string) => {
-  // code.value = props.formConfig[name];
+  code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局样式";
   isShowCss.value = true;
 };
 
 const confirm = () => {
-  // props.formConfig[codeName.value] = code.value;
+  formConfig[codeName.value] = code.value;
+  console.log(props);
   cancel();
 };
 

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="ex-codemirror">
     <Codemirror
-      v-model:code="codeValue"
+      v-model="codeValue"
       :style="{ height: height + 'px' }"
       :extensions="extensions"
       :disabled="disabled"
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { Codemirror } from "vue-codemirror";
 import "../style/index.scss";
 import { codeEditoirProps, codeEditorEmits, langs } from "./code-editor";
@@ -24,16 +24,24 @@ const emits = defineEmits(codeEditorEmits);
 const props = defineProps(codeEditoirProps);
 const extensions = [langs[props.lang]];
 
-const codeValue = ref<string>();
-
-watch(
-  () => props.modelValue,
-  (val) => {
-    codeValue.value = val;
-  }
-);
+const codeValue = ref(props.modelValue);
 
 const onChange = (value: string) => {
   emits("update:modelValue", value);
 };
 </script>
+<style lang="scss" scoped>
+:deep(.cm-editor) {
+  outline: none;
+}
+
+:deep(.cm-focused) {
+  border: none !important;
+}
+
+:deep(.cm-scroller) {
+  font-family: inherit;
+  line-height: 1.6;
+  font-size: 12px;
+}
+</style>

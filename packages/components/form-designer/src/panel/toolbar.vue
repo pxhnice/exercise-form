@@ -142,24 +142,16 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-// import type { DesignerType } from "../interface";
-// import FileSaver from "file-saver";
-// import prettier from "prettier/standalone";
-// import parserHtml from "prettier/parser-html";
-// import parserBabel from "prettier/parser-babel";
-// import parserPostcss from "prettier/parser-postcss";
-// import WidgetTree from "./widget-tree.vue";
-// import CodeEdit from "@/components/code-edit/index.vue";
-// import VFormRender from "@/components/form-render/index.vue";
-// import { deepClone } from "@/utils/util";
-// import { getSFCGenerator } from "@/utils/sfc-generator";
+import FileSaver from "file-saver";
+import { deepClone, getSFCGenerator } from "@exercise-form/utils";
+import prettier from "prettier";
+import parserHtml from "prettier/plugins/html";
+import parserCss from "prettier/plugins/postcss";
+import parserBabel from "prettier/plugins/babel";
+import { desPanelProps } from "./panel";
 import "../../style/index.scss";
 
-interface PropsWidgetType {
-  designer?: any;
-}
-
-const props = defineProps<PropsWidgetType>();
+const props = defineProps(desPanelProps);
 
 const patternType = ref("pad");
 const formConfig = ref<any>({});
@@ -203,67 +195,67 @@ const openPreview = () => {
 
 const openJsonDialog = () => {
   title.value = "导出JSON";
-  // form.value.importName = `form${new Date().getTime()}.json`;
-  // let widgetList = deepClone(props.designer.widgetList.value);
-  // const jsonString = JSON.stringify(widgetList, null, 2);
-  // codeValue.value = jsonString;
+  form.value.importName = `form${new Date().getTime()}.json`;
+  let widgetList = deepClone(props.designer.widgetList);
+  const jsonString = JSON.stringify(widgetList, null, 2);
+  codeValue.value = jsonString;
   isShowJSON.value = true;
 };
 
 const importJSON = () => {
-  // let bold = new Blob([codeValue.value], { type: "application/json" });
-  // FileSaver.saveAs(
-  //   bold,
-  //   form.value.importName ?? `form${new Date().getTime()}.json`
-  // );
+  let bold = new Blob([codeValue.value], { type: "application/json" });
+  FileSaver.saveAs(
+    bold,
+    form.value.importName ?? `form${new Date().getTime()}.json`
+  );
 };
 
-const openSFCDialog = () => {
+const openSFCDialog = async () => {
   title.value = "生成SFC";
   form.value.importName = `form${new Date().getTime()}.vue`;
-  changeRadio();
+  await changeRadio();
   isShowSFC.value = true;
 };
 
-const changeRadio = () => {
-  // let widgetList = deepClone(props.designer.widgetList.value);
-  // let formConfig = deepClone(props.designer.formConfig.value);
-  // let code = getSFCGenerator(formConfig, widgetList);
-  // codeValue.value = prettierCode(code);
+const changeRadio = async () => {
+  let widgetList = deepClone(props.widgetList);
+  let formConfig = deepClone(props.formConfig);
+  let code = getSFCGenerator(formConfig as any, widgetList);
+  codeValue.value = await prettierCode(code);
 };
 
 const importSFC = () => {
-  // let bold = new Blob([codeValue.value], { type: "application/json" });
-  // FileSaver.saveAs(
-  //   bold,
-  //   form.value.importName ?? `form${new Date().getTime()}.vue`
-  // );
+  let bold = new Blob([codeValue.value], { type: "application/json" });
+  FileSaver.saveAs(
+    bold,
+    form.value.importName ?? `form${new Date().getTime()}.vue`
+  );
 };
 // 格式化vue模板
-// const prettierCode = (code: string) => {
-// try {
-//   return prettier.format(code, {
-//     parser: "vue",
-//     plugins: [parserHtml, parserBabel, parserPostcss],
-//     tabWidth: 4,
-//     printWidth: 60,
-//     trailingComma: "none",
-//     htmlWhitespaceSensitivity: "ignore",
-//     vueIndentScriptAndStyle: true,
-//     singleAttributePerLine: true,
-//   });
-// } catch (error) {
-//   return code;
-// }
-// };
+const prettierCode = async (code: string) => {
+  try {
+    return await prettier.format(code, {
+      parser: "vue",
+      plugins: [parserHtml, parserBabel, parserCss],
+      tabWidth: 4,
+      printWidth: 60,
+      trailingComma: "none",
+      htmlWhitespaceSensitivity: "ignore",
+      vueIndentScriptAndStyle: true,
+      singleAttributePerLine: true
+    });
+  } catch (error) {
+    return code;
+  }
+};
 
 const openDefaultValueDialog = () => {
-  // title.value = "表单数据";
-  // form.value.importName = `form${new Date().getTime()}.json`;
-  // let data = vFormRenderRef.value.originalData;
-  // const jsonString = JSON.stringify(deepClone(data), null, 2);
-  // codeValue.value = jsonString;
-  // isShowJSON.value = true;
+  title.value = "表单数据";
+  form.value.importName = `form${new Date().getTime()}.json`;
+  let data = vFormRenderRef.value.originalData;
+  const jsonString = JSON.stringify(deepClone(data), null, 2);
+  codeValue.value = jsonString;
+  isShowJSON.value = true;
 };
 
 const handleResetForm = () => {

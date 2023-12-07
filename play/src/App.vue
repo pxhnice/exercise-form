@@ -5,8 +5,7 @@
   <!-- <ex-code-editor :height="500" lang="html"></ex-code-editor> -->
 </template>
 <script lang="ts" setup>
-import { ExFormDesigner } from "../../packages";
-console.log(ExFormDesigner);
+// import { ExFormDesigner } from "../../packages";
 </script>
 <style>
 body {

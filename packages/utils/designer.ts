@@ -1,91 +1,49 @@
-import { toRefs, reactive } from "vue";
-import { containers, baseFields, customs } from "@exercise-form/constants";
-import { deepClone, getUniqueId } from "@exercise-form/utils";
+import { reactive, toRefs } from "vue";
+import {
+  containers,
+  baseFields,
+  customs,
+  DES_FORM_CONFIG,
+  DES_HISTORY
+} from "@exercise-form/constants";
+import type {
+  DesWidgetConfigType,
+  DesWidgetListType
+} from "@exercise-form/constants";
+import { deepClone, getUniqueId } from "./util";
 
-export type WidgetConfigType = {
-  name: string;
-  iconName?: string;
-  category?: string;
-  type: string;
-  // children?: Array<WidgetConfigType>;
-  options: { [key: string]: any };
-  [key: string]: any;
-};
+export type desPatternType = "pc" | "pad" | "h5";
 
-export type WidgetHistoryType = {
-  index: number;
-  maxStep: number;
-  steps: Array<any>;
-};
+const patternType: desPatternType = "pc";
+const desFormConfig = deepClone(DES_FORM_CONFIG);
+const desHistory = deepClone(DES_HISTORY);
+const widgetList: DesWidgetListType = []; //组件数据列表
+const selectWidgetId = ""; //当前选中ID
+const selectWidget = {} as DesWidgetConfigType; //当前选中表单组件
 
-export interface DesignerFormConfigType {
-  cssCode: string;
-  [key: string]: any;
-}
-
-export interface PropsWidgetType {
-  widgetData: WidgetConfigType;
-  parentList: Array<WidgetConfigType>;
-  widgetSub: number;
-  parentData?: WidgetConfigType;
-  designer: any;
-}
-
-let customClass: Array<string> = [];
-let selectWidget = {} as WidgetConfigType;
-let widgetList: Array<WidgetConfigType> = [];
-let history: WidgetHistoryType = {
-  index: -1,
-  maxStep: 10,
-  steps: []
-};
-
-function getDesignerData() {
-  let formConfig = getFormConfigDefalut();
+const creatTarget = () => {
   return {
-    customClass,
+    patternType,
+    desFormConfig,
+    desHistory,
     widgetList,
-    selectWidget,
-    history,
-    formConfig,
-    patternType: "pc",
-    selectWidgetId: ""
+    selectWidgetId,
+    selectWidget
   };
-}
+};
 
-function getFormConfigDefalut() {
-  return {
-    size: "default",
-    labelPosition: "left",
-    align: "left",
-    labelWidth: 100,
-    modelName: "formData",
-    formName: "formRef",
-    rulesName: "rules",
-    isPageType: "page",
-    hideRequiredAsterisk: false,
-    cssCode: "",
-    customClass: [],
-    functions: "",
-    onFormCreated: "",
-    onFormMounted: "",
-    onFormDataChange: ""
-  };
-}
+const initPrint = () => {
+  console.log(
+    `%cExForm v:0.0.0-dev_1`,
+    `padding: 4px;color: #fff;background:#409EFF;border-radius: 3px 0 0 0px;`
+  );
+};
 
-export function createDesigner() {
-  const widgetData = reactive(getDesignerData());
+export const createDesigner = () => {
+  initPrint();
   return {
-    ...toRefs(widgetData),
-    initDesigner() {
-      console.log(this, "init");
-      console.log(
-        `%c%cExForm v:0.0.0-dev_1`,
-        `padding: 4px;color: #fff;background:#409EFF;border-radius: 3px 0 0 3px;`,
-        `padding: 4px;color: #fff; background:#409EFF;border-radius: 0 3px 3px 0;`
-      );
-    },
-    setSelectWidget(widget: WidgetConfigType) {
+    ...toRefs(reactive(creatTarget())),
+    setSelectWidget(widget: DesWidgetConfigType) {
       console.log(widget, "widget");
       if (!widget) {
         this.clearSelectWidget();
@@ -96,17 +54,17 @@ export function createDesigner() {
     },
     clearSelectWidget() {
       this.selectWidgetId.value = "";
-      this.selectWidget.value = {} as WidgetConfigType;
+      this.selectWidget.value = {} as DesWidgetConfigType;
     },
     getContinerType(type: string) {
       let allWidgets = [...containers, ...baseFields, ...customs];
-      let widgetData = {} as WidgetConfigType;
-      allWidgets.forEach((widget: WidgetConfigType) => {
+      let widgetData = {} as DesWidgetConfigType;
+      allWidgets.forEach((widget: DesWidgetConfigType) => {
         if (type === widget.type) widgetData = widget;
       });
       return widgetData;
     },
-    cloneWidget(widget: WidgetConfigType) {
+    cloneWidget(widget: DesWidgetConfigType) {
       let newWidget = deepClone(widget);
       newWidget.id = newWidget.type + getUniqueId();
       newWidget.options.name = newWidget.id;
@@ -118,7 +76,7 @@ export function createDesigner() {
           newWidget.children.push(colWidget);
         }
       } else if (newWidget.type == "table") {
-        let newRows: WidgetConfigType = {
+        let newRows: DesWidgetConfigType = {
           name: "tr",
           type: "table-tr",
           id: "table-tr-" + getUniqueId(),
@@ -139,9 +97,9 @@ export function createDesigner() {
       return newWidget;
     },
     setPatternType(type: string) {
-      this.patternType.value = type;
+      this.patternType.value = type as any;
     },
-    copyContainerWidget(widget: WidgetConfigType) {
+    copyContainerWidget(widget: DesWidgetConfigType) {
       if (widget.type == "grid") {
         let colWidget = deepClone(this.getContinerType("grid-col"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
@@ -157,12 +115,12 @@ export function createDesigner() {
       }
     },
     copyContainerField() {},
-    copyWidget(parentList: WidgetConfigType[], widget: WidgetConfigType) {
+    copyWidget(parentList: DesWidgetListType, widget: DesWidgetConfigType) {
       console.log(parentList);
       let newWidget = this.copyDeepWidget(deepClone(widget));
       parentList.push(newWidget);
     },
-    copyDeepWidget(widget: WidgetConfigType) {
+    copyDeepWidget(widget: DesWidgetConfigType) {
       if (widget.category === "container") {
         widget.id = widget.type + "_" + getUniqueId();
         widget.options.name = widget.id;
@@ -176,25 +134,25 @@ export function createDesigner() {
       }
       return widget;
     },
-    moveUpWidget(parentList: WidgetConfigType[], sub: number) {
+    moveUpWidget(parentList: DesWidgetListType, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub - 1, 0, item);
     },
-    moveDownWidget(parentList: WidgetConfigType[], sub: number) {
+    moveDownWidget(parentList: DesWidgetListType, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub + 1, 0, item);
     },
-    deleteWidget(parentList: WidgetConfigType[], sub: number) {
+    deleteWidget(parentList: DesWidgetListType, sub: number) {
       parentList.splice(sub, 1);
     },
     clearAllWidget() {
       this.clearSelectWidget();
       this.widgetList.value = [];
     },
-    insertCell(parentList: WidgetConfigType[], cell: number, type: string) {
-      parentList.forEach((child: WidgetConfigType) => {
+    insertCell(parentList: DesWidgetListType, cell: number, type: string) {
+      parentList.forEach((child: DesWidgetConfigType) => {
         let colWidget = deepClone(this.getContinerType("table-td"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
@@ -205,8 +163,8 @@ export function createDesigner() {
         }
       });
     },
-    insertRow(parentList: WidgetConfigType[], row: number, type: string) {
-      let newRows: WidgetConfigType = {
+    insertRow(parentList: DesWidgetListType, row: number, type: string) {
+      let newRows: DesWidgetConfigType = {
         name: "tr",
         type: "table-tr",
         id: "table-tr-" + getUniqueId(),
@@ -225,7 +183,7 @@ export function createDesigner() {
         parentList.splice(row + 1, 0, newRows);
       }
     },
-    getMergeTarget(parentList: WidgetConfigType[]) {
+    getMergeTarget(parentList: DesWidgetListType) {
       let deepList = deepClone(parentList);
       return deepList.map((tr: any) => {
         tr.children = tr.children.filter((item: any) => item.merged);
@@ -233,8 +191,8 @@ export function createDesigner() {
       });
     },
     getMergeTargetSub(
-      mergeList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      mergeList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number
     ) {
       let rows = mergeList[rowsub].children || [];
@@ -242,8 +200,8 @@ export function createDesigner() {
       return index;
     },
     mergeRightCell(
-      parentList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      parentList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number,
       cellsub: number
     ) {
@@ -273,8 +231,8 @@ export function createDesigner() {
       }
     },
     mergeLeftCell(
-      parentList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      parentList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number
     ) {
       let mergeList = this.getMergeTarget(parentList);
@@ -303,8 +261,8 @@ export function createDesigner() {
       }
     },
     mergeUpCell(
-      parentList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      parentList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number,
       cellsub: number
     ) {
@@ -327,8 +285,8 @@ export function createDesigner() {
       }
     },
     mergeDownCell(
-      parentList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      parentList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number,
       cellsub: number
     ) {
@@ -349,7 +307,7 @@ export function createDesigner() {
         }
       }
     },
-    mergeEntireRow(parentList: WidgetConfigType[], rowsub: number) {
+    mergeEntireRow(parentList: DesWidgetListType, rowsub: number) {
       let children = parentList[rowsub].children || [];
       for (let i = 0; i < children.length; i++) {
         if (i == 0) {
@@ -361,9 +319,9 @@ export function createDesigner() {
         }
       }
     },
-    mergeEntireCol(parentList: WidgetConfigType[], cellsub: number) {
+    mergeEntireCol(parentList: DesWidgetListType, cellsub: number) {
       let len = parentList.length;
-      parentList.forEach((p: WidgetConfigType, index: number) => {
+      parentList.forEach((p: DesWidgetConfigType, index: number) => {
         if (p.children) {
           let cell = p.children[cellsub] || [];
           if (index == 0) {
@@ -376,19 +334,19 @@ export function createDesigner() {
         }
       });
     },
-    deleteEntireRow(parentList: WidgetConfigType[], rowsub: number) {
+    deleteEntireRow(parentList: DesWidgetListType, rowsub: number) {
       parentList.splice(rowsub, 1);
       this.clearSelectWidget();
     },
-    deleteEntireCol(parentList: WidgetConfigType[], rowsub: number) {
+    deleteEntireCol(parentList: DesWidgetListType, rowsub: number) {
       parentList.forEach((p: any) => {
         p.children.splice(rowsub, 1);
       });
       this.clearSelectWidget();
     },
     revocationMerge(
-      parentList: WidgetConfigType[],
-      widgetData: WidgetConfigType,
+      parentList: DesWidgetListType,
+      widgetData: DesWidgetConfigType,
       rowsub: number,
       cellsub: number
     ) {
@@ -404,4 +362,4 @@ export function createDesigner() {
       }
     }
   };
-}
+};

@@ -81,13 +81,10 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { containers, baseFields, customs } from "@exercise-form/constants";
+import { desPanelProps } from "./panel";
 import ".././../style/index.scss";
 
-interface PropsWidgetType {
-  designer?: any;
-}
-
-const props = defineProps<PropsWidgetType>();
+const props = defineProps(desPanelProps);
 
 const groupValue = ref("ZJ");
 const activeNames = ref(["1", "2", "3"]);

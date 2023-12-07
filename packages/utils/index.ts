@@ -4,3 +4,4 @@ export * from "./sfc-generator";
 export * from "./vue3Js-generator";
 export * from "./util";
 export * from "./types";
+export * from "./designer";

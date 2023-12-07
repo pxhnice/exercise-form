@@ -3,7 +3,7 @@
     <el-form-item label="卡片阴影">
       <el-select v-model="optionsModel.shadow">
         <el-option
-          v-for="name in shadowList"
+          v-for="name in SHADOW_LIST"
           :key="name"
           :lable="name"
           :value="name"
@@ -14,9 +14,8 @@
 </template>
 
 <script setup lang="ts">
+import { SHADOW_LIST } from "@exercise-form/constants";
 import { desPropertyProps } from "../property";
 
 defineProps(desPropertyProps);
-
-const shadowList = ["always", "never", "hover"];
 </script>

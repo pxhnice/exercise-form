@@ -1,15 +1,18 @@
-import type { WidgetConfigType } from "@exercise-form/components/form-designer/src/designer";
+import type {
+  DesWidgetConfigType,
+  DesWidgetListType
+} from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
 export const desContainerProps = {
   widgetData: {
-    type: definePropType<WidgetConfigType>({}),
+    type: definePropType<DesWidgetConfigType>({}),
     default() {
       return {};
     }
   },
   parentList: {
-    type: definePropType<Array<WidgetConfigType>>([]),
+    type: definePropType<DesWidgetListType>([]),
     default() {
       return [];
     }
@@ -19,7 +22,7 @@ export const desContainerProps = {
     default: 0
   },
   parentData: {
-    type: definePropType<WidgetConfigType>({}),
+    type: definePropType<DesWidgetConfigType>({}),
     default() {
       return {};
     }

@@ -1,4 +1,6 @@
-export const baseFields = [
+import type { DesWidgetListType } from "./container";
+
+export const baseFields: DesWidgetListType = [
   {
     name: "单行输入框",
     iconName: "input",

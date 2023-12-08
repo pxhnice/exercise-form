@@ -1,30 +1,20 @@
 import { genVue3JS } from "./vue3Js-generator";
-
-export type WidgetConfigType = {
-  name: string;
-  iconName?: string;
-  category?: string;
-  type: string;
-  // children?: Array<WidgetConfigType>;
-  options: { [key: string]: any };
-  [key: string]: any;
-};
-
-export interface DesignerFormConfigType {
-  cssCode: string;
-  [key: string]: any;
-}
+import type {
+  DesWidgetConfigType,
+  DesWidgetListType,
+  DesFormConfigType
+} from "@exercise-form/constants";
 
 // 不需要el-form-item的组件
 const staticTypeList = ["text", "alert", "divider"];
 // 容器组件
 const containerTemplate: any = {
-  grid: (ctn: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  grid: (ctn: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     return `<el-row>
       ${
         ctn.children &&
         ctn.children
-          .map((col: WidgetConfigType) => {
+          .map((col: DesWidgetConfigType) => {
             let { span, md, sm, xs, offset, push, pull } = col.options;
             const spanAttr = span ? `:span="${span}"` : "";
             const mdAttr = md ? `:md="${md}"` : "";
@@ -37,7 +27,7 @@ const containerTemplate: any = {
           ${
             col.children &&
             col.children
-              .map((child: WidgetConfigType) => {
+              .map((child: DesWidgetConfigType) => {
                 if (child.category === "container") {
                   return buildContainerWidget(child, formConfig);
                 } else {
@@ -52,17 +42,17 @@ const containerTemplate: any = {
       }
     </el-row>`;
   },
-  table: (ctn: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  table: (ctn: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     return `<table><tbody>
     ${
       ctn.children &&
       ctn.children
-        .map((rows: WidgetConfigType) => {
+        .map((rows: DesWidgetConfigType) => {
           return ` <tr>
       ${
         rows.children &&
         rows.children
-          .map((col: WidgetConfigType) => {
+          .map((col: DesWidgetConfigType) => {
             let { colspan, rowspan } = col.options;
             let colspanAttr = colspan > 1 ? `:colspan="${colspan}"` : "";
             let rowspanAttr = rowspan > 1 ? `:rowspan="${rowspan}"` : "";
@@ -70,7 +60,7 @@ const containerTemplate: any = {
             ${
               col.children &&
               col.children
-                .map((child: WidgetConfigType) => {
+                .map((child: DesWidgetConfigType) => {
                   if (child.category === "container") {
                     return buildContainerWidget(child, formConfig);
                   } else {
@@ -89,7 +79,7 @@ const containerTemplate: any = {
     }
    </tbody></table>`;
   },
-  card: (cw: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  card: (cw: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { shadow, cardWidth, label } = cw.options;
     let shadowAttr = shadow ? `:shadow="true"` : "";
     let cardWidthAttr = cardWidth ? `style="{width:${cardWidth}}"` : "";
@@ -101,7 +91,7 @@ const containerTemplate: any = {
       ${
         cw.children &&
         cw.children
-          .map((child: WidgetConfigType) => {
+          .map((child: DesWidgetConfigType) => {
             if (child.category === "container") {
               return buildContainerWidget(child, formConfig);
             } else {
@@ -113,7 +103,7 @@ const containerTemplate: any = {
       </template>
     </el-card>`;
   },
-  tabs: (ctn: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  tabs: (ctn: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     return `<el-tabs>
       ${
         ctn.children &&
@@ -141,18 +131,15 @@ const containerTemplate: any = {
 };
 
 function buildContainerWidget(
-  widget: WidgetConfigType,
-  formConfig: DesignerFormConfigType
+  widget: DesWidgetConfigType,
+  formConfig: DesFormConfigType
 ) {
   return containerTemplate[widget.type](widget, formConfig)
     ? containerTemplate[widget.type](widget, formConfig)
     : null;
 }
 // 组件属性
-function getElAttr(
-  widget: WidgetConfigType,
-  formConfig: DesignerFormConfigType
-) {
+function getElAttr(widget: DesWidgetConfigType, formConfig: DesFormConfigType) {
   let wop = widget.options;
   return {
     modelValue: `v-model="${formConfig.modelName}.${widget.id}"`,
@@ -206,28 +193,28 @@ function getElAttr(
   };
 }
 
-function buildRadioChildren(widget: WidgetConfigType) {
+function buildRadioChildren(widget: DesWidgetConfigType) {
   let { buttonMode, border } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-radio-button" : "el-radio";
   return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.value" ${borderAttr}>{{item.label}}</${tag}>`;
 }
 
-function buildCheckboxChildren(widget: WidgetConfigType) {
+function buildCheckboxChildren(widget: DesWidgetConfigType) {
   let { buttonMode, border } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-checkbox-button" : "el-checkbox";
   return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.value" ${borderAttr}>{{item.label}}</${tag}>`;
 }
 
-function buildSelectChildren(widget: WidgetConfigType) {
+function buildSelectChildren(widget: DesWidgetConfigType) {
   let tag = "el-option";
   return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.label" :value="item.value"/>`;
 }
 
 // 基础组件
 const elTemplates: { [key: string]: any } = {
-  input: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  input: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let {
       modelValue,
       disabled,
@@ -244,8 +231,8 @@ const elTemplates: { [key: string]: any } = {
       ${minLength} ${size} ${rows} ${readonly} ${placeholder} ${clearable}/>`;
   },
   "input-number": (
-    widget: WidgetConfigType,
-    formConfig: DesignerFormConfigType
+    widget: DesWidgetConfigType,
+    formConfig: DesFormConfigType
   ) => {
     let { modelValue, disabled, size, readonly, placeholder } = getElAttr(
       widget,
@@ -253,25 +240,25 @@ const elTemplates: { [key: string]: any } = {
     );
     return `<el-input-number ${modelValue}" ${disabled} ${size} ${readonly} ${placeholder} />`;
   },
-  radio: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  radio: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, size, border } = getElAttr(widget, formConfig);
     let childTemplate = buildRadioChildren(widget);
     return `<el-radio-group ${modelValue} ${size} ${disabled} ${border}>${childTemplate}</el-radio-group>`;
   },
-  checkbox: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  checkbox: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, size, border } = getElAttr(widget, formConfig);
     let childTemplate = buildCheckboxChildren(widget);
     return `<el-checkbox-group ${modelValue} ${size} ${disabled} ${border}>${childTemplate}</el-checkbox-group>`;
   },
-  select: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  select: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, size, multiple, multipleLimit, clearable } =
       getElAttr(widget, formConfig);
     let childTemplate = buildSelectChildren(widget);
     return `<el-select ${modelValue} ${size} ${disabled} ${multiple} ${multipleLimit} ${clearable}>${childTemplate}</el-select>`;
   },
   "date-picker": (
-    widget: WidgetConfigType,
-    formConfig: DesignerFormConfigType
+    widget: DesWidgetConfigType,
+    formConfig: DesFormConfigType
   ) => {
     let {
       modelValue,
@@ -290,8 +277,8 @@ const elTemplates: { [key: string]: any } = {
     ${clearable} ${placeholder} ${readonly} ${startPlaceholder} ${endPlaceholder}/>`;
   },
   "time-picker": (
-    widget: WidgetConfigType,
-    formConfig: DesignerFormConfigType
+    widget: DesWidgetConfigType,
+    formConfig: DesFormConfigType
   ) => {
     let {
       modelValue,
@@ -309,36 +296,36 @@ const elTemplates: { [key: string]: any } = {
     return `<el-time-picker ${modelValue} ${type} ${size} ${disabled} ${editable} ${format} 
       ${clearable} ${placeholder} ${readonly} ${startPlaceholder} ${endPlaceholder} />`;
   },
-  switch: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  switch: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, size } = getElAttr(widget, formConfig);
     return `<el-switch ${modelValue} ${disabled} ${size} />`;
   },
-  cascader: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  cascader: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, size, clearable, placeholder } = getElAttr(
       widget,
       formConfig
     );
     return `<el-autocomplete ${modelValue} ${disabled} ${size} ${clearable} ${placeholder}/>`;
   },
-  rate: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  rate: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, allowHalf, max, disabled, size, clearable } = getElAttr(
       widget,
       formConfig
     );
     return `<el-rate ${modelValue} ${max} ${disabled} ${size} ${clearable} ${allowHalf} />`;
   },
-  button: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  button: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { disabled, size } = getElAttr(widget, formConfig);
     return `<el-button ${disabled} ${size}>${widget.options.label}</el-button>`;
   },
-  divider: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  divider: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { borderStyle, contentPosition, direction } = getElAttr(
       widget,
       formConfig
     );
     return `<el-divider ${borderStyle} ${contentPosition} ${direction} />`;
   },
-  slider: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  slider: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { modelValue, disabled, step, showStops } = getElAttr(
       widget,
       formConfig
@@ -346,17 +333,17 @@ const elTemplates: { [key: string]: any } = {
     return `<el-slider ${modelValue} ${disabled} ${showStops} ${step} />`;
   },
   "color-picker": (
-    widget: WidgetConfigType,
-    formConfig: DesignerFormConfigType
+    widget: DesWidgetConfigType,
+    formConfig: DesFormConfigType
   ) => {
     let { modelValue, disabled, size } = getElAttr(widget, formConfig);
     return `<el-color-picker ${modelValue} ${disabled} ${size} />`;
   },
-  alert: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  alert: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { closable, showIcon, title, type } = getElAttr(widget, formConfig);
     return `<el-alert ${type} ${closable} ${showIcon} ${title}  />`;
   },
-  text: (widget: WidgetConfigType, formConfig: DesignerFormConfigType) => {
+  text: (widget: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     let { fontSize, size, tag, truncated, customClass } = getElAttr(
       widget,
       formConfig
@@ -366,8 +353,8 @@ const elTemplates: { [key: string]: any } = {
 };
 
 function buildBasicsTemplate(
-  widget: WidgetConfigType,
-  formConfig: DesignerFormConfigType
+  widget: DesWidgetConfigType,
+  formConfig: DesFormConfigType
 ) {
   return elTemplates[widget.type](widget, formConfig)
     ? elTemplates[widget.type](widget, formConfig)
@@ -375,11 +362,11 @@ function buildBasicsTemplate(
 }
 
 function buildHtmlTemplate(
-  widgetList: WidgetConfigType[],
-  formConfig: DesignerFormConfigType,
+  widgetList: DesWidgetConfigType[],
+  formConfig: DesFormConfigType,
   templateList: any = []
 ) {
-  widgetList.forEach((widget: WidgetConfigType) => {
+  widgetList.forEach((widget: DesWidgetConfigType) => {
     if (widget.category === "container") {
       let template = buildContainerWidget(widget, formConfig);
       templateList.push(template);
@@ -392,8 +379,8 @@ function buildHtmlTemplate(
 }
 
 function buildFieldWidget(
-  widget: WidgetConfigType,
-  formConfig: DesignerFormConfigType
+  widget: DesWidgetConfigType,
+  formConfig: DesFormConfigType
 ) {
   let { customClass, label, labelWidth, align, required } = getElAttr(
     widget,
@@ -409,8 +396,8 @@ function buildFieldWidget(
 }
 
 function buildFormTemplate(
-  widgetList: WidgetConfigType[],
-  formConfig: DesignerFormConfigType
+  widgetList: DesWidgetListType,
+  formConfig: DesFormConfigType
 ) {
   let { modelName, formName, size, labelPosition, rulesName, labelWidth } =
     formConfig;
@@ -423,8 +410,8 @@ function buildFormTemplate(
 }
 
 function buildFieldTmplate(
-  widgetList: WidgetConfigType[],
-  formConfig: DesignerFormConfigType
+  widgetList: DesWidgetListType,
+  formConfig: DesFormConfigType
 ) {
   let formTemplate = buildFormTemplate(widgetList, formConfig);
   if (formConfig.isPageType === "page") {
@@ -443,8 +430,8 @@ function buildFieldTmplate(
 }
 
 export function getSFCGenerator(
-  formConfig: DesignerFormConfigType,
-  widgetList: WidgetConfigType[]
+  formConfig: DesFormConfigType,
+  widgetList: DesWidgetListType
 ) {
   let html = buildFieldTmplate(widgetList, formConfig);
   let js = genVue3JS(formConfig, widgetList);

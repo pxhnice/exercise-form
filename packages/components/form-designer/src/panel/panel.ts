@@ -1,6 +1,7 @@
 import {
   DesWidgetConfigType,
-  DesWidgetListType
+  DesWidgetListType,
+  DesFormConfigType
 } from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
@@ -12,7 +13,7 @@ export const desPanelProps = {
     }
   },
   formConfig: {
-    type: Object,
+    type: definePropType<DesFormConfigType>(Object),
     default() {
       return {};
     }
@@ -29,6 +30,9 @@ export const desPanelProps = {
       return {};
     }
   },
-  selectWidgetId: String,
+  selectWidgetId: {
+    type: String,
+    default: " "
+  },
   patternType: String
 };

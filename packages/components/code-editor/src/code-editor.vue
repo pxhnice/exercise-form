@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
 import { Codemirror } from "vue-codemirror";
 import "../style/index.scss";
 import { codeEditoirProps, codeEditorEmits, langs } from "./code-editor";
@@ -24,7 +24,10 @@ const emits = defineEmits(codeEditorEmits);
 const props = defineProps(codeEditoirProps);
 const extensions = [langs[props.lang]];
 
-const codeValue = ref(props.modelValue);
+const codeValue = computed({
+  get: () => props.modelValue,
+  set: (val) => val
+});
 
 const onChange = (value: string) => {
   emits("update:modelValue", value);

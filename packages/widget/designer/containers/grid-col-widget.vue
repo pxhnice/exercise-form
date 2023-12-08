@@ -7,7 +7,7 @@
   >
     <draggable
       group="componentsGroup"
-      ghost-class="ghost"
+      ghost-class="ex-ghost"
       handle=".drag-mover"
       class="container-draggable"
       :list="widgetData.children"
@@ -125,6 +125,7 @@ const handleDel = () => {
   min-height: 40px !important;
   padding: 2px 4px !important;
   border-radius: 0px;
+  box-sizing: border-box;
 }
 .ex-container-draggable {
   width: 100%;

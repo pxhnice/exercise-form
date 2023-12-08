@@ -1,26 +1,28 @@
 import type {
-  DesWidgetConfigType,
+  DesWidgetListType,
   DesFormConfigType
 } from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
-export const renContainerProps = {
-  widgetData: {
-    type: definePropType<DesWidgetConfigType>(Object),
-    default() {
-      return {};
-    }
-  },
-  formData: {
-    type: definePropType<DesFormConfigType>(Object),
-    default() {
-      return {};
-    }
-  },
+export const desFormsProps = {
   designer: {
     type: Object,
     default() {
       return {};
     }
-  }
+  },
+  formConfig: {
+    type: definePropType<DesFormConfigType>(Object),
+    default() {
+      return {};
+    }
+  },
+  widgetList: {
+    type: definePropType<DesWidgetListType>(Array),
+    default() {
+      return [];
+    }
+  },
+  selectWidgetId: String,
+  patternType: String
 };

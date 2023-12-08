@@ -1,7 +1,7 @@
 <template>
   <div class="ex-form-operation">
-    <div v-if="isSelect" title="手动拖拽" class="ex-title ex-drag-mover">
-      <ex-svg-icon class="ex-ft" name="drag" />
+    <div v-if="isSelect" title="手动拖拽" class="ex-title drag-mover">
+      <ex-svg-icon class="ex-ft" name="widget-drag" />
       <span class="ex-title-name">{{ widgetData.name }}</span>
     </div>
     <div :class="{ 'ex-is-container-drag': isSelect }">
@@ -11,7 +11,7 @@
       <div title="选中父组件">
         <ex-svg-icon
           @click.stop="handleParentChecked"
-          class="ft"
+          class="ex-ft"
           name="arrow-left"
         />
       </div>
@@ -36,7 +36,7 @@
         <ex-svg-icon
           @click.stop="insertNewCol"
           class="ex-ft"
-          name="insert-cloumn"
+          name="insert-column"
         />
       </div>
       <div title="复制">
@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="operation">
+<script setup lang="ts">
 import { computed } from "vue";
 import { desContainerProps } from "./container";
 
@@ -141,8 +141,8 @@ const insertNewRow = () => {
 .ex-is-container-drag::before {
   content: "";
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: -2px;
+  left: -2px;
   width: 100%;
   height: 100%;
   border: 2px solid var(--el-color-primary) !important;

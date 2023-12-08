@@ -1,4 +1,6 @@
 import { PATTERN_TYPE } from "@exercise-form/constants";
+import type { DesWidgetListType } from "@exercise-form/constants";
+import { definePropType } from "@exercise-form/utils";
 
 export const formRenderProps = {
   patternType: {
@@ -7,9 +9,9 @@ export const formRenderProps = {
     default: "pc"
   },
   widgetList: {
-    type: Array,
+    type: definePropType<DesWidgetListType>(Array),
     default() {
-      return {};
+      return [];
     }
   },
   formConfig: {

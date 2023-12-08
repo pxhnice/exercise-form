@@ -44,7 +44,6 @@ export const createDesigner = () => {
   return {
     ...toRefs(reactive(creatTarget())),
     setSelectWidget(widget: DesWidgetConfigType) {
-      console.log(widget, "widget");
       if (!widget) {
         this.clearSelectWidget();
         return;

@@ -18,7 +18,7 @@
               size="small"
             />
             <el-input class="put" v-model="element.options.label" />
-            <svg-icon class="ft-20 pane-mover ft" name="drag" />
+            <ex-svg-icon class="ft-20 pane-mover ft" name="drag" />
             <el-button
               @click="handelDel(index)"
               class="btn"

@@ -1,13 +1,13 @@
 <template>
   <div class="form-widget">
-    <div class="widget-container">
-      <div class="widget-container-box">
+    <div class="ex-forms-container bg">
+      <div class="ex-forms-container-box">
         <el-scrollbar
-          class="widget-box-scrollbar"
+          class="ex-forms-box-scrollbar"
           :class="{
-            'box-pc': patternType == 'pc',
-            'box-pad': patternType == 'pad',
-            'box-h5': patternType == 'h5'
+            'ex-box-pc': patternType == 'pc',
+            'ex-box-pad': patternType == 'pad',
+            'ex-box-h5': patternType == 'h5'
           }"
         >
           <el-form
@@ -22,7 +22,6 @@
                 <component
                   :is="`${item.type}-item`"
                   :widget-data="item"
-                  :designer="designer"
                   :form-data="formData"
                   :key="item.id"
                 />
@@ -30,7 +29,6 @@
               <template v-else>
                 <form-item
                   :widget-data="item"
-                  :designer="designer"
                   :form-data="formData"
                   :key="item.id"
                 />
@@ -52,6 +50,8 @@ import { formRenderProps } from "./form-render";
 
 defineOptions({ name: "ex-form-render" });
 const props = defineProps(formRenderProps);
+
+console.log(props);
 
 const formRef = ref<FormInstance>();
 const formData = ref<{ [key: string]: any }>({});
@@ -104,47 +104,7 @@ defineExpose({
   height: 100%;
   display: flex;
 }
-.widget-box-scrollbar {
-  background-color: #fff;
-  padding: 0px !important;
-}
-.box-pc {
-  width: 100%;
-  border: 1px solid #fff;
-  // border-radius: 10px;
-}
-.box-pad,
-.box-h5 {
-  border: 10px solid #000;
-  border-radius: 30px;
-}
-.box-pad {
-  max-width: 960px;
-  margin: 0 auto;
-}
-.box-h5 {
-  max-width: 460px;
-  margin: 0 auto;
-}
-.box-scrollbar {
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-}
-
-:deep(.el-scrollbar__view) {
-  width: 100%;
-  height: 100%;
-}
-
-.tips {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  text-align: center;
-  color: var(--el-color-primary-light-3);
+.bg {
+  background: #fff;
 }
 </style>

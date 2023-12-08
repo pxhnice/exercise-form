@@ -8,6 +8,7 @@
       <div class="ex-widget-container-box">
         <el-scrollbar class="ex-widget-box-scrollbar">
           <el-form
+            class="ex-setting-label"
             v-if="groupValue == 'bd'"
             :model="formConfig"
             size="small"
@@ -120,6 +121,7 @@
           </el-form>
           <el-form
             v-else
+            class="ex-setting-label"
             ref="formComRef"
             :model="selectWidget"
             size="small"
@@ -220,7 +222,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
 import { desPanelProps } from "./panel";
 import "../../style/index.scss";
@@ -228,7 +230,7 @@ import "../../style/index.scss";
 const props = defineProps(desPanelProps);
 
 const formConfig = props.formConfig;
-
+const formComRef = ref();
 const groupValue = ref("bd");
 const activeNames = ref(["1", "2"]);
 const isShowEvent = ref(false);
@@ -243,7 +245,7 @@ const globalCss = computed(() => {
   let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
   rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
   rules = Array.from(new Set([...rules])) as RegExpMatchArray;
-  return [];
+  return rules;
 });
 const firstName = computed(() => {
   return fnName.value.slice(0, fnName.value.length - 1);
@@ -252,9 +254,12 @@ const lastName = computed(() => {
   return fnName.value.slice(-1);
 });
 
-const formComRef = ref();
+watch(props.designer.selectWidgetId, (value) => {
+  groupValue.value = value ? "zj" : "bd";
+});
+
 const hideCollapseEvent = () => {
-  let options = props.selectWidget.options || {};
+  let options = props.selectWidget.options;
   for (const key in EVENT_PROPERTIES) {
     if (key in options) {
       return true;
@@ -265,7 +270,7 @@ const hideCollapseEvent = () => {
 
 const hasPropName = (name: string) => {
   if (!name) return false;
-  let options = props.selectWidget.options || {};
+  let options = props.selectWidget.options;
   if (name in options) {
     return true;
   } else {
@@ -274,7 +279,6 @@ const hasPropName = (name: string) => {
 };
 
 const handelEventCode = (name: string) => {
-  console.log(props.formConfig, formConfig[name]);
   code.value = formConfig[name];
   fnName.value = `${name}(){}`;
   codeName.value = name;
@@ -298,7 +302,6 @@ const handelCsstCode = (name: string) => {
 
 const confirm = () => {
   formConfig[codeName.value] = code.value;
-  console.log(props);
   cancel();
 };
 
@@ -309,3 +312,14 @@ const cancel = () => {
   isShowCss.value = false;
 };
 </script>
+<style scoped lang="scss">
+.ex-setting-label {
+  :deep(.el-form-item__label) {
+    font-size: 13px;
+    font-weight: 400;
+  }
+  :deep(.el-form-item--small) {
+    margin-bottom: 12px !important;
+  }
+}
+</style>

@@ -40,5 +40,6 @@ const onClickRow = () => {
   border: 1px dashed var(--el-color-primary);
   margin: 0px !important;
   padding: 3px;
+  box-sizing: border-box;
 }
 </style>

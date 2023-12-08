@@ -21,7 +21,7 @@
         <div class="ex-card-body">
           <draggable
             group="componentsGroup"
-            ghost-class="ghost"
+            ghost-class="ex-ghost"
             handle=".drag-mover"
             class="container-draggable"
             :list="widgetData.children"
@@ -82,6 +82,7 @@ const onDragAdd = (e: any, parent: any) => {
 .ex-drag-card {
   padding: 2px;
   margin: 3px 0;
+  box-sizing: border-box;
 }
 
 .ex-card-body {

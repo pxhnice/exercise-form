@@ -3,7 +3,7 @@ import { definePropType } from "@exercise-form/utils";
 
 export const desPropertyProps = {
   settingData: {
-    type: definePropType<DesWidgetConfigType>({}),
+    type: definePropType<DesWidgetConfigType>(Object),
     default() {
       return {};
     }

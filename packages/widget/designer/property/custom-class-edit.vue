@@ -20,7 +20,7 @@ import { desPropertyProps } from "./property";
 const props = defineProps(desPropertyProps);
 
 const globalCssList = computed(() => {
-  let str = props.designer.formConfig.value.cssCode.replaceAll("\n", "");
+  let str = props.designer.desFormConfig.value.cssCode.replaceAll("\n", "");
   let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
   rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
   rules = Array.from(new Set([...rules])) as RegExpMatchArray;

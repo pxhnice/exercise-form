@@ -45,7 +45,7 @@
       v-model="isShowJSON"
       width="800"
       :title="title"
-      @close="cancel"
+      @close="cancelJSONDialog"
       destroy-on-close
       draggable
       :close-on-click-modal="false"
@@ -65,7 +65,7 @@
         <span>
           <el-button type="primary">复制内容</el-button>
           <el-button type="primary" @click="importJSON">保存为文件</el-button>
-          <el-button @click="cancel">取消</el-button>
+          <el-button @click="cancelJSONDialog">取消</el-button>
         </span>
       </template>
     </el-dialog>
@@ -73,7 +73,7 @@
       v-model="isShowSFC"
       width="800"
       :title="title"
-      @close="cancel"
+      @close="cancelSFCDialog"
       draggable
       destroy-on-close
       :close-on-click-modal="false"
@@ -101,7 +101,7 @@
           <el-button type="primary" @click="importSFC">
             保存为Vue3组件
           </el-button>
-          <el-button @click="cancel">取消</el-button>
+          <el-button @click="cancelSFCDialog">取消</el-button>
         </span>
       </template>
     </el-dialog>
@@ -109,14 +109,18 @@
       v-model="isShowRender"
       fullscreen
       title="预览"
-      @close="cancel"
+      @close="cancelRenderialog"
       destroy-on-close
       center
       :close-on-click-modal="false"
     >
-      <template> </template>
       <div style="height: calc(100vh - 176px)">
-        <ex-form-render ref="vFormRenderRef" :designer="designer" />
+        <ex-form-render
+          ref="vFormRenderRef"
+          :pattern-type="patternType"
+          :widget-list="widgetList"
+          :form-config="formConfig"
+        />
       </div>
       <template #footer>
         <div class="footer-btns">
@@ -132,40 +136,62 @@
           <el-button @click="handleUndisable" type="primary">
             恢复编辑
           </el-button>
-          <el-button @click="cancel">关闭</el-button>
+          <el-button @click="cancelRenderialog">关闭</el-button>
         </div>
       </template>
     </el-dialog>
-    <!-- <widget-tree ref="widgetTreeRef" :designer="designer" /> -->
+    <el-drawer
+      size="300px"
+      v-model="drawer"
+      title="组件层次结构树"
+      direction="ltr"
+      @open="handelOpen"
+      :before-close="close"
+    >
+      <div class="drawer-tree">
+        <el-tree
+          ref="treeRef"
+          :data="widgetList"
+          :props="defaultProps"
+          node-key="id"
+          default-expand-all
+          @node-click="handleNodeClick"
+          :filter-node-method="filterNode"
+        />
+      </div>
+    </el-drawer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import FileSaver from "file-saver";
-import { deepClone, getSFCGenerator } from "@exercise-form/utils";
 import prettier from "prettier";
 import parserHtml from "prettier/plugins/html";
 import parserCss from "prettier/plugins/postcss";
 import parserBabel from "prettier/plugins/babel";
+import parserEstree from "prettier/plugins/estree";
+import { deepClone, getSFCGenerator } from "@exercise-form/utils";
+import { onMessageWarning } from "@exercise-form/utils";
 import { desPanelProps } from "./panel";
 import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 
-const patternType = ref("pad");
-const formConfig = ref<any>({});
-const widgetTreeRef = ref();
+const patternType = props.patternType;
 const isShowJSON = ref(false);
 const isShowSFC = ref(false);
 const isShowRender = ref(false);
 const title = ref("导出JSON");
-// const toolbarTreeRef = ref();
 const vFormRenderRef = ref();
-const form = ref({
-  importName: ""
-});
+const form = ref({ importName: "" });
 const codeValue = ref("");
+const treeRef = ref();
+const drawer = ref(false);
+const defaultProps = {
+  children: "children",
+  label: "id"
+};
 
 const onChange = (value: string) => {
   props.designer.setPatternType(value);
@@ -174,7 +200,7 @@ const clear = () => {
   props.designer.clearAllWidget();
 };
 const openWidgetTree = () => {
-  if (widgetTreeRef.value) widgetTreeRef.value.open();
+  drawer.value = true;
 };
 
 // const hanldeAdvance = () => {
@@ -220,7 +246,7 @@ const openSFCDialog = async () => {
 const changeRadio = async () => {
   let widgetList = deepClone(props.widgetList);
   let formConfig = deepClone(props.formConfig);
-  let code = getSFCGenerator(formConfig as any, widgetList);
+  let code = getSFCGenerator(formConfig, widgetList);
   codeValue.value = await prettierCode(code);
 };
 
@@ -236,7 +262,7 @@ const prettierCode = async (code: string) => {
   try {
     return await prettier.format(code, {
       parser: "vue",
-      plugins: [parserHtml, parserBabel, parserCss],
+      plugins: [parserHtml, parserBabel, parserEstree, parserCss],
       tabWidth: 4,
       printWidth: 60,
       trailingComma: "none",
@@ -270,9 +296,90 @@ const handleUndisable = () => {
   vFormRenderRef.value.undisable();
 };
 
-const cancel = () => {
+const cancelJSONDialog = () => {
   isShowJSON.value = false;
+};
+
+const cancelSFCDialog = () => {
   isShowSFC.value = false;
+};
+
+const cancelRenderialog = () => {
   isShowRender.value = false;
 };
+
+const handelOpen = () => {
+  let id = props.designer.selectWidgetId.value;
+  if (id) treeRef.value!.setCurrentKey(id);
+  treeRef.value!.filter();
+};
+
+const filterNode = (value: string, data: any) => {
+  return !(data.type === "table-td" && !data.merged);
+};
+
+const handleNodeClick = (data: any) => {
+  if (["tab-pane", "table-tr"].includes(data.type)) {
+    onMessageWarning("该节点不可选中");
+    return;
+  }
+  props.designer.setSelectWidget(data);
+};
+
+const close = () => {
+  drawer.value = false;
+};
 </script>
+<style scoped lang="scss">
+:deep(.el-drawer__header) {
+  margin: 0px;
+}
+.drawer-tree {
+  :deep(.el-tree-node) {
+    position: relative;
+    padding-left: 20px;
+    font-size: 13px;
+  }
+  :deep(.el-tree-node::before) {
+    content: "";
+    position: absolute;
+    border-left: 1px dashed var(--el-color-primary);
+    left: 5px;
+    height: 100%;
+    top: 0px;
+    width: 1px;
+  }
+  :deep(.el-tree-node:after) {
+    content: "";
+    left: 5px;
+    position: absolute;
+    border-width: 1px;
+    border-top: 1px dashed var(--el-color-primary);
+    height: 20px;
+    top: 12px;
+    width: 15px;
+  }
+  :deep(.el-tree-node__content) {
+    padding: 0px !important;
+    height: 26px;
+  }
+  :deep(.el-tree-node__expand-icon) {
+    padding: 0px !important;
+  }
+  :deep(.is-leaf) {
+    display: none;
+  }
+  :deep(.el-tree-node__label) {
+    padding-left: 5px;
+  }
+  :deep(.el-tree-node.is-current > .el-tree-node__content) {
+    background-color: var(--el-color-primary-light-3);
+    color: #fff;
+  }
+}
+.footer-btns {
+  :deep(.el-button) {
+    line-height: normal;
+  }
+}
+</style>

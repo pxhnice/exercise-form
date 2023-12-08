@@ -1,5 +1,27 @@
+export type DesFormSize = "default" | "large" | "small";
+export type DesFormLabelPosition = "left" | "top" | "right";
+export type DesFormAlign = "left" | "top" | "right";
+export type DesFormPageType = "dialog" | "page";
+export type DesFormConfigType = {
+  size: DesFormSize;
+  labelPosition: DesFormLabelPosition;
+  align: DesFormAlign;
+  labelWidth: string | number;
+  modelName: string;
+  formName: string;
+  rulesName: string;
+  isPageType: DesFormPageType;
+  hideRequiredAsterisk: boolean;
+  cssCode: string;
+  customClass: [];
+  functions: string;
+  onFormCreated: string;
+  onFormMounted: string;
+  onFormDataChange: string;
+  [key: string]: any;
+};
 // 表单配置
-export const DES_FORM_CONFIG = {
+export const DES_FORM_CONFIG: DesFormConfigType = {
   size: "default",
   labelPosition: "left",
   align: "left",
@@ -16,6 +38,7 @@ export const DES_FORM_CONFIG = {
   onFormMounted: "",
   onFormDataChange: ""
 };
+
 // 历史记录
 export const DES_HISTORY = {
   index: -1,
@@ -54,4 +77,4 @@ export const MODEL_TYPE_LIST = [
   "rate",
   "slider",
   "color-picker"
-] as const;
+];

@@ -1,25 +1,15 @@
 import { getRegExp, MODEL_TYPE_LIST } from "@exercise-form/constants";
-
-type WidgetConfigType = {
-  name: string;
-  iconName?: string;
-  category?: string;
-  type: string;
-  // children?: Array<WidgetConfigType>;
-  options: { [key: string]: any };
-  [key: string]: any;
-};
-
-interface DesignerFormConfigType {
-  cssCode: string;
-  [key: string]: any;
-}
+import type {
+  DesWidgetConfigType,
+  DesWidgetListType,
+  DesFormConfigType
+} from "@exercise-form/constants";
 
 export function traverseFieldWidget(
-  widgetList: WidgetConfigType[],
-  cd: (wt: WidgetConfigType) => void
+  widgetList: DesWidgetListType,
+  cd: (wt: DesWidgetConfigType) => void
 ) {
-  widgetList.forEach((widget: WidgetConfigType) => {
+  widgetList.forEach((widget: DesWidgetConfigType) => {
     if (widget.category === "container") {
       traverseFieldWidget(widget.children, cd);
     } else {
@@ -29,7 +19,7 @@ export function traverseFieldWidget(
 }
 
 export function buildDefalutValueListFn(defaultValueList: [string]) {
-  return function (widget: WidgetConfigType) {
+  return function (widget: DesWidgetConfigType) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
       let modelFefaultValue = widget.options.modelFefaultValue;
       defaultValueList.push(
@@ -40,7 +30,7 @@ export function buildDefalutValueListFn(defaultValueList: [string]) {
 }
 
 function buildRulesListFn(rulesList: [string]) {
-  return function (widget: WidgetConfigType) {
+  return function (widget: DesWidgetConfigType) {
     let { required, validation, validationHint } = widget.options;
     if (required || validation) {
       let requiredText = required
@@ -61,7 +51,7 @@ function buildRulesListFn(rulesList: [string]) {
 }
 
 function buildOptionsItemListFn(optionsValueList: [string]) {
-  return function (widget: WidgetConfigType) {
+  return function (widget: DesWidgetConfigType) {
     let { optionsItem } = widget.options;
     if (optionsItem) {
       optionsValueList.push(
@@ -72,14 +62,14 @@ function buildOptionsItemListFn(optionsValueList: [string]) {
 }
 
 export function genVue3JS(
-  formConfig: DesignerFormConfigType,
-  widgetList: WidgetConfigType[]
+  formConfig: DesFormConfigType,
+  widgetList: DesWidgetListType
 ) {
   let defaultValueList: any = [];
   let rulesList: any = [];
   let optionsList: any = [];
   let { formName, modelName, rulesName } = formConfig;
-  traverseFieldWidget(widgetList, (widget: WidgetConfigType) => {
+  traverseFieldWidget(widgetList, (widget: DesWidgetConfigType) => {
     buildDefalutValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
     buildOptionsItemListFn(optionsList)(widget);
@@ -98,7 +88,7 @@ export function genVue3JS(
   });${optionsList.join("\n")}
   const { ${modelName}, ${rulesName} } = state;${
     formConfig.isPageType === "dialog"
-      ? "const open = (params) => {dialogVisible.value=true};const close=()=>{dialogVisible.value=false}"
+      ? "const open = (params) => {dialogVisible.value=true};const close=()=>{dialogVisible.value=false};"
       : ""
   }
   const handleSubmit = () => {

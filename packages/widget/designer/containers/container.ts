@@ -5,14 +5,20 @@ import type {
 import { definePropType } from "@exercise-form/utils";
 
 export const desContainerProps = {
+  designer: {
+    type: Object,
+    default() {
+      return {};
+    }
+  },
   widgetData: {
-    type: definePropType<DesWidgetConfigType>({}),
+    type: definePropType<DesWidgetConfigType>(Object),
     default() {
       return {};
     }
   },
   parentList: {
-    type: definePropType<DesWidgetListType>([]),
+    type: definePropType<DesWidgetListType>(Array),
     default() {
       return [];
     }
@@ -22,15 +28,27 @@ export const desContainerProps = {
     default: 0
   },
   parentData: {
-    type: definePropType<DesWidgetConfigType>({}),
+    type: definePropType<DesWidgetConfigType>(Object),
     default() {
       return {};
     }
   },
-  designer: {
-    type: Object,
+  widgetRow: {
+    type: Number,
+    default: 0
+  },
+  rowLength: {
+    type: Number,
+    default: 0
+  },
+  colLength: {
+    type: Number,
+    default: 0
+  },
+  colList: {
+    type: definePropType<DesWidgetListType>(Array),
     default() {
-      return {};
+      return [];
     }
   }
 };

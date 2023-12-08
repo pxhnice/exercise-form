@@ -39,6 +39,13 @@ export default defineConfig({
         "@codemirror/lang-javascript",
         "@codemirror/lang-json",
         "@codemirror/lang-vue",
+        "file-saver",
+        "prettier/plugins/html",
+        "prettier/plugins/postcss",
+        "prettier/plugins/babel",
+        "prettier/plugins/estree",
+        "vuedraggable",
+        "prettier",
         /\.scss/
       ],
       input: "../../packages/index.ts",

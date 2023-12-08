@@ -1,9 +1,9 @@
 <template>
-  <div class="ex-form-widget">
-    <div class="ex-widget-container">
-      <div class="ex-widget-container-box ex-bg">
+  <div class="ex-forms-widget">
+    <div class="ex-forms-container">
+      <div class="ex-forms-container-box ex-bg">
         <el-scrollbar
-          class="ex-widget-box-scrollbar"
+          class="ex-forms-box-scrollbar"
           :class="{
             'ex-box-pc': patternType == 'pc',
             'ex-box-pad': patternType == 'pad',
@@ -15,7 +15,7 @@
               group="componentsGroup"
               class="container-draggable"
               scroll-fensitivity="20"
-              ghost-class="ghost"
+              ghost-class="ex-ghost"
               handle=".drag-mover"
               :list="widgetList"
               @add="onDragAdd($event, widgetList)"
@@ -57,17 +57,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { desFormsProps } from "./forms";
 import "../../style/index.scss";
-export interface FormWidgetType {
-  designer?: any;
-}
-
-const props = defineProps<FormWidgetType>();
-
-const patternType = ref("pad");
-const widgetList: any = [];
-const formConfig: any = {};
+const props = defineProps(desFormsProps);
 
 const onDragAdd = (e: any, widgetList: Array<any>) => {
   props.designer.setSelectWidget(widgetList[e.newIndex]);

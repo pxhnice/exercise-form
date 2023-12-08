@@ -64,7 +64,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    padding: 0 10px;
+    // padding: 0 10px;
     box-sizing: border-box;
 
     .ex-widget-box-scrollbar {
@@ -74,6 +74,8 @@
 
       .el-scrollbar__wrap {
         background: #fff;
+        padding: 10px;
+        box-sizing: border-box;
       }
     }
   }
@@ -211,7 +213,7 @@
 .ex-box-pad,
 .ex-box-h5 {
   border: 10px solid #000;
-  border-radius: 30px;
+  border-radius: 30px !important;
 }
 
 .ex-box-pad {
@@ -254,4 +256,42 @@
   .name-back {
     border-radius: 0 0 5px 5px;
   }
+}
+
+.ex-forms-container {
+  flex: 1;
+  position: relative;
+  background: #f4f4f4;
+
+  .ex-forms-container-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10px 10px 0;
+    box-sizing: border-box;
+
+    .ex-forms-box-scrollbar {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      background: #fff;
+
+      .el-scrollbar__wrap,
+      .el-scrollbar__view {
+        width: 100%;
+        height: 100%;
+      }
+
+      .el-scrollbar__view {
+        padding: 10px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+.container-draggable {
+  width: 100%;
+  min-height: 100%;
 }

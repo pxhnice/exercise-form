@@ -13,7 +13,7 @@
           <li class="col">
             <el-input class="put" v-model="element.value" />
             <el-input class="put" v-model="element.label" />
-            <svg-icon class="ft-20 pane-mover ft" name="drag" />
+            <ex-svg-icon class="ft-20 pane-mover ft" name="drag" />
             <el-button
               @click="handelDel(index)"
               class="btn"

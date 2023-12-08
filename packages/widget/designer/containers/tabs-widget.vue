@@ -21,7 +21,7 @@
         >
           <draggable
             group="componentsGroup"
-            ghost-class="ghost"
+            ghost-class="ex-ghost"
             handle=".drag-mover"
             class="container-draggable"
             :list="tab.children"

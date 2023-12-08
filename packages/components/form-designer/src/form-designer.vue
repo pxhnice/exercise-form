@@ -19,6 +19,7 @@
             :widget-list="widgetList"
             :form-config="formConfig"
             :select-widget="selectWidget"
+            :pattern-type="patternType"
             :select-widget-id="selectWidgetId"
           />
         </el-header>
@@ -28,7 +29,7 @@
             :designer="designer"
             :widget-list="widgetList"
             :form-config="formConfig"
-            :select-widget="selectWidget"
+            :pattern-type="patternType"
             :select-widget-id="selectWidgetId"
           />
         </el-main>
@@ -65,5 +66,6 @@ const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
 const selectWidgetId = designer.selectWidgetId;
 const formConfig = designer.desFormConfig;
+const patternType = designer.patternType;
 console.log(props, widgetList, selectWidget, formConfig, selectWidgetId);
 </script>

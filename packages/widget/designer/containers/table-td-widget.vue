@@ -7,7 +7,7 @@
   >
     <draggable
       group="componentsGroup"
-      ghost-class="ghost"
+      ghost-class="ex-ghost"
       handle=".drag-mover"
       class="container-draggable"
       :list="widgetData.children"
@@ -47,13 +47,13 @@
         <div title="选中父组件">
           <ex-svg-icon
             @click.stop="handleParentChecked"
-            class="ft"
+            class="ex-ft"
             name="arrow-left"
           />
         </div>
         <div title="单元格操作">
           <el-tooltip effect="light" placement="bottom" trigger="click">
-            <ex-svg-icon @click.stop class="ft" name="all" />
+            <ex-svg-icon @click.stop class="ex-ft" name="all" />
             <template #content>
               <div class="td-btns">
                 <el-button link class="btn" @click.stop="insertLeftCol">
@@ -163,167 +163,162 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type {
-  PropsWidgetType,
-  WidgetConfigType
-} from "@exercise-form/components/form-designer/src/designer";
+import type { DesWidgetConfigType } from "@exercise-form/constants";
+import { desContainerProps } from "./container";
 
-interface TdPropsWidgetType extends PropsWidgetType {
-  colList: WidgetConfigType[];
-  widgetRow: number;
-  colLength: number;
-  rowLength: number;
-}
-
-const props = withDefaults(defineProps<TdPropsWidgetType>(), {
-  widgetRow: 0,
-  widgetSub: 0
-});
-
-let { designer, parentList, parentData, widgetData } = props;
+const props = defineProps(desContainerProps);
 
 const isSelect = computed(
-  () => designer.selectWidgetId.value == props.widgetData.id
+  () => props.designer.selectWidgetId.value == props.widgetData.id
 );
 
-const onDragAdd = (e: any, parent: WidgetConfigType) => {
+const onDragAdd = (e: any, parent: DesWidgetConfigType) => {
   let i = e.newIndex;
   if (parent.children) {
-    designer.setSelectWidget(parent.children[i]);
+    props.designer.setSelectWidget(parent.children[i]);
   }
 };
 
 const onClickCol = () => {
-  designer.setSelectWidget(widgetData);
+  props.designer.setSelectWidget(props.widgetData);
 };
 
 const handleParentChecked = () => {
-  designer.setSelectWidget(parentData);
+  props.designer.setSelectWidget(props.parentData);
 };
 
 const isMergeLeft = computed(() => {
   return (
     props.widgetSub <= 0 ||
     props.colList[props.widgetSub - 1].options.rowspan !==
-      widgetData.options.rowspan
+      props.widgetData.options.rowspan
   );
 });
 
 const isMergeRight = computed(() => {
-  let rightColIndex = props.widgetSub + widgetData.options.colspan;
+  let rightColIndex = props.widgetSub + props.widgetData.options.colspan;
   return (
     props.widgetSub >= props.colLength - 1 ||
     rightColIndex > props.colLength - 1 ||
-    props.colList[rightColIndex].options.rowspan !== widgetData.options.rowspan
+    props.colList[rightColIndex].options.rowspan !==
+      props.widgetData.options.rowspan
   );
 });
 
 const isUpMerge = computed(() => {
   return (
     props.widgetRow <= 0 ||
-    parentList[props.widgetRow - 1].children[props.widgetSub].options
-      .colspan !== widgetData.options.colspan
+    props.parentList[props.widgetRow - 1].children[props.widgetSub].options
+      .colspan !== props.widgetData.options.colspan
   );
 });
 
 const isDownMerge = computed(() => {
-  let belowRowIndex = props.widgetRow + widgetData.options.rowspan;
+  let belowRowIndex = props.widgetRow + props.widgetData.options.rowspan;
   return (
     props.widgetRow >= props.rowLength - 1 ||
     belowRowIndex > props.rowLength - 1 ||
-    parentList[belowRowIndex].children[props.widgetSub].options.colspan !==
-      widgetData.options.colspan
+    props.parentList[belowRowIndex].children[props.widgetSub].options
+      .colspan !== props.widgetData.options.colspan
   );
 });
 
 const isMergeRow = computed(() => {
-  return props.colLength <= 1 || props.colLength === widgetData.options.colspan;
+  return (
+    props.colLength <= 1 || props.colLength === props.widgetData.options.colspan
+  );
 });
 
 const isMergeCol = computed(() => {
-  return props.rowLength <= 1 || props.rowLength === widgetData.options.rowspan;
+  return (
+    props.rowLength <= 1 || props.rowLength === props.widgetData.options.rowspan
+  );
 });
 
 const isBackoutRow = computed(() => {
-  let { rowspan } = widgetData.options;
+  let { rowspan } = props.widgetData.options;
   return rowspan == 1;
 });
 
 const isBackoutCol = computed(() => {
-  let { colspan } = widgetData.options;
+  let { colspan } = props.widgetData.options;
   return colspan == 1;
 });
 
 const insertRightCol = () => {
-  designer.insertCell(parentList, props.widgetSub, "right");
+  props.designer.insertCell(props.parentList, props.widgetSub, "right");
 };
 
 const insertLeftCol = () => {
-  designer.insertCell(parentList, props.widgetSub, "left");
+  props.designer.insertCell(props.parentList, props.widgetSub, "left");
 };
 
 const insertUpRow = () => {
-  designer.insertRow(parentList, props.widgetRow, "up");
+  props.designer.insertRow(props.parentList, props.widgetRow, "up");
 };
 
 const insertDownRow = () => {
-  designer.insertRow(parentList, props.widgetRow, "down");
+  props.designer.insertRow(props.parentList, props.widgetRow, "down");
 };
 
 const mergeRightCell = () => {
-  designer.mergeRightCell(
-    parentList,
-    widgetData,
+  props.designer.mergeRightCell(
+    props.parentList,
+    props.widgetData,
     props.widgetRow,
     props.widgetSub
   );
 };
 
 const mergeLeftCell = () => {
-  designer.mergeLeftCell(parentList, widgetData, props.widgetRow);
+  props.designer.mergeLeftCell(
+    props.parentList,
+    props.widgetData,
+    props.widgetRow
+  );
 };
 
 const mergeUpCell = () => {
-  designer.mergeUpCell(
-    parentList,
-    widgetData,
+  props.designer.mergeUpCell(
+    props.parentList,
+    props.widgetData,
     props.widgetRow,
     props.widgetSub
   );
 };
 
 const mergeDownCell = () => {
-  designer.mergeDownCell(
-    parentList,
-    widgetData,
+  props.designer.mergeDownCell(
+    props.parentList,
+    props.widgetData,
     props.widgetRow,
     props.widgetSub
   );
 };
 
 const mergeRow = () => {
-  designer.mergeEntireRow(parentList, props.widgetRow);
+  props.designer.mergeEntireRow(props.parentList, props.widgetRow);
 };
 
 const mergeCol = () => {
-  designer.mergeEntireCol(parentList, props.widgetSub);
+  props.designer.mergeEntireCol(props.parentList, props.widgetSub);
 };
 
 const revocationMerge = () => {
-  designer.revocationMerge(
-    parentList,
-    widgetData,
+  props.designer.revocationMerge(
+    props.parentList,
+    props.widgetData,
     props.widgetRow,
     props.widgetSub
   );
 };
 
 const delRow = () => {
-  designer.deleteEntireRow(parentList, props.widgetRow);
+  props.designer.deleteEntireRow(props.parentList, props.widgetRow);
 };
 
 const delCol = () => {
-  designer.deleteEntireCol(parentList, props.widgetRow);
+  props.designer.deleteEntireCol(props.parentList, props.widgetRow);
 };
 </script>
 
@@ -378,7 +373,7 @@ const delCol = () => {
     background-color: var(--el-color-primary);
   }
 
-  .ft {
+  .ex-ft {
     font-size: 16px;
     margin: 0 2px;
     color: #fff;

@@ -15,7 +15,6 @@
                 :list="parentContainer"
                 item-key="id"
                 :sort="false"
-                @start="checkMove"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -36,7 +35,6 @@
                 :list="baseFields"
                 item-key="id"
                 :sort="false"
-                :move="checkMove"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -57,7 +55,6 @@
                 :list="customs"
                 item-key="id"
                 :sort="false"
-                :move="checkMove"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -96,11 +93,6 @@ const group = ref({
 const parentContainer = computed(() =>
   containers.filter((item) => item.iconName)
 );
-
-const checkMove = (e: any) => {
-  // console.log(e, "mmmmmmmmmmmm");
-  // e.draggedContext.element.id = getUniqueId();
-};
 
 const handleClone = (target: any) => {
   return props.designer.cloneWidget(target);

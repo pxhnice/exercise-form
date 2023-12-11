@@ -88,6 +88,7 @@ const onDragAdd = (e: any, parent: any) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);
+    props.designer.emitHistoryChange();
   }
 };
 </script>

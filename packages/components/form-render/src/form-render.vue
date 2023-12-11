@@ -5,9 +5,9 @@
         <el-scrollbar
           class="ex-forms-box-scrollbar"
           :class="{
-            'ex-box-pc': patternType == 'pc',
-            'ex-box-pad': patternType == 'pad',
-            'ex-box-h5': patternType == 'h5'
+            'ex-box-pc': formConfig.patternType == 'pc',
+            'ex-box-pad': formConfig.patternType == 'pad',
+            'ex-box-h5': formConfig.patternType == 'h5'
           }"
         >
           <el-form

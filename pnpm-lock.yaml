@@ -188,6 +188,8 @@ importers:
 
   packages/constants: {}
 
+  packages/directives: {}
+
   packages/exercise-form: {}
 
   packages/hooks: {}

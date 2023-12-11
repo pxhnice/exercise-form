@@ -13,21 +13,36 @@ export const codeEditorEmits = {
 const codeLangType = ["javascript", "html", "css", "json", "vue"] as const;
 
 export const codeEditoirProps = {
+  /**
+   * @description  绑定值
+   */
   modelValue: {
     type: String
   },
+  /**
+   * @description 高度
+   */
   height: {
     type: [Number, String],
     default: "300"
   },
+  /**
+   * @description vue-codemirror组件自定义样式
+   */
   codeStyle: {
     type: definePropType<CSSProperties>({})
   },
+  /**
+   * @description vue-codemirror使用语言
+   */
   lang: {
     type: String,
     values: codeLangType,
     default: "javascript"
   },
+  /**
+   * @description 禁用
+   */
   disabled: Boolean
 };
 

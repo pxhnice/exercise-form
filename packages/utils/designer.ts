@@ -7,14 +7,13 @@ import {
   DES_HISTORY
 } from "@exercise-form/constants";
 import type {
+  DesFormConfigType,
   DesWidgetConfigType,
   DesWidgetListType
 } from "@exercise-form/constants";
 import { deepClone, getUniqueId } from "./util";
+import { localStorageUtils } from "./storege";
 
-export type desPatternType = "pc" | "pad" | "h5";
-
-const patternType: desPatternType = "pc";
 const desFormConfig = deepClone(DES_FORM_CONFIG);
 const desHistory = deepClone(DES_HISTORY);
 const widgetList: DesWidgetListType = []; //组件数据列表
@@ -23,7 +22,6 @@ const selectWidget = {} as DesWidgetConfigType; //当前选中表单组件
 
 const creatTarget = () => {
   return {
-    patternType,
     desFormConfig,
     desHistory,
     widgetList,
@@ -32,17 +30,17 @@ const creatTarget = () => {
   };
 };
 
-const initPrint = () => {
-  console.log(
-    `%cExForm v:0.0.0-dev_1`,
-    `padding: 4px;color: #fff;background:#409EFF;border-radius: 3px 0 0 0px;`
-  );
-};
-
 export const createDesigner = () => {
-  initPrint();
   return {
     ...toRefs(reactive(creatTarget())),
+    initDesigner() {
+      console.log(
+        `%cExForm v:0.0.0-dev_1`,
+        `padding: 4px;color: #fff;background:#409EFF;border-radius: 3px 0 0 0px;`
+      );
+      this.initHistoryData();
+    },
+
     setSelectWidget(widget: DesWidgetConfigType) {
       if (!widget) {
         this.clearSelectWidget();
@@ -51,10 +49,12 @@ export const createDesigner = () => {
       this.selectWidgetId.value = widget.id;
       this.selectWidget.value = widget;
     },
+
     clearSelectWidget() {
       this.selectWidgetId.value = "";
       this.selectWidget.value = {} as DesWidgetConfigType;
     },
+
     getContinerType(type: string) {
       let allWidgets = [...containers, ...baseFields, ...customs];
       let widgetData = {} as DesWidgetConfigType;
@@ -63,6 +63,7 @@ export const createDesigner = () => {
       });
       return widgetData;
     },
+
     cloneWidget(widget: DesWidgetConfigType) {
       let newWidget = deepClone(widget);
       newWidget.id = newWidget.type + getUniqueId();
@@ -95,9 +96,11 @@ export const createDesigner = () => {
       }
       return newWidget;
     },
-    setPatternType(type: string) {
-      this.patternType.value = type as any;
-    },
+
+    // setPatternType(type: string) {
+    //   this.patternType.value = type as any;
+    // },
+
     copyContainerWidget(widget: DesWidgetConfigType) {
       if (widget.type == "grid") {
         let colWidget = deepClone(this.getContinerType("grid-col"));
@@ -113,12 +116,8 @@ export const createDesigner = () => {
         widget.children.push(newTab);
       }
     },
+
     copyContainerField() {},
-    copyWidget(parentList: DesWidgetListType, widget: DesWidgetConfigType) {
-      console.log(parentList);
-      let newWidget = this.copyDeepWidget(deepClone(widget));
-      parentList.push(newWidget);
-    },
     copyDeepWidget(widget: DesWidgetConfigType) {
       if (widget.category === "container") {
         widget.id = widget.type + "_" + getUniqueId();
@@ -133,25 +132,45 @@ export const createDesigner = () => {
       }
       return widget;
     },
+
+    copyWidget(parentList: DesWidgetListType, widget: DesWidgetConfigType) {
+      let newWidget = this.copyDeepWidget(deepClone(widget));
+      parentList.push(newWidget);
+
+      this.emitHistoryChange();
+    },
+
     moveUpWidget(parentList: DesWidgetListType, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub - 1, 0, item);
+
+      this.emitHistoryChange();
     },
+
     moveDownWidget(parentList: DesWidgetListType, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub + 1, 0, item);
+
+      this.emitHistoryChange();
     },
+
     deleteWidget(parentList: DesWidgetListType, sub: number) {
       parentList.splice(sub, 1);
+
+      this.emitHistoryChange();
     },
+
     clearAllWidget() {
       this.clearSelectWidget();
       this.widgetList.value = [];
+
+      this.emitHistoryChange();
     },
+
     insertCell(parentList: DesWidgetListType, cell: number, type: string) {
-      parentList.forEach((child: DesWidgetConfigType) => {
+      parentList.forEach((child) => {
         let colWidget = deepClone(this.getContinerType("table-td"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
@@ -161,7 +180,10 @@ export const createDesigner = () => {
           child.children?.splice(cell + 1, 0, colWidget);
         }
       });
+
+      this.emitHistoryChange();
     },
+
     insertRow(parentList: DesWidgetListType, row: number, type: string) {
       let newRows: DesWidgetConfigType = {
         name: "tr",
@@ -181,14 +203,17 @@ export const createDesigner = () => {
       } else {
         parentList.splice(row + 1, 0, newRows);
       }
+      this.emitHistoryChange();
     },
+
     getMergeTarget(parentList: DesWidgetListType) {
       let deepList = deepClone(parentList);
-      return deepList.map((tr: any) => {
+      return deepList.map((tr) => {
         tr.children = tr.children.filter((item: any) => item.merged);
         return tr;
       });
     },
+
     getMergeTargetSub(
       mergeList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -198,6 +223,7 @@ export const createDesigner = () => {
       let index = rows.findIndex((item: any) => item.id == widgetData.id);
       return index;
     },
+
     mergeRightCell(
       parentList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -228,7 +254,9 @@ export const createDesigner = () => {
           }
         }
       }
+      this.emitHistoryChange();
     },
+
     mergeLeftCell(
       parentList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -258,7 +286,9 @@ export const createDesigner = () => {
           }
         }
       }
+      this.emitHistoryChange();
     },
+
     mergeUpCell(
       parentList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -282,7 +312,9 @@ export const createDesigner = () => {
           }
         }
       }
+      this.emitHistoryChange();
     },
+
     mergeDownCell(
       parentList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -305,7 +337,9 @@ export const createDesigner = () => {
           }
         }
       }
+      this.emitHistoryChange();
     },
+
     mergeEntireRow(parentList: DesWidgetListType, rowsub: number) {
       let children = parentList[rowsub].children || [];
       for (let i = 0; i < children.length; i++) {
@@ -317,10 +351,12 @@ export const createDesigner = () => {
           children[i].options.colspan = children.length;
         }
       }
+
+      this.emitHistoryChange();
     },
     mergeEntireCol(parentList: DesWidgetListType, cellsub: number) {
       let len = parentList.length;
-      parentList.forEach((p: DesWidgetConfigType, index: number) => {
+      parentList.forEach((p, index) => {
         if (p.children) {
           let cell = p.children[cellsub] || [];
           if (index == 0) {
@@ -332,17 +368,23 @@ export const createDesigner = () => {
           }
         }
       });
+      this.emitHistoryChange();
     },
+
     deleteEntireRow(parentList: DesWidgetListType, rowsub: number) {
       parentList.splice(rowsub, 1);
       this.clearSelectWidget();
+      this.emitHistoryChange();
     },
+
     deleteEntireCol(parentList: DesWidgetListType, rowsub: number) {
-      parentList.forEach((p: any) => {
+      parentList.forEach((p) => {
         p.children.splice(rowsub, 1);
       });
       this.clearSelectWidget();
+      this.emitHistoryChange();
     },
+
     revocationMerge(
       parentList: DesWidgetListType,
       widgetData: DesWidgetConfigType,
@@ -358,6 +400,89 @@ export const createDesigner = () => {
           cell.options.colspan = 1;
           cell.options.rowspan = 1;
         }
+      }
+      this.emitHistoryChange();
+    },
+
+    initHistoryData() {
+      this.loadFormContentFromStorage();
+      this.desHistory.value.index++;
+      this.desHistory.value.steps[this.desHistory.value.index] = {
+        widgetList: deepClone(this.widgetList.value),
+        desFormConfig: deepClone(this.desFormConfig.value)
+      };
+    },
+
+    emitHistoryChange() {
+      let index = this.desHistory.value.index;
+      let maxStep = this.desHistory.value.maxStep;
+      if (index == maxStep - 1) {
+        this.desHistory.value.steps.shift();
+      } else {
+        this.desHistory.value.index++;
+      }
+      this.desHistory.value.steps[this.desHistory.value.index] = {
+        widgetList: deepClone(this.widgetList.value),
+        desFormConfig: deepClone(this.desFormConfig.value)
+      };
+      this.saveFormContentToStorage();
+      console.log(this.desHistory);
+    },
+
+    undoHistoryStep() {
+      if (this.desHistory.value.index !== 0) {
+        this.desHistory.value.index--;
+      }
+      this.widgetList.value =
+        this.desHistory.value.steps[this.desHistory.value.index].widgetList;
+      this.desFormConfig.value =
+        this.desHistory.value.steps[this.desHistory.value.index].desFormConfig;
+
+      this.saveFormContentToStorage();
+    },
+
+    redoHistoryStep() {
+      if (
+        this.desHistory.value.index !==
+        this.desHistory.value.steps.length - 1
+      ) {
+        this.desHistory.value.index++;
+      }
+      this.widgetList.value =
+        this.desHistory.value.steps[this.desHistory.value.index].widgetList;
+      this.desFormConfig.value =
+        this.desHistory.value.steps[this.desHistory.value.index].desFormConfig;
+
+      this.saveFormContentToStorage();
+    },
+    undoEnabled() {
+      return (
+        this.desHistory.value.index > 0 &&
+        this.desHistory.value.steps.length > 0
+      );
+    },
+
+    redoEnabled() {
+      return (
+        this.desHistory.value.index < this.desHistory.value.steps.length - 1
+      );
+    },
+
+    saveFormContentToStorage() {
+      let storage = localStorageUtils();
+      storage.set("ex_widget_list", this.widgetList.value);
+      storage.set("ex_form_config", this.desFormConfig.value);
+    },
+
+    loadFormContentFromStorage() {
+      let storage = localStorageUtils();
+      let list = storage.get("ex_widget_list");
+      let form = storage.get("ex_form_config");
+      if (list) {
+        this.widgetList.value = list as DesWidgetListType;
+      }
+      if (form) {
+        this.desFormConfig.value = form as DesFormConfigType;
       }
     }
   };

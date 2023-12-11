@@ -8,7 +8,7 @@ import type {
 // 不需要el-form-item的组件
 const staticTypeList = ["text", "alert", "divider"];
 // 容器组件
-const containerTemplate: any = {
+const containerTemplate: { [key: string]: any } = {
   grid: (ctn: DesWidgetConfigType, formConfig: DesFormConfigType) => {
     return `<el-row>
       ${
@@ -133,7 +133,7 @@ const containerTemplate: any = {
 function buildContainerWidget(
   widget: DesWidgetConfigType,
   formConfig: DesFormConfigType
-) {
+): string {
   return containerTemplate[widget.type](widget, formConfig)
     ? containerTemplate[widget.type](widget, formConfig)
     : null;
@@ -364,7 +364,7 @@ function buildBasicsTemplate(
 function buildHtmlTemplate(
   widgetList: DesWidgetConfigType[],
   formConfig: DesFormConfigType,
-  templateList: any = []
+  templateList: string[] = []
 ) {
   widgetList.forEach((widget: DesWidgetConfigType) => {
     if (widget.category === "container") {

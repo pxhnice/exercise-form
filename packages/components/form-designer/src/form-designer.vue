@@ -19,7 +19,6 @@
             :widget-list="widgetList"
             :form-config="formConfig"
             :select-widget="selectWidget"
-            :pattern-type="patternType"
             :select-widget-id="selectWidgetId"
           />
         </el-header>
@@ -29,8 +28,6 @@
             :designer="designer"
             :widget-list="widgetList"
             :form-config="formConfig"
-            :pattern-type="patternType"
-            :select-widget-id="selectWidgetId"
           />
         </el-main>
       </el-container>
@@ -62,10 +59,17 @@ const emist = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
 
 const designer = createDesigner();
+designer.initDesigner();
 const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
 const selectWidgetId = designer.selectWidgetId;
 const formConfig = designer.desFormConfig;
-const patternType = designer.patternType;
-console.log(props, widgetList, selectWidget, formConfig, selectWidgetId);
+// const patternType = designer.patternType;
+console.log(props);
+
+defineExpose({
+  widgetList,
+  selectWidget,
+  formConfig
+});
 </script>

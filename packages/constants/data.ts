@@ -2,6 +2,8 @@ export type DesFormSize = "default" | "large" | "small";
 export type DesFormLabelPosition = "left" | "top" | "right";
 export type DesFormAlign = "left" | "top" | "right";
 export type DesFormPageType = "dialog" | "page";
+export type DesPatternType = "pc" | "pad" | "h5";
+
 export type DesFormConfigType = {
   size: DesFormSize;
   labelPosition: DesFormLabelPosition;
@@ -10,6 +12,7 @@ export type DesFormConfigType = {
   modelName: string;
   formName: string;
   rulesName: string;
+  patternType: DesPatternType;
   isPageType: DesFormPageType;
   hideRequiredAsterisk: boolean;
   cssCode: string;
@@ -20,6 +23,12 @@ export type DesFormConfigType = {
   onFormDataChange: string;
   [key: string]: any;
 };
+export type DesHistoryType = {
+  index: number;
+  maxStep: number;
+  steps: any[];
+};
+
 // 表单配置
 export const DES_FORM_CONFIG: DesFormConfigType = {
   size: "default",
@@ -29,6 +38,7 @@ export const DES_FORM_CONFIG: DesFormConfigType = {
   modelName: "formData",
   formName: "formRef",
   rulesName: "rules",
+  patternType: "pc",
   isPageType: "page",
   hideRequiredAsterisk: false,
   cssCode: "",
@@ -40,7 +50,7 @@ export const DES_FORM_CONFIG: DesFormConfigType = {
 };
 
 // 历史记录
-export const DES_HISTORY = {
+export const DES_HISTORY: DesHistoryType = {
   index: -1,
   maxStep: 10,
   steps: []

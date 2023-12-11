@@ -33,6 +33,5 @@ export const desPanelProps = {
   selectWidgetId: {
     type: String,
     default: " "
-  },
-  patternType: String
+  }
 };

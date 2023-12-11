@@ -5,9 +5,9 @@
         <el-scrollbar
           class="ex-forms-box-scrollbar"
           :class="{
-            'ex-box-pc': patternType == 'pc',
-            'ex-box-pad': patternType == 'pad',
-            'ex-box-h5': patternType == 'h5'
+            'ex-box-pc': formConfig.patternType == 'pc',
+            'ex-box-pad': formConfig.patternType == 'pad',
+            'ex-box-h5': formConfig.patternType == 'h5'
           }"
         >
           <el-form style="width: 100%; height: 100%" v-bind="formConfig">
@@ -63,5 +63,6 @@ const props = defineProps(desFormsProps);
 
 const onDragAdd = (e: any, widgetList: Array<any>) => {
   props.designer.setSelectWidget(widgetList[e.newIndex]);
+  props.designer.emitHistoryChange();
 };
 </script>

@@ -22,7 +22,5 @@ export const desFormsProps = {
     default() {
       return [];
     }
-  },
-  selectWidgetId: String,
-  patternType: String
+  }
 };

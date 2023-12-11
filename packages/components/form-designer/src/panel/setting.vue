@@ -258,8 +258,12 @@ watch(props.designer.selectWidgetId, (value) => {
   groupValue.value = value ? "zj" : "bd";
 });
 
+watch(formConfig, () => {
+  props.designer.saveFormContentToStorage();
+});
+
 const hideCollapseEvent = () => {
-  let options = props.selectWidget.options;
+  let options = props.selectWidget.options ?? {};
   for (const key in EVENT_PROPERTIES) {
     if (key in options) {
       return true;
@@ -270,7 +274,7 @@ const hideCollapseEvent = () => {
 
 const hasPropName = (name: string) => {
   if (!name) return false;
-  let options = props.selectWidget.options;
+  let options = props.selectWidget.options ?? {};
   if (name in options) {
     return true;
   } else {

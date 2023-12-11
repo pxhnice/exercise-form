@@ -176,6 +176,7 @@ const onDragAdd = (e: any, parent: DesWidgetConfigType) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);
+    props.designer.emitHistoryChange();
   }
 };
 

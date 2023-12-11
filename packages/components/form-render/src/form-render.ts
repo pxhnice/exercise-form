@@ -1,21 +1,24 @@
-import { PATTERN_TYPE } from "@exercise-form/constants";
-import type { DesWidgetListType } from "@exercise-form/constants";
+import type {
+  DesWidgetListType,
+  DesFormConfigType
+} from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
 export const formRenderProps = {
-  patternType: {
-    type: String,
-    values: PATTERN_TYPE,
-    default: "pc"
-  },
+  /**
+   * @description 构造组件列表
+   */
   widgetList: {
     type: definePropType<DesWidgetListType>(Array),
     default() {
       return [];
     }
   },
+  /**
+   * @description 构造表单配置
+   */
   formConfig: {
-    type: Object,
+    type: definePropType<DesFormConfigType>(Object),
     default() {
       return {};
     }

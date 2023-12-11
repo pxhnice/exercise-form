@@ -3,14 +3,24 @@
     <div class="ex-toolbar-header">
       <div class="ex-toolbar-header-left">
         <div class="ex-operation">
-          <el-button :type="0 ? 'primary' : ''" link>
+          <el-button
+            :type="undoEnabled ? 'primary' : ''"
+            :disabled="!undoEnabled"
+            @click="hanldeRetreat"
+            link
+          >
             <ex-svg-icon class="ex-icon-ft-20" name="retreat" />
           </el-button>
-          <el-button :type="0 ? 'primary' : ''" link>
+          <el-button
+            :type="redoEnabled ? 'primary' : ''"
+            :disabled="!redoEnabled"
+            @click="hanldeAdvance"
+            link
+          >
             <ex-svg-icon class="ex-icon-ft-20" name="advance" />
           </el-button>
         </div>
-        <el-radio-group v-model="patternType" @change="onChange">
+        <el-radio-group v-model="formConfig.patternType" @change="onChange">
           <el-radio-button label="pc">Pc</el-radio-button>
           <el-radio-button label="pad">Pad</el-radio-button>
           <el-radio-button label="h5">H5</el-radio-button>
@@ -117,7 +127,6 @@
       <div style="height: calc(100vh - 176px)">
         <ex-form-render
           ref="vFormRenderRef"
-          :pattern-type="patternType"
           :widget-list="widgetList"
           :form-config="formConfig"
         />
@@ -164,7 +173,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import FileSaver from "file-saver";
 import prettier from "prettier";
 import parserHtml from "prettier/plugins/html";
@@ -178,7 +187,7 @@ import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 
-const patternType = props.patternType;
+// const patternType = props.formConfig.patternType;
 const isShowJSON = ref(false);
 const isShowSFC = ref(false);
 const isShowRender = ref(false);
@@ -192,28 +201,29 @@ const defaultProps = {
   children: "children",
   label: "id"
 };
+const undoEnabled = computed(() => props.designer.undoEnabled());
+const redoEnabled = computed(() => props.designer.redoEnabled());
 
 const onChange = (value: string) => {
-  props.designer.setPatternType(value);
+  console.log(props.designer.con);
+  // props.designer.setPatternType(value);
 };
+
 const clear = () => {
   props.designer.clearAllWidget();
 };
+
 const openWidgetTree = () => {
   drawer.value = true;
 };
 
-// const hanldeAdvance = () => {
-//   console.log("前进");
-// };
+const hanldeAdvance = () => {
+  props.designer.redoHistoryStep();
+};
 
-// const hanldeRetreat = () => {
-//   console.log("后退");
-// };
-
-// const openTree = () => {
-//   toolbarTreeRef.value.open();
-// };
+const hanldeRetreat = () => {
+  props.designer.undoHistoryStep();
+};
 
 const openPreview = () => {
   isShowRender.value = true;
@@ -222,7 +232,7 @@ const openPreview = () => {
 const openJsonDialog = () => {
   title.value = "导出JSON";
   form.value.importName = `form${new Date().getTime()}.json`;
-  let widgetList = deepClone(props.designer.widgetList);
+  let widgetList = deepClone(props.designer.widgetList.value);
   const jsonString = JSON.stringify(widgetList, null, 2);
   codeValue.value = jsonString;
   isShowJSON.value = true;

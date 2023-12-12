@@ -46,17 +46,28 @@
 </template>
 
 <script setup lang="ts">
+import { ref, provide } from "vue";
 import { createDesigner } from "@exercise-form/utils";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";
 import ExWidgetPanel from "./panel/widget.vue";
-import { formDesignerEmits, formDesignerProps } from "./form-designer";
+import {
+  formDesignerEmits,
+  formDesignerProps,
+  optionsKeys,
+  bannedWidegetKeys
+} from "./form-designer";
 import "../style/index.scss";
 
 defineOptions({ name: "ex-form-designer" });
 const emist = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
+
+const optionsData = ref(props.optionsData);
+const bannedWidegets = ref(props.bannedWidegets);
+provide(optionsKeys, optionsData);
+provide(bannedWidegetKeys, bannedWidegets);
 
 const designer = createDesigner();
 designer.initDesigner();

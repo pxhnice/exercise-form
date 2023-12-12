@@ -74,6 +74,8 @@
     "@exercise-form/constants": "workspace:^",
     "@exercise-form/hooks": "workspace:^",
     "@exercise-form/utils": "workspace:^",
-    "@exercise-form/widget": "workspace:^"
+    "@exercise-form/widget": "workspace:^",
+    "@exercise-form/directives": "workspace:^",
+    "@exercise-form/theme": "workspace:^"
   }
 }

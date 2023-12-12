@@ -1,8 +1,10 @@
 <template>
   <div>
     <el-radio-group class="ex-radio-group" v-model="groupValue">
-      <el-radio-button style="flex: 1" label="ZJ">组件库</el-radio-button>
-      <el-radio-button style="flex: 1" label="MB">模版</el-radio-button>
+      <el-radio-button label="ZJ">组件库</el-radio-button>
+      <el-radio-button v-if="optionsData?.templateButton" label="MB">
+        模版
+      </el-radio-button>
     </el-radio-group>
     <div class="ex-widget-container">
       <div class="ex-widget-container-box">
@@ -12,7 +14,7 @@
               <draggable
                 :group="group"
                 class="ex-form-draggable"
-                :list="parentContainer"
+                :list="containerList"
                 item-key="id"
                 :sort="false"
                 :clone="handleClone"
@@ -32,7 +34,7 @@
               <draggable
                 :group="group"
                 class="ex-form-draggable"
-                :list="baseFields"
+                :list="fieldsList"
                 item-key="id"
                 :sort="false"
                 :clone="handleClone"
@@ -52,7 +54,7 @@
               <draggable
                 :group="group"
                 class="ex-form-draggable"
-                :list="customs"
+                :list="customsList"
                 item-key="id"
                 :sort="false"
                 :clone="handleClone"
@@ -76,24 +78,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import { containers, baseFields, customs } from "@exercise-form/constants";
+import { optionsKeys, bannedWidegetKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 import ".././../style/index.scss";
 
 const props = defineProps(desPanelProps);
 
-const groupValue = ref("ZJ");
-const activeNames = ref(["1", "2", "3"]);
-const group = ref({
+const group = {
   name: "componentsGroup",
   pull: "clone",
   put: false
+};
+const optionsData = inject(optionsKeys);
+const bannedWidegets = inject(bannedWidegetKeys);
+const groupValue = ref("ZJ");
+const activeNames = ref(["1", "2", "3"]);
+const containerList = computed(() => {
+  let list = containers.filter((item) => item.iconName);
+  return list.filter((item) => !bannedWidegets?.value.includes(item.type));
 });
-const parentContainer = computed(() =>
-  containers.filter((item) => item.iconName)
+const fieldsList = computed(() =>
+  baseFields.filter((item) => !bannedWidegets?.value.includes(item.type))
 );
-
+const customsList = computed(() =>
+  customs.filter((item) => !bannedWidegets?.value.includes(item.type))
+);
 const handleClone = (target: any) => {
   return props.designer.cloneWidget(target);
 };

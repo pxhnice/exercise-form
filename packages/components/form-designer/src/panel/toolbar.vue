@@ -20,12 +20,16 @@
             <ex-svg-icon class="ex-icon-ft-20" name="advance" />
           </el-button>
         </div>
-        <el-radio-group v-model="formConfig.patternType" @change="onChange">
+        <el-radio-group v-model="formConfig.patternType">
           <el-radio-button label="pc">Pc</el-radio-button>
           <el-radio-button label="pad">Pad</el-radio-button>
           <el-radio-button label="h5">H5</el-radio-button>
         </el-radio-group>
-        <el-button @click="openWidgetTree" class="ex-mgl-10">
+        <el-button
+          v-if="optionsData?.treeFormButton"
+          @click="openWidgetTree"
+          class="ex-mgl-10"
+        >
           <div title="组件层次结构树">
             <ex-svg-icon class="ex-icon-ft-20" name="tree" />
           </div>
@@ -37,14 +41,29 @@
             <el-icon><Delete /></el-icon>
             清空
           </el-button>
-          <el-button @click="openPreview" link type="primary">
+          <el-button
+            v-if="optionsData?.previewFormButton"
+            @click="openPreview"
+            link
+            type="primary"
+          >
             <el-icon><View /></el-icon>
             预览
           </el-button>
-          <el-button @click="openJsonDialog" link type="primary">
+          <el-button
+            v-if="optionsData?.exportJsonButton"
+            @click="openJsonDialog"
+            link
+            type="primary"
+          >
             JSON导出
           </el-button>
-          <el-button @click="openSFCDialog" link type="primary">
+          <el-button
+            v-if="optionsData?.generateSFCButton"
+            @click="openSFCDialog"
+            link
+            type="primary"
+          >
             <el-icon><Coin /></el-icon>
             导出SFC
           </el-button>
@@ -73,8 +92,18 @@
       />
       <template #footer>
         <span>
-          <el-button type="primary">复制内容</el-button>
-          <el-button type="primary" @click="importJSON">保存为文件</el-button>
+          <el-button
+            v-if="optionsData?.copyDataButton"
+            type="primary"
+            v-copy="codeValue"
+            >复制内容</el-button
+          >
+          <el-button
+            v-if="optionsData?.saveFileButton"
+            type="primary"
+            @click="importJSON"
+            >保存为文件</el-button
+          >
           <el-button @click="cancelJSONDialog">取消</el-button>
         </span>
       </template>
@@ -93,7 +122,11 @@
           <el-input v-model="form.importName" />
         </el-form-item>
         <el-form-item>
-          <el-radio-group v-model="formConfig.isPageType" @change="changeRadio">
+          <el-radio-group
+            v-if="optionsData?.pageTypeButton"
+            v-model="formConfig.isPageType"
+            @change="changeRadio"
+          >
             <el-radio-button label="page">页面</el-radio-button>
             <el-radio-button label="dialog">弹框</el-radio-button>
           </el-radio-group>
@@ -107,8 +140,17 @@
       />
       <template #footer>
         <span>
-          <!-- <el-button type="primary" v-copy="codeValue">复制内容</el-button> -->
-          <el-button type="primary" @click="importSFC">
+          <el-button
+            v-if="optionsData?.copyDataButton"
+            type="primary"
+            v-copy="codeValue"
+            >复制内容</el-button
+          >
+          <el-button
+            v-if="optionsData?.saveFileButton"
+            type="primary"
+            @click="importSFC"
+          >
             保存为Vue3组件
           </el-button>
           <el-button @click="cancelSFCDialog">取消</el-button>
@@ -173,7 +215,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import FileSaver from "file-saver";
 import prettier from "prettier";
 import parserHtml from "prettier/plugins/html";
@@ -182,12 +224,14 @@ import parserBabel from "prettier/plugins/babel";
 import parserEstree from "prettier/plugins/estree";
 import { deepClone, getSFCGenerator } from "@exercise-form/utils";
 import { onMessageWarning } from "@exercise-form/utils";
+import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
+import { optionsKeys } from "../form-designer";
 import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 
-// const patternType = props.formConfig.patternType;
+const optionsData = inject(optionsKeys);
 const isShowJSON = ref(false);
 const isShowSFC = ref(false);
 const isShowRender = ref(false);
@@ -203,11 +247,6 @@ const defaultProps = {
 };
 const undoEnabled = computed(() => props.designer.undoEnabled());
 const redoEnabled = computed(() => props.designer.redoEnabled());
-
-const onChange = (value: string) => {
-  console.log(props.designer.con);
-  // props.designer.setPatternType(value);
-};
 
 const clear = () => {
   props.designer.clearAllWidget();

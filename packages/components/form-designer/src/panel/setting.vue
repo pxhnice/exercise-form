@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-radio-group v-model="groupValue" class="ex-radio-group">
-      <el-radio-button style="flex: 1" label="zj">组件设置</el-radio-button>
-      <el-radio-button style="flex: 1" label="bd">表单设置</el-radio-button>
+      <el-radio-button label="zj">组件设置</el-radio-button>
+      <el-radio-button label="bd">表单设置</el-radio-button>
     </el-radio-group>
     <div class="ex-widget-container">
       <div class="ex-widget-container-box">
@@ -11,9 +11,7 @@
             class="ex-setting-label"
             v-if="groupValue == 'bd'"
             :model="formConfig"
-            size="small"
-            label-width="130px"
-            label-position="left"
+            v-bind="formOptions"
           >
             <el-collapse v-model="activeNames">
               <el-collapse-item title="基本属性" name="1">
@@ -124,9 +122,7 @@
             class="ex-setting-label"
             ref="formComRef"
             :model="selectWidget"
-            size="small"
-            label-width="130px"
-            label-position="left"
+            v-bind="formOptions"
           >
             <el-collapse v-model="activeNames">
               <el-collapse-item title="基本属性" name="1">
@@ -229,6 +225,11 @@ import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 
+const formOptions = {
+  size: "small",
+  labelWidth: "130px",
+  labelPosition: "left"
+};
 const formConfig = props.formConfig;
 const formComRef = ref();
 const groupValue = ref("bd");

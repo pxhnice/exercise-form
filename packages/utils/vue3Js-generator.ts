@@ -94,7 +94,6 @@ export function genVue3JS(
   const handleSubmit = () => {
     if (!${formName}.value) return;
     ${formName}.value.validate((valid) => {
-      //提交表单
       if (valid) {
         console.log("submit!");
       } else {
@@ -106,11 +105,7 @@ export function genVue3JS(
     if (!${formName}.value) return;
     ${formName}.value.resetFields();
   }
-  ${
-    formConfig.isPageType === "dialog"
-      ? "// 暴露方法\n defineExpose({ open });"
-      : ""
-  }
+  ${formConfig.isPageType === "dialog" ? "defineExpose({ open });" : ""}
   `;
   return vue3JSTemplate;
 }

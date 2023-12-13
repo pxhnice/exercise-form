@@ -1,18 +1,18 @@
-import type { CSSProperties } from "vue";
-import { javascript } from "@codemirror/lang-javascript";
-import { html } from "@codemirror/lang-html";
-import { vue } from "@codemirror/lang-vue";
-import { json } from "@codemirror/lang-json";
-import { css } from "@codemirror/lang-css";
-import { definePropType } from "@exercise-form/utils";
+import { css } from '@codemirror/lang-css';
+import { html } from '@codemirror/lang-html';
+import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
+import { vue } from '@codemirror/lang-vue';
+import { definePropType } from '@exercise-form/utils';
 
+import type { CSSProperties } from "vue";
 export const codeEditorEmits = {
   "update:modelValue": (val: string) => val
 };
 
 const codeLangType = ["javascript", "html", "css", "json", "vue"] as const;
 
-export const codeEditoirProps = {
+export const codeEditorProps = {
   /**
    * @description  绑定值
    */

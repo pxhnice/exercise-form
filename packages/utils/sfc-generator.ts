@@ -1,4 +1,5 @@
-import { genVue3JS } from "./vue3Js-generator";
+import { genVue3JS } from './vue3Js-generator';
+
 import type {
   DesWidgetConfigType,
   DesWidgetListType,
@@ -409,7 +410,7 @@ function buildFormTemplate(
   </el-form> `;
 }
 
-function buildFieldTmplate(
+function buildFieldTemplate(
   widgetList: DesWidgetListType,
   formConfig: DesFormConfigType
 ) {
@@ -433,7 +434,7 @@ export function getSFCGenerator(
   formConfig: DesFormConfigType,
   widgetList: DesWidgetListType
 ) {
-  let html = buildFieldTmplate(widgetList, formConfig);
+  let html = buildFieldTemplate(widgetList, formConfig);
   let js = genVue3JS(formConfig, widgetList);
   let localStyle = "";
   let sfcTemplate = `

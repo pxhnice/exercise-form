@@ -17,11 +17,11 @@
 import { computed } from "vue";
 import { Codemirror } from "vue-codemirror";
 import "../style/index.scss";
-import { codeEditoirProps, codeEditorEmits, langs } from "./code-editor";
+import { codeEditorProps, codeEditorEmits, langs } from "./code-editor";
 
 defineOptions({ name: "ex-code-editor" });
 const emits = defineEmits(codeEditorEmits);
-const props = defineProps(codeEditoirProps);
+const props = defineProps(codeEditorProps);
 const extensions = [langs[props.lang]];
 
 const codeValue = computed({

@@ -1,14 +1,8 @@
-import { ExFormDesigner } from "@exercise-form/components/form-designer";
-import { ExFormRender } from "@exercise-form/components/form-render";
-import { ExCodeEditor } from "@exercise-form/components/code-editor";
-import { ExSvgIcon } from "@exercise-form/components/svg-icon";
-
-import {
-  desContainerInsalll,
-  desPropertyInsalll,
-  desFieldInsalll,
-  renContainerInsalll
-} from "@exercise-form/widget";
+import { ExCodeEditor } from '@exercise-form/components/code-editor';
+import { ExFormDesigner } from '@exercise-form/components/form-designer';
+import { ExFormRender } from '@exercise-form/components/form-render';
+import { ExSvgIcon } from '@exercise-form/components/svg-icon';
+import { desContainerInstall, desFieldInstall, desPropertyInstall, renContainerInstall } from '@exercise-form/widget';
 
 import type { Plugin } from "vue";
 
@@ -17,8 +11,8 @@ export default [
   ExFormRender,
   ExCodeEditor,
   ExSvgIcon,
-  desContainerInsalll.default,
-  desPropertyInsalll.default,
-  desFieldInsalll.default,
-  renContainerInsalll.default
+  desContainerInstall.default,
+  desPropertyInstall.default,
+  desFieldInstall.default,
+  renContainerInstall.default
 ] as Plugin[];

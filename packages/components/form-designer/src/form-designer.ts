@@ -1,7 +1,7 @@
-import type { DesFormConfigType } from "@exercise-form/constants";
-import { definePropType } from "@exercise-form/utils";
-import { InjectionKey, Ref } from "vue";
+import { definePropType } from '@exercise-form/utils';
+import { InjectionKey, Ref } from 'vue';
 
+import type { DesFormConfigType } from "@exercise-form/constants";
 export type DesOptionsDataType = {
   templateButton: boolean;
   previewFormButton: boolean;
@@ -17,7 +17,7 @@ export type DesOptionsDataType = {
 
 export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
 
-export const bannedWidegetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
+export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 
 /**
  * 1.自定义组件扩展{
@@ -75,7 +75,7 @@ export const formDesignerProps = {
   /**
    * @description 组件禁用列表
    */
-  bannedWidegets: {
+  bannedWidgets: {
     type: definePropType<Array<string>>(Array),
     default() {
       return [];
@@ -85,7 +85,7 @@ export const formDesignerProps = {
    * @description 自定义添加组件
    */
   customWidgets: {
-    tyep: Array,
+    type: Array,
     default() {
       return [];
     }

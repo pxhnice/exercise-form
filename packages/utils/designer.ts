@@ -1,19 +1,14 @@
-import { reactive, toRefs } from "vue";
-import {
-  containers,
-  baseFields,
-  customs,
-  DES_FORM_CONFIG,
-  DES_HISTORY
-} from "@exercise-form/constants";
+import { baseFields, containers, customs, DES_FORM_CONFIG, DES_HISTORY } from '@exercise-form/constants';
+import { reactive, toRefs } from 'vue';
+
+import { localStorageUtils } from './storege';
+import { deepClone, getUniqueId } from './util';
+
 import type {
   DesFormConfigType,
   DesWidgetConfigType,
   DesWidgetListType
 } from "@exercise-form/constants";
-import { deepClone, getUniqueId } from "./util";
-import { localStorageUtils } from "./storege";
-
 const desFormConfig = deepClone(DES_FORM_CONFIG);
 const desHistory = deepClone(DES_HISTORY);
 const widgetList: DesWidgetListType = []; //组件数据列表
@@ -55,7 +50,7 @@ export const createDesigner = () => {
       this.selectWidget.value = {} as DesWidgetConfigType;
     },
 
-    getContinerType(type: string) {
+    getContainerType(type: string) {
       let allWidgets = [...containers, ...baseFields, ...customs];
       let widgetData = {} as DesWidgetConfigType;
       allWidgets.forEach((widget: DesWidgetConfigType) => {
@@ -70,7 +65,7 @@ export const createDesigner = () => {
       newWidget.options.name = newWidget.id;
       if (newWidget.type == "grid") {
         for (let index = 0; index < 2; index++) {
-          let colWidget = deepClone(this.getContinerType("grid-col"));
+          let colWidget = deepClone(this.getContainerType("grid-col"));
           colWidget.id = colWidget.type + "_" + getUniqueId();
           colWidget.options.name = colWidget.id;
           newWidget.children.push(colWidget);
@@ -83,13 +78,13 @@ export const createDesigner = () => {
           options: {},
           children: []
         };
-        let newCol = deepClone(this.getContinerType("table-td"));
+        let newCol = deepClone(this.getContainerType("table-td"));
         newCol.id = newCol.type + "_" + getUniqueId();
         newCol.options.name = newCol.id;
         newRows.children?.push(newCol);
         newWidget.children?.push(newRows);
       } else if (newWidget.type == "tabs") {
-        let newTab = deepClone(this.getContinerType("tab-pane"));
+        let newTab = deepClone(this.getContainerType("tab-pane"));
         newTab.id = newTab.type + "_" + getUniqueId();
         newTab.options.name = "tab1";
         newWidget.children?.push(newTab);
@@ -103,12 +98,12 @@ export const createDesigner = () => {
 
     copyContainerWidget(widget: DesWidgetConfigType) {
       if (widget.type == "grid") {
-        let colWidget = deepClone(this.getContinerType("grid-col"));
+        let colWidget = deepClone(this.getContainerType("grid-col"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
         widget.children.push(colWidget);
       } else if (widget.type == "tabs") {
-        let newTab = deepClone(this.getContinerType("tab-pane"));
+        let newTab = deepClone(this.getContainerType("tab-pane"));
         newTab.id = newTab.type + "_" + getUniqueId();
         let len = widget.children.length + 1;
         newTab.options.name = "tab" + len;
@@ -171,7 +166,7 @@ export const createDesigner = () => {
 
     insertCell(parentList: DesWidgetListType, cell: number, type: string) {
       parentList.forEach((child) => {
-        let colWidget = deepClone(this.getContinerType("table-td"));
+        let colWidget = deepClone(this.getContainerType("table-td"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
         if (type == "left") {
@@ -193,7 +188,7 @@ export const createDesigner = () => {
         children: []
       };
       parentList[row].children?.forEach(() => {
-        let colWidget = deepClone(this.getContinerType("table-td"));
+        let colWidget = deepClone(this.getContainerType("table-td"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
         newRows.children?.push(colWidget);

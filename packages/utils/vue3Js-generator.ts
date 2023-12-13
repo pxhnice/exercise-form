@@ -1,4 +1,5 @@
-import { getRegExp, MODEL_TYPE_LIST } from "@exercise-form/constants";
+import { getRegExp, MODEL_TYPE_LIST } from '@exercise-form/constants';
+
 import type {
   DesWidgetConfigType,
   DesWidgetListType,
@@ -18,12 +19,12 @@ export function traverseFieldWidget(
   });
 }
 
-export function buildDefalutValueListFn(defaultValueList: [string]) {
+export function buildDefaultValueListFn(defaultValueList: [string]) {
   return function (widget: DesWidgetConfigType) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
-      let modelFefaultValue = widget.options.modelFefaultValue;
+      let modelDefaultValue = widget.options.modelDefaultValue;
       defaultValueList.push(
-        `${widget.id}:${modelFefaultValue ? `"${modelFefaultValue}"` : "null"},`
+        `${widget.id}:${modelDefaultValue ? `"${modelDefaultValue}"` : "null"},`
       );
     }
   };
@@ -70,7 +71,7 @@ export function genVue3JS(
   let optionsList: any = [];
   let { formName, modelName, rulesName } = formConfig;
   traverseFieldWidget(widgetList, (widget: DesWidgetConfigType) => {
-    buildDefalutValueListFn(defaultValueList)(widget);
+    buildDefaultValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
     buildOptionsItemListFn(optionsList)(widget);
   });

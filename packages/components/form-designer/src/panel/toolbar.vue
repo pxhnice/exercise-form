@@ -6,7 +6,7 @@
           <el-button
             :type="undoEnabled ? 'primary' : ''"
             :disabled="!undoEnabled"
-            @click="hanldeRetreat"
+            @click="handleRetreat"
             link
           >
             <ex-svg-icon class="ex-icon-ft-20" name="retreat" />
@@ -14,7 +14,7 @@
           <el-button
             :type="redoEnabled ? 'primary' : ''"
             :disabled="!redoEnabled"
-            @click="hanldeAdvance"
+            @click="handleAdvance"
             link
           >
             <ex-svg-icon class="ex-icon-ft-20" name="advance" />
@@ -161,7 +161,7 @@
       v-model="isShowRender"
       fullscreen
       title="预览"
-      @close="cancelRenderialog"
+      @close="cancelRenderDialog"
       destroy-on-close
       center
       :close-on-click-modal="false"
@@ -187,7 +187,7 @@
           <el-button @click="handleUndisable" type="primary">
             恢复编辑
           </el-button>
-          <el-button @click="cancelRenderialog">关闭</el-button>
+          <el-button @click="cancelRenderDialog">关闭</el-button>
         </div>
       </template>
     </el-dialog>
@@ -222,8 +222,7 @@ import parserHtml from "prettier/plugins/html";
 import parserCss from "prettier/plugins/postcss";
 import parserBabel from "prettier/plugins/babel";
 import parserEstree from "prettier/plugins/estree";
-import { deepClone, getSFCGenerator } from "@exercise-form/utils";
-import { onMessageWarning } from "@exercise-form/utils";
+import { deepClone, getSFCGenerator,onMessageWarning } from "@exercise-form/utils";
 import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
 import { optionsKeys } from "../form-designer";
@@ -256,11 +255,11 @@ const openWidgetTree = () => {
   drawer.value = true;
 };
 
-const hanldeAdvance = () => {
+const handleAdvance = () => {
   props.designer.redoHistoryStep();
 };
 
-const hanldeRetreat = () => {
+const handleRetreat = () => {
   props.designer.undoHistoryStep();
 };
 
@@ -353,7 +352,7 @@ const cancelSFCDialog = () => {
   isShowSFC.value = false;
 };
 
-const cancelRenderialog = () => {
+const cancelRenderDialog = () => {
   isShowRender.value = false;
 };
 

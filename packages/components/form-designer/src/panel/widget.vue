@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
 import { containers, baseFields, customs } from "@exercise-form/constants";
-import { optionsKeys, bannedWidegetKeys } from "../form-designer";
+import { optionsKeys, bannedWidgetKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 import ".././../style/index.scss";
 
@@ -92,18 +92,18 @@ const group = {
   put: false
 };
 const optionsData = inject(optionsKeys);
-const bannedWidegets = inject(bannedWidegetKeys);
+const bannedWidgets = inject(bannedWidgetKeys);
 const groupValue = ref("ZJ");
 const activeNames = ref(["1", "2", "3"]);
 const containerList = computed(() => {
   let list = containers.filter((item) => item.iconName);
-  return list.filter((item) => !bannedWidegets?.value.includes(item.type));
+  return list.filter((item) => !bannedWidgets?.value.includes(item.type));
 });
 const fieldsList = computed(() =>
-  baseFields.filter((item) => !bannedWidegets?.value.includes(item.type))
+  baseFields.filter((item) => !bannedWidgets?.value.includes(item.type))
 );
 const customsList = computed(() =>
-  customs.filter((item) => !bannedWidegets?.value.includes(item.type))
+  customs.filter((item) => !bannedWidgets?.value.includes(item.type))
 );
 const handleClone = (target: any) => {
   return props.designer.cloneWidget(target);

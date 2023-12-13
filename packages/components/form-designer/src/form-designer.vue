@@ -56,7 +56,7 @@ import {
   formDesignerEmits,
   formDesignerProps,
   optionsKeys,
-  bannedWidegetKeys
+  bannedWidgetKeys
 } from "./form-designer";
 import "../style/index.scss";
 
@@ -65,9 +65,9 @@ const emist = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
 
 const optionsData = ref(props.optionsData);
-const bannedWidegets = ref(props.bannedWidegets);
+const bannedWidgets = ref(props.bannedWidgets);
 provide(optionsKeys, optionsData);
-provide(bannedWidegetKeys, bannedWidegets);
+provide(bannedWidgetKeys, bannedWidgets);
 
 const designer = createDesigner();
 designer.initDesigner();

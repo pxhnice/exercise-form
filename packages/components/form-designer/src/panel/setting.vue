@@ -44,7 +44,7 @@
                 </el-form-item>
                 <el-form-item label="表单全局CSS">
                   <el-button
-                    @click="handelCsstCode('cssCode')"
+                    @click="handelCssCode('cssCode')"
                     type="primary"
                     icon="Edit"
                     round
@@ -64,7 +64,7 @@
                 </el-form-item>
                 <el-form-item label="表单全局函数">
                   <el-button
-                    @click="handelFunctiontCode('functions')"
+                    @click="handelFunctionCode('functions')"
                     type="primary"
                     icon="Edit"
                     round
@@ -291,14 +291,14 @@ const handelEventCode = (name: string) => {
   isShowEvent.value = true;
 };
 
-const handelFunctiontCode = (name: string) => {
+const handelFunctionCode = (name: string) => {
   code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局函数";
   isShowFunction.value = true;
 };
 
-const handelCsstCode = (name: string) => {
+const handelCssCode = (name: string) => {
   code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局样式";

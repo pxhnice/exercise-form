@@ -51,25 +51,23 @@ import { formRenderProps } from "./form-render";
 defineOptions({ name: "ex-form-render" });
 const props = defineProps(formRenderProps);
 
-console.log(props);
-
 const formRef = ref<FormInstance>();
 const formData = ref<{ [key: string]: any }>({});
 const originalData = ref<{ [key: string]: any }>({});
 const disabled = ref(false);
 
-const buildDefalutValueListFn = () => {
+const buildDefaultValueListFn = () => {
   return function (widget: any) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
-      let modelFefaultValue = widget.options.modelFefaultValue;
-      formData.value[widget.id] = modelFefaultValue ?? null;
+      let modelDefaultValue = widget.options.modelDefaultValue;
+      formData.value[widget.id] = modelDefaultValue ?? null;
     }
   };
 };
 
 const addFormName = () => {
   traverseFieldWidget(props.widgetList, (widget) => {
-    buildDefalutValueListFn()(widget);
+    buildDefaultValueListFn()(widget);
   });
   originalData.value = deepClone(formData.value);
 };

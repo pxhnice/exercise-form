@@ -7,7 +7,7 @@ import "element-plus/dist/index.css";
 import ExForm from "../../packages";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
-
+import "element-plus/theme-chalk/dark/css-vars.css";
 // import "exercise-form_dev/es/style.css";
 
 // const a = ExForm;

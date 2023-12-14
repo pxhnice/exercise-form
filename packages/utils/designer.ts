@@ -36,8 +36,9 @@ export const createDesigner = () => {
     ...toRefs(reactive(createTarget())),
     initDesigner() {
       console.log(
-        `%cExForm v:0.0.0-dev_1`,
-        `padding: 4px;color: #fff;background:#409EFF;border-radius: 3px 0 0 0px;`
+        `%cExForm %cv:0.0.0-dev_1 \nhttps://gitee.com/pxhgood/exercise-form.git`,
+        `color: #409EFF;font-size:20px;font-weight:bold`,
+        `color:#666`
       );
       this.initHistoryData();
     },
@@ -427,7 +428,6 @@ export const createDesigner = () => {
         desFormConfig: deepClone(this.desFormConfig.value)
       };
       this.saveFormContentToStorage();
-      console.log(this.desHistory);
     },
 
     undoHistoryStep() {

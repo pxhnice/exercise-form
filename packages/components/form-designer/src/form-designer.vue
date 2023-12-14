@@ -6,7 +6,7 @@
           class="ex-layout-child"
           :designer="designer"
           :widget-list="widgetList"
-          :form-config="formConfig"
+          :form-config="desFormConfig"
           :select-widget="selectWidget"
           :select-widget-id="selectWidgetId"
         />
@@ -17,7 +17,7 @@
             class="ex-layout-child"
             :designer="designer"
             :widget-list="widgetList"
-            :form-config="formConfig"
+            :form-config="desFormConfig"
             :select-widget="selectWidget"
             :select-widget-id="selectWidgetId"
           />
@@ -27,7 +27,7 @@
             class="ex-layout-child"
             :designer="designer"
             :widget-list="widgetList"
-            :form-config="formConfig"
+            :form-config="desFormConfig"
           />
         </el-main>
       </el-container>
@@ -36,7 +36,7 @@
           class="ex-layout-child"
           :designer="designer"
           :widget-list="widgetList"
-          :form-config="formConfig"
+          :form-config="desFormConfig"
           :select-widget="selectWidget"
           :select-widget-id="selectWidgetId"
         />
@@ -46,8 +46,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from "vue";
-import { createDesigner } from "@exercise-form/utils";
+import { ref, watch, provide } from "vue";
+import {
+  createDesigner,
+  traverseFieldWidget,
+  isArray,
+  isObject
+} from "@exercise-form/utils";
+import {
+  MODEL_TYPE_LIST,
+  DesWidgetConfigType,
+  DesWidgetListType
+} from "@exercise-form/constants";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";
@@ -61,26 +71,72 @@ import {
 import "../style/index.scss";
 
 defineOptions({ name: "ex-form-designer" });
-const emist = defineEmits(formDesignerEmits);
+const emits = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
 
+const formData = ref(props.formData);
+const formJson = ref(props.formJson);
 const optionsData = ref(props.optionsData);
 const bannedWidgets = ref(props.bannedWidgets);
-provide(optionsKeys, optionsData);
-provide(bannedWidgetKeys, bannedWidgets);
-
 const designer = createDesigner();
 designer.initDesigner();
 const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
 const selectWidgetId = designer.selectWidgetId;
-const formConfig = designer.desFormConfig;
-// const patternType = designer.patternType;
-console.log(props);
+const desFormConfig = designer.desFormConfig;
+
+const initData = () => {
+  if (isObject(props.formJson.formConfig)) {
+    desFormConfig.value = Object.assign(
+      desFormConfig.value,
+      props.formJson.formConfig
+    );
+  }
+  if (isArray(props.formJson.widgetList)) {
+    widgetList.value = props.formJson.widgetList;
+  }
+};
+
+const buildDefaultValueListFn = () => {
+  return function (widget: DesWidgetConfigType) {
+    if (MODEL_TYPE_LIST.includes(widget.type)) {
+      let { modelDefaultValue, name } = widget.options;
+      formData.value[name] = modelDefaultValue ?? null;
+    }
+  };
+};
+
+const getFormData = (val: DesWidgetListType) => {
+  //触发响应式清除空
+  for (const key in formData.value) {
+    delete formData.value[key];
+  }
+  traverseFieldWidget(val, (widget) => {
+    buildDefaultValueListFn()(widget);
+  });
+};
+
+initData();
+
+watch(
+  designer.widgetList,
+  (val) => {
+    formJson.value.widgetList = val;
+    getFormData(val);
+  },
+  { deep: true }
+);
+
+watch(desFormConfig.value, (val) => {
+  formJson.value.formConfig = val;
+});
+
+provide(optionsKeys, optionsData);
+provide(bannedWidgetKeys, bannedWidgets);
 
 defineExpose({
   widgetList,
   selectWidget,
-  formConfig
+  formJson
 });
 </script>

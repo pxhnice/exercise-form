@@ -1,7 +1,10 @@
-import { definePropType } from '@exercise-form/utils';
-import { InjectionKey, Ref } from 'vue';
+import { definePropType } from "@exercise-form/utils";
+import { InjectionKey, Ref } from "vue";
+import type {
+  DesFormConfigType,
+  DesWidgetListType
+} from "@exercise-form/constants";
 
-import type { DesFormConfigType } from "@exercise-form/constants";
 export type DesOptionsDataType = {
   templateButton: boolean;
   previewFormButton: boolean;
@@ -15,39 +18,34 @@ export type DesOptionsDataType = {
   resetFormJson: boolean;
 };
 
+type formJsonType = {
+  formConfig: DesFormConfigType;
+  widgetList: DesWidgetListType;
+};
+
 export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 
-/**
- * 1.自定义组件扩展{
- *
- * }
- *
- *
- *
- *
- */
-
 export const formDesignerEmits = {
-  change: (val: string) => val
+  change: (desData: formJsonType) => desData
 };
 
 export const formDesignerProps = {
   /**
-   * @description 表单配置项
+   * @description 表单数据
    */
   formData: {
-    type: definePropType<DesFormConfigType>(Object),
+    type: Object,
     default() {
       return {};
     }
   },
   /**
-   * @description 数据
+   * @description 构建数据
    */
   formJson: {
-    type: Object,
+    type: definePropType<formJsonType>(Object),
     default() {
       return {};
     }
@@ -82,7 +80,7 @@ export const formDesignerProps = {
     }
   },
   /**
-   * @description 自定义添加组件
+   * @description 自定义添加组件[cname]
    */
   customWidgets: {
     type: Array,

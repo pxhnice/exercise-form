@@ -3,7 +3,7 @@
     <el-form-item label="默认值">
       <component
         :is="`el-${settingData.type}`"
-        v-model="optionsModel.modelFefaultValue"
+        v-model="optionsModel.modelDefaultValue"
         :type="optionsModel.type"
         :multiple="optionsModel.multiple"
         :format="optionsModel.format"

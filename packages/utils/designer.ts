@@ -1,8 +1,14 @@
-import { baseFields, containers, customs, DES_FORM_CONFIG, DES_HISTORY } from '@exercise-form/constants';
-import { reactive, toRefs } from 'vue';
+import {
+  baseFields,
+  containers,
+  customs,
+  DES_FORM_CONFIG,
+  DES_HISTORY
+} from "@exercise-form/constants";
+import { reactive, toRefs } from "vue";
 
-import { localStorageUtils } from './storege';
-import { deepClone, getUniqueId } from './util';
+import { localStorageUtils } from "./storage";
+import { deepClone, getUniqueId } from "./util";
 
 import type {
   DesFormConfigType,
@@ -15,7 +21,7 @@ const widgetList: DesWidgetListType = []; //组件数据列表
 const selectWidgetId = ""; //当前选中ID
 const selectWidget = {} as DesWidgetConfigType; //当前选中表单组件
 
-const creatTarget = () => {
+const createTarget = () => {
   return {
     desFormConfig,
     desHistory,
@@ -27,7 +33,7 @@ const creatTarget = () => {
 
 export const createDesigner = () => {
   return {
-    ...toRefs(reactive(creatTarget())),
+    ...toRefs(reactive(createTarget())),
     initDesigner() {
       console.log(
         `%cExForm v:0.0.0-dev_1`,

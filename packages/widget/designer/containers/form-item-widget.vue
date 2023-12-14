@@ -42,7 +42,7 @@ const props = defineProps(desContainerProps);
 const fieldValue: any = ref(null);
 
 watch(
-  () => props.widgetData.options?.modelFefaultValue,
+  () => props.widgetData.options?.modelDefaultValue,
   (val) => {
     fieldValue.value = val;
   },

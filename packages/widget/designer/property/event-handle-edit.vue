@@ -13,7 +13,7 @@
       destroy-on-close
       :close-on-click-modal="false"
     >
-      <div class="box">
+      <div class="ex-dialog-box">
         <div class="name-front">{{ firstName }}</div>
         <ex-code-editor v-model="code" />
         <div class="name-back">{{ lastName }}</div>
@@ -72,23 +72,3 @@ const cancel = () => {
   isShowEvent.value = false;
 };
 </script>
-
-<style lang="scss" scoped>
-.box {
-  .name-front,
-  .name-back {
-    padding: 10px;
-    background-color: #f4f4f5;
-    outline: 1px solid #ddd;
-  }
-  .name-front {
-    border-radius: 5px 5px 0px 0px;
-    .lang {
-      font-weight: bold;
-    }
-  }
-  .name-back {
-    border-radius: 0px 0px 5px 5px;
-  }
-}
-</style>

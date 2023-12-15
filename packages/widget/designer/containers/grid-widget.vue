@@ -7,7 +7,7 @@
     :designer="designer"
   >
     <el-row
-      class="ex-drag-row"
+      class="ex-widget-grid_row"
       v-bind="widgetData.options"
       @click.stop="onClickRow"
     >
@@ -33,13 +33,3 @@ const onClickRow = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-row {
-  display: -webkit-box;
-  border: 1px dashed var(--el-color-primary);
-  margin: 0px !important;
-  padding: 3px;
-  box-sizing: border-box;
-}
-</style>

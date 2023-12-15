@@ -35,19 +35,3 @@ import { renContainerProps } from "./container";
 
 defineProps(renContainerProps);
 </script>
-
-<style lang="scss" scoped>
-table {
-  width: 100%;
-  min-height: 40px;
-  border-collapse: collapse;
-}
-th,
-td {
-  border: 1px solid;
-  border-color: var(--el-border-color);
-}
-td {
-  height: 40px;
-}
-</style>

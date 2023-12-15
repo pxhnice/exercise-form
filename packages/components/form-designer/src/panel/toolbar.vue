@@ -222,11 +222,14 @@ import parserHtml from "prettier/plugins/html";
 import parserCss from "prettier/plugins/postcss";
 import parserBabel from "prettier/plugins/babel";
 import parserEstree from "prettier/plugins/estree";
-import { deepClone, getSFCGenerator,onMessageWarning } from "@exercise-form/utils";
+import {
+  deepClone,
+  getSFCGenerator,
+  onMessageWarning
+} from "@exercise-form/utils";
 import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
 import { optionsKeys } from "../form-designer";
-import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 

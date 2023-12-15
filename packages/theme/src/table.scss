@@ -1,0 +1,59 @@
+.ex-widget-table {
+  table-layout: fixed;
+  width: 100%;
+  border: 1px dashed var(--el-color-primary);
+  margin: 3px 0 !important;
+  padding: 2px;
+  min-height: 60px !important;
+  box-sizing: border-box;
+}
+
+.ex-widget-td {
+  position: relative;
+  height: 40px;
+  border: 1px dashed var(--el-color-primary);
+  margin: 0 !important;
+  padding: 4px;
+  word-break: break-all;
+  box-sizing: border-box;
+}
+
+.ex-widget-td_content {
+  margin: 3px 0;
+}
+
+.ex-widget-td_buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+
+  .el-divider--horizontal {
+    margin: 5px 0;
+  }
+
+  .el-button {
+    display: block;
+    margin: 2px 0;
+    text-align: left;
+  }
+
+  .btn {
+    display: inline-block;
+    text-align: left;
+    font-size: 13px;
+    margin: 0;
+    padding: 5px;
+  }
+
+  .btn:hover {
+    color: var(--el-color-primary);
+  }
+
+  .mgr {
+    margin: 5px 0;
+  }
+}
+
+.ex-is-drag {
+  border: 2px solid var(--el-color-primary);
+}

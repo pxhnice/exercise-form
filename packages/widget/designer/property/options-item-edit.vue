@@ -1,22 +1,22 @@
 <template>
-  <div>
+  <div class="ex-property-options">
     <el-divider> 选项设置 </el-divider>
     <el-form-item label-width="0">
       <draggable
         tag="ul"
-        class="row"
+        class="options-row"
         :list="optionsItem"
         handle=".pane-mover"
         item-key="id"
       >
         <template #item="{ element, index }">
-          <li class="col">
-            <el-input class="put" v-model="element.value" />
-            <el-input class="put" v-model="element.label" />
-            <ex-svg-icon class="ft-20 pane-mover ft" name="drag" />
+          <li class="options-col">
+            <el-input class="options-put" v-model="element.value" />
+            <el-input class="options-put" v-model="element.label" />
+            <ex-svg-icon class="ex-property_ft22 pane-mover" name="drag" />
             <el-button
               @click="handelDel(index)"
-              class="btn"
+              class="options-btn"
               icon="Minus"
               type="danger"
               plain
@@ -25,7 +25,7 @@
           </li>
         </template>
       </draggable>
-      <el-button @click="handelAdd" class="btn" type="primary" link>
+      <el-button @click="handelAdd" class="options-btn" type="primary" link>
         添加选项
       </el-button>
     </el-form-item>
@@ -58,28 +58,3 @@ const handelDel = (index: number) => {
   optionsItem.value.splice(index, 1);
 };
 </script>
-
-<style lang="scss" scoped>
-.row {
-  padding: 0px;
-  margin-bottom: 10px;
-  .col {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    text-decoration: none;
-    margin-bottom: 10px;
-    .put {
-      width: 85px;
-    }
-    .put,
-    .btn {
-      margin-left: 5px;
-    }
-    .ft {
-      font-size: 22px;
-      cursor: move;
-    }
-  }
-}
-</style>

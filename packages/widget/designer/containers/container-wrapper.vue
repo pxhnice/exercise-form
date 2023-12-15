@@ -1,7 +1,11 @@
 <template>
-  <div class="ex-form-operation">
+  <div style="position: relative" class="ex-widget-operation">
     <div v-if="isSelect" title="手动拖拽" class="ex-title drag-mover">
-      <ex-svg-icon class="ex-ft" name="widget-drag" />
+      <ex-svg-icon
+        style="font-size: 14px"
+        class="ex-mgr-10"
+        name="widget-drag"
+      />
       <span class="ex-title-name">{{ widgetData.name }}</span>
     </div>
     <div :class="{ 'ex-is-container-drag': isSelect }">
@@ -11,39 +15,51 @@
       <div title="选中父组件">
         <ex-svg-icon
           @click.stop="handleParentChecked"
-          class="ex-ft"
+          class="ex-icon-ft-16 ex-mgr-10"
           name="arrow-left"
         />
       </div>
       <div v-if="widgetSub != 0" title="上移">
-        <ex-svg-icon @click.stop="handleMoveUp" class="ex-ft" name="move-up" />
+        <ex-svg-icon
+          @click.stop="handleMoveUp"
+          class="ex-icon-ft-16 ex-mgr-10"
+          name="move-up"
+        />
       </div>
       <div v-if="widgetSub < parentList.length - 1" title="下移">
         <ex-svg-icon
           @click.stop="handleMoveDown"
-          class="ex-ft"
+          class="ex-icon-ft-16 ex-mgr-10"
           name="shift-down"
         />
       </div>
       <div v-if="widgetData.type === 'table'" title="插入新行">
         <ex-svg-icon
           @click.stop="insertNewRow"
-          class="ex-ft"
+          class="ex-icon-ft-16 ex-mgr-10"
           name="insert-rows"
         />
       </div>
       <div v-if="widgetData.type === 'table'" title="插入新列">
         <ex-svg-icon
           @click.stop="insertNewCol"
-          class="ex-ft"
+          class="ex-icon-ft-16 ex-mgr-10"
           name="insert-column"
         />
       </div>
       <div title="复制">
-        <ex-svg-icon @click.stop="hanldleCopy" class="ex-ft" name="copy" />
+        <ex-svg-icon
+          @click.stop="handleCopy"
+          class="ex-icon-ft-16 ex-mgr-10"
+          name="copy"
+        />
       </div>
       <div title="删除">
-        <ex-svg-icon @click.stop="handleDel" class="ex-ft" name="delete" />
+        <ex-svg-icon
+          @click.stop="handleDel"
+          class="ex-icon-ft-16"
+          name="delete"
+        />
       </div>
     </div>
   </div>
@@ -71,7 +87,7 @@ const handleMoveDown = () => {
   props.designer.moveDownWidget(props.parentList, props.widgetSub);
 };
 
-const hanldleCopy = () => {
+const handleCopy = () => {
   props.designer.copyWidget(props.parentList, props.widgetData);
 };
 
@@ -91,60 +107,3 @@ const insertNewRow = () => {
   props.designer.insertRow(parentList, row - 1, "down");
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-form-operation {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  .ex-title,
-  .ex-operation-row {
-    position: absolute;
-    padding: 2px 5px;
-    color: #fff;
-  }
-  .ex-title {
-    top: 0;
-    left: 0;
-    cursor: move;
-    z-index: 11;
-  }
-  .ex-title::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: var(--el-color-primary);
-    opacity: 0.8;
-    z-index: -1;
-  }
-  .ex-operation-row {
-    display: flex;
-    right: 0;
-    bottom: 0;
-    align-items: center;
-    background-color: var(--el-color-primary);
-  }
-  .ex-ft {
-    font-size: 16px;
-    margin: 0 5px;
-  }
-  .ex-title-name {
-    font-size: 14px;
-  }
-}
-.ex-is-container-drag {
-  position: relative;
-}
-.ex-is-container-drag::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  width: 100%;
-  height: 100%;
-  border: 2px solid var(--el-color-primary) !important;
-}
-</style>

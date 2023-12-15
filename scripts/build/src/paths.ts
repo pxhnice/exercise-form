@@ -6,6 +6,7 @@ export const buildPath = resolve(proPath, "scripts", "build");
 export const componentPath = resolve(pkgPath, "components");
 export const exPath = resolve(pkgPath, "exercise-form");
 export const utilPath = resolve(pkgPath, "utils");
+export const themePath = resolve(pkgPath, "theme");
 
 export const compPackage = resolve(componentPath, "package.json");
 export const exPackage = resolve(exPath, "package.json");

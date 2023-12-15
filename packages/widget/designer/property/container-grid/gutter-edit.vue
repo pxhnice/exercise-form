@@ -10,22 +10,22 @@
     </el-form-item>
     <el-form-item label="当前栅格列" />
     <el-form-item label-width="0">
-      <ul class="row">
+      <ul class="ex-property-row">
         <li
-          class="col"
+          class="ex-property-col ex-mgb-10"
           v-for="(col, index) in settingData.children"
           :key="col.id"
         >
-          <span class="col-title">栅格宽度{{ index + 1 }}</span>
+          <span class="ex-property-col_title">栅格宽度{{ index + 1 }}</span>
           <el-input-number
-            class="put"
+            class="ex-property-col_put"
             v-model="col.options.span"
             :min="1"
             :max="24"
           />
           <el-button
             @click="handelDel(index)"
-            class="btn"
+            class="ex-mgl-10"
             icon="Minus"
             type="danger"
             plain
@@ -33,13 +33,7 @@
           />
         </li>
       </ul>
-      <el-button
-        style="padding: 0px"
-        @click="handelAdd"
-        class="btn"
-        type="primary"
-        link
-      >
+      <el-button style="padding: 0px" @click="handelAdd" type="primary" link>
         添加栅格列
       </el-button>
     </el-form-item>
@@ -59,25 +53,3 @@ const handelDel = (index: number) => {
   // props.optionsModel.children.splice(index, 1);
 };
 </script>
-
-<style lang="scss" scoped>
-.row {
-  padding: 0px;
-  .col {
-    list-style: none;
-    text-decoration: none;
-    margin-bottom: 5px;
-    .col-title {
-      display: inline-block;
-      width: 130px;
-      font-size: 13px;
-    }
-    .put {
-      width: 100px;
-    }
-    .btn {
-      margin-left: 10px;
-    }
-  }
-}
-</style>

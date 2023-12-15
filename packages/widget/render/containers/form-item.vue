@@ -1,7 +1,7 @@
 <template>
   <el-form-item
     v-if="!isWidget(widgetData.type)"
-    class="ex-item"
+    class="ex-widget-form_item"
     :label="widgetData.options.label"
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
@@ -34,12 +34,3 @@ const isWidget = (type: any) => {
   return CUSTOM_DATA.includes(type);
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-item {
-  padding: 1px;
-}
-:deep(.el-form-item__content) {
-  padding: 2px;
-}
-</style>

@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Codemirror } from "vue-codemirror";
-import "../style/index.scss";
 import { codeEditorProps, codeEditorEmits, langs } from "./code-editor";
 
 defineOptions({ name: "ex-code-editor" });

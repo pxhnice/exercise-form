@@ -7,16 +7,12 @@
     :designer="designer"
   >
     <table
-      class="ex-drag-table"
+      class="ex-widget-table"
       v-bind="widgetData.options"
       @click.stop="onClickRow"
     >
       <tbody>
-        <tr
-          class="ex-drag-tr"
-          v-for="(row, rowIndex) in widgetData.children"
-          :key="row.id"
-        >
+        <tr v-for="(row, rowIndex) in widgetData.children" :key="row.id">
           <template v-for="(cell, index) in row.children" :key="cell.id">
             <table-td-widget
               v-if="cell.merged"
@@ -46,14 +42,3 @@ const onClickRow = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-table {
-  table-layout: fixed;
-  width: 100%;
-  border: 1px dashed var(--el-color-primary);
-  margin: 3px 0 !important;
-  padding: 2px;
-  min-height: 60px !important;
-}
-</style>

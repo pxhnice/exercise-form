@@ -1,6 +1,6 @@
 <template>
   <td
-    class="ex-drag-td"
+    class="ex-widget-td"
     :class="{ 'ex-is-drag': isSelect }"
     v-bind="widgetData.options"
     @click.stop="onClickCol"
@@ -16,7 +16,7 @@
       @add="onDragAdd($event, widgetData)"
     >
       <template #item="{ element, index }">
-        <div class="ex-drag-container">
+        <div class="ex-widget-td_content">
           <template v-if="element.category === 'container'">
             <component
               :is="`${element.type}-widget`"
@@ -41,38 +41,36 @@
         </div>
       </template>
     </draggable>
-    <div v-if="isSelect" class="ex-form-operation">
-      <div class="title">{{ widgetData.name }}</div>
-      <div class="operation-row">
+    <div v-if="isSelect">
+      <div class="ex-title">{{ widgetData.name }}</div>
+      <div class="ex-operation-row">
         <div title="选中父组件">
           <ex-svg-icon
             @click.stop="handleParentChecked"
-            class="ex-ft"
+            style="font-size: 14px"
+            class="ex-mgr-10"
             name="arrow-left"
           />
         </div>
         <div title="单元格操作">
           <el-tooltip effect="light" placement="bottom" trigger="click">
-            <ex-svg-icon @click.stop class="ex-ft" name="all" />
+            <ex-svg-icon @click.stop class="ex-icon-ft-16" name="all" />
             <template #content>
-              <div class="td-btns">
-                <el-button link class="btn" @click.stop="insertLeftCol">
+              <div class="ex-widget-td_buttons">
+                <el-button link @click.stop="insertLeftCol">
                   插入左列
                 </el-button>
-                <el-button link class="btn" @click.stop="insertRightCol">
+                <el-button link @click.stop="insertRightCol">
                   插入右列
                 </el-button>
-                <el-button link class="btn" @click.stop="insertUpRow">
-                  插入上行
-                </el-button>
-                <el-button link class="btn" @click.stop="insertDownRow">
+                <el-button link @click.stop="insertUpRow"> 插入上行 </el-button>
+                <el-button link @click.stop="insertDownRow">
                   插入下行
                 </el-button>
-                <el-divider class="mgr" />
+                <el-divider />
                 <el-button
                   link
                   :disabled="isMergeLeft"
-                  class="btn"
                   @click.stop="mergeLeftCell"
                 >
                   合并左侧单元格
@@ -80,76 +78,47 @@
                 <el-button
                   link
                   :disabled="isMergeRight"
-                  class="btn"
                   @click.stop="mergeRightCell"
                 >
                   合并右侧单元格
                 </el-button>
-                <el-button
-                  link
-                  :disabled="isMergeCol"
-                  class="btn"
-                  @click.stop="mergeRow"
-                >
+                <el-button link :disabled="isMergeCol" @click.stop="mergeRow">
                   合并整行
                 </el-button>
-                <el-divider class="mgr" />
-                <el-button
-                  link
-                  :disabled="isUpMerge"
-                  class="btn"
-                  @click.stop="mergeUpCell"
-                >
+                <el-divider />
+                <el-button link :disabled="isUpMerge" @click.stop="mergeUpCell">
                   合并上单元格
                 </el-button>
                 <el-button
                   link
                   :disabled="isDownMerge"
-                  class="btn"
                   @click.stop="mergeDownCell"
                 >
                   合并下单元格
                 </el-button>
-                <el-button
-                  link
-                  :disabled="isMergeRow"
-                  class="btn"
-                  @click.stop="mergeCol"
-                >
+                <el-button link :disabled="isMergeRow" @click.stop="mergeCol">
                   合并整列
                 </el-button>
-                <el-divider class="mgr" />
+                <el-divider />
                 <el-button
                   link
-                  :disabled="isBackoutRow"
-                  class="btn"
+                  :disabled="isRevocationRow"
                   @click.stop="revocationMerge"
                 >
                   撤销列合并
                 </el-button>
                 <el-button
                   link
-                  :disabled="isBackoutCol"
-                  class="btn"
+                  :disabled="isRevocationCol"
                   @click.stop="revocationMerge"
                 >
                   撤销行合并
                 </el-button>
-                <el-divider class="mgr" />
-                <el-button
-                  link
-                  :disabled="isMergeRow"
-                  class="btn"
-                  @click.stop="delCol"
-                >
+                <el-divider />
+                <el-button link :disabled="isMergeRow" @click.stop="delCol">
                   删除整列
                 </el-button>
-                <el-button
-                  link
-                  :disabled="isMergeCol"
-                  class="btn"
-                  @click.stop="delRow"
-                >
+                <el-button link :disabled="isMergeCol" @click.stop="delRow">
                   删除整行
                 </el-button>
               </div>
@@ -236,12 +205,12 @@ const isMergeCol = computed(() => {
   );
 });
 
-const isBackoutRow = computed(() => {
+const isRevocationRow = computed(() => {
   let { rowspan } = props.widgetData.options;
   return rowspan == 1;
 });
 
-const isBackoutCol = computed(() => {
+const isRevocationCol = computed(() => {
   let { colspan } = props.widgetData.options;
   return colspan == 1;
 });
@@ -322,88 +291,3 @@ const delCol = () => {
   props.designer.deleteEntireCol(props.parentList, props.widgetRow);
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-td {
-  position: relative;
-  border: 1px dashed var(--el-color-primary);
-  margin: 0px !important;
-  padding: 2px;
-  word-break: break-all;
-  height: 40px;
-}
-
-.ex-drag-container {
-  margin: 3px 0;
-}
-
-.ex-form-operation {
-  // width: 100%;
-  // height: 100%;
-  .title,
-  .operation-row {
-    position: absolute;
-    padding: 5px;
-    color: #fff;
-  }
-
-  .title {
-    top: 0;
-    left: 0;
-    // cursor: move;
-    z-index: 1;
-  }
-
-  .title::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: var(--el-color-primary);
-    opacity: 0.8;
-    z-index: -1;
-  }
-
-  .operation-row {
-    display: flex;
-    right: 0;
-    bottom: 0;
-    align-items: center;
-    background-color: var(--el-color-primary);
-  }
-
-  .ex-ft {
-    font-size: 16px;
-    margin: 0 2px;
-    color: #fff;
-  }
-}
-
-.td-btns {
-  display: flex;
-  flex-direction: column;
-  padding: 0 10px;
-
-  .btn {
-    display: inline-block;
-    text-align: left;
-    font-size: 13px;
-    margin: 0px;
-    padding: 5px;
-  }
-
-  .btn:hover {
-    color: var(--el-color-primary);
-  }
-
-  .mgr {
-    margin: 5px 0;
-  }
-}
-
-.ex-is-drag {
-  border: 2px solid var(--el-color-primary);
-}
-</style>

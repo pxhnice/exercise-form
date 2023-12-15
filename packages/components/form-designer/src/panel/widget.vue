@@ -82,7 +82,6 @@ import { ref, computed, inject } from "vue";
 import { containers, baseFields, customs } from "@exercise-form/constants";
 import { optionsKeys, bannedWidgetKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
-import ".././../style/index.scss";
 
 const props = defineProps(desPanelProps);
 

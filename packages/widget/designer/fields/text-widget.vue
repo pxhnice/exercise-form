@@ -1,5 +1,5 @@
 <template>
-  <div class="text">
+  <div class="ex-fields_text">
     <el-text
       v-bind="widgetData.options"
       :style="{ fontSize: widgetData.options.fontSize }"
@@ -14,9 +14,3 @@ import { desFieldsProps } from "./fields";
 
 defineProps(desFieldsProps);
 </script>
-
-<style lang="scss" scoped>
-.text {
-  min-height: 30px;
-}
-</style>

@@ -10,7 +10,7 @@
             'ex-box-h5': formConfig.patternType == 'h5'
           }"
         >
-          <el-form style="width: 100%; height: 100%" v-bind="formConfig">
+          <el-form class="ex-designer-forms" v-bind="formConfig">
             <draggable
               group="componentsGroup"
               class="container-draggable"
@@ -58,7 +58,6 @@
 
 <script setup lang="ts">
 import { desFormsProps } from "./forms";
-import "../../style/index.scss";
 const props = defineProps(desFormsProps);
 
 const onDragAdd = (e: any, widgetList: Array<any>) => {

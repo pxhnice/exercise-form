@@ -31,5 +31,3 @@ const initOptions = () => {
 
 initOptions();
 </script>
-
-<style scoped></style>

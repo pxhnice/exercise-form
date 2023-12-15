@@ -35,9 +35,3 @@ const props = defineProps(desFieldsProps);
 const fieldValue: any = ref([]);
 const optionsItem = ref(props.widgetData.options.optionsItem);
 </script>
-
-<style lang="scss" scoped>
-label {
-  font-weight: 400;
-}
-</style>

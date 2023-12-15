@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ex-property-cascader">
     <el-form-item label="级联选项设置">
       <el-button @click="visible = true" type="primary" icon="Edit" round>
         选项设置
@@ -19,12 +19,15 @@
           draggable
         >
           <template #default="{ node, data }">
-            <div class="col">
-              <el-input class="put" v-model="data.value" />
-              <el-input class="put" v-model="data.label" />
+            <div class="ex-property-col">
+              <el-input class="ex-property-col_put" v-model="data.value" />
+              <el-input
+                class="ex-property-col_put ex-mgl-10"
+                v-model="data.label"
+              />
               <el-button
                 @click.stop="handelAddChild(node)"
-                class="btn"
+                class="ex-mgl-10"
                 icon="Plus"
                 type="primary"
                 plain
@@ -32,7 +35,7 @@
               />
               <el-button
                 @click.stop="handelDel(node, data)"
-                class="btn"
+                class="ex-mgl-10"
                 icon="Minus"
                 type="danger"
                 plain
@@ -133,25 +136,3 @@ const confirm = () => {
   isImport.value = false;
 };
 </script>
-
-<style lang="scss" scoped>
-:deep(.el-tree-node__content) {
-  height: auto;
-  padding: 3px 0;
-}
-.col {
-  display: flex;
-  align-items: center;
-  .put {
-    width: 100px;
-  }
-  .put,
-  .btn {
-    margin-left: 5px;
-  }
-  .ft {
-    font-size: 22px;
-    cursor: move;
-  }
-}
-</style>

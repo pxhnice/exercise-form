@@ -1,15 +1,15 @@
 <template>
   <el-card
-    class="ex-drag-card"
+    class="ex-widget-card"
     :style="{ width: widgetData.options.cardWidth }"
     v-bind="widgetData.options"
   >
     <template #header>
-      <div class="ex-card-header">
+      <div class="ex-widget-card_header">
         <span>{{ widgetData.options.label }}</span>
       </div>
     </template>
-    <div class="ex-card-body">
+    <div class="ex-widget-card_body">
       <template v-for="item in widgetData.children" :key="item.id">
         <template v-if="item.category === 'container'">
           <component
@@ -38,23 +38,3 @@ import { renContainerProps } from "./container";
 
 defineProps(renContainerProps);
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-card {
-  padding: 2px;
-  margin: 3px 0;
-}
-
-.ex-card-body {
-  width: 100%;
-  min-height: 20px;
-}
-
-.ex-card-header {
-  padding: 10px;
-  text-align: left;
-}
-:deep(.el-card__header) {
-  padding: 0px;
-}
-</style>

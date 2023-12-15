@@ -68,7 +68,6 @@ import {
   optionsKeys,
   bannedWidgetKeys
 } from "./form-designer";
-import "../style/index.scss";
 
 defineOptions({ name: "ex-form-designer" });
 const emits = defineEmits(formDesignerEmits);

@@ -1,0 +1,22 @@
+.ex-widget-grid_row {
+  display: -webkit-box;
+  border: 1px dashed var(--el-color-primary);
+  margin: 0 !important;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.ex-widget-grid_col {
+  display: grid;
+  position: relative;
+  border: 1px dashed var(--el-color-primary);
+  margin: 0 !important;
+  min-height: 40px !important;
+  padding: 2px 4px !important;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.ex-widget-container {
+  margin: 3px 0;
+}

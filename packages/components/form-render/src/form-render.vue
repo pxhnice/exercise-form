@@ -12,6 +12,7 @@
         >
           <el-form
             ref="formRef"
+            class="ex-render-form"
             style="width: 100%; height: 100%"
             :model="formData"
             v-bind="formConfig"

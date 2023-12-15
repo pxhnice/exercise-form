@@ -8,7 +8,7 @@
   >
     <el-tabs
       v-model="activate"
-      class="ex-drag-tabs"
+      class="ex-widget-tabs"
       v-bind="widgetData.options"
       @click.stop="onClickTabs"
     >
@@ -30,7 +30,7 @@
             @add="onDragAdd($event, tab)"
           >
             <template #item="{ element, index }">
-              <div class="ex-drag-container">
+              <div class="ex-widget-container">
                 <template v-if="element.category === 'container'">
                   <component
                     :is="`${element.type}-widget`"
@@ -92,14 +92,3 @@ const onDragAdd = (e: any, parent: any) => {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-tabs {
-  padding: 2px;
-  margin: 3px 0;
-}
-.ex-drag-tab-pane {
-  width: 100%;
-  min-height: 40px;
-}
-</style>

@@ -7,18 +7,18 @@
     :designer="designer"
   >
     <el-card
-      class="ex-drag-card"
+      class="ex-widget-card"
       :style="{ width: widgetData.options.cardWidth }"
       v-bind="widgetData.options"
       @click.stop="onClickTabs"
     >
       <template #header>
-        <div class="ex-card-header">
+        <div class="ex-widget-card_header">
           <span>{{ widgetData.options.label }}</span>
         </div>
       </template>
       <div style="display: flex">
-        <div class="ex-card-body">
+        <div class="ex-widget-card_body">
           <draggable
             group="componentsGroup"
             ghost-class="ex-ghost"
@@ -78,24 +78,3 @@ const onDragAdd = (e: any, parent: any) => {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-card {
-  padding: 2px;
-  margin: 3px 0;
-  box-sizing: border-box;
-}
-
-.ex-card-body {
-  width: 100%;
-  min-height: 20px;
-}
-
-.ex-card-header {
-  padding: 10px;
-  text-align: left;
-}
-:deep(.el-card__header) {
-  padding: 0px;
-}
-</style>

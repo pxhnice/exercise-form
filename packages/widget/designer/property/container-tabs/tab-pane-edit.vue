@@ -64,24 +64,3 @@ const handelDel = (index: number) => {
   children.value.splice(index, 1);
 };
 </script>
-
-<style lang="scss" scoped>
-.row {
-  padding: 0px;
-  margin-bottom: 10px;
-  .col {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    text-decoration: none;
-    .put,
-    .btn {
-      margin-left: 10px;
-    }
-    .ft {
-      font-size: 32px;
-      cursor: move;
-    }
-  }
-}
-</style>

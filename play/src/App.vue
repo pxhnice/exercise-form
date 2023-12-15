@@ -1,14 +1,5 @@
 <template>
-  <!-- <div>启动测试</div> -->
-  <!-- <ex-svg-icon name="copy"></ex-svg-icon> -->
-  <div>{{ formData }}</div>
-  <div>{{ formJson }}</div>
-  <ex-form-designer
-    style="width: 100%; height: 800px"
-    :form-data="formData"
-    :form-json="formJson"
-  ></ex-form-designer>
-  <!-- <ex-code-editor :height="500" lang="html"></ex-code-editor> -->
+  <ex-form-designer :form-data="formData" :form-json="formJson" />
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
@@ -19,7 +10,7 @@ const formJson = reactive({
     size: "default",
     labelPosition: "left",
     align: "left",
-    labelWidth: 120,
+    labelWidth: 90,
     modelName: "formData",
     formName: "formRef",
     rulesName: "rules",

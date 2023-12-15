@@ -221,7 +221,6 @@
 import { ref, computed, watch } from "vue";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
 import { desPanelProps } from "./panel";
-import "../../style/index.scss";
 
 const props = defineProps(desPanelProps);
 

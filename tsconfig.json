@@ -2,7 +2,7 @@
   "include": [
     "packages",
   ],
-  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist",],
+  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,

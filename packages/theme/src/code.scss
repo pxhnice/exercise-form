@@ -1,6 +1,7 @@
 .ex-codemirror {
   width: 100%;
-  outline: 1px solid #ddd;
+  outline: 1px solid;
+  outline-color: var(--el-border-color);
 
   .cm-editor {
     outline: none;

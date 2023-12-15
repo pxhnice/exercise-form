@@ -1,5 +1,5 @@
 <template>
-  <div class="divider">
+  <div class="ex-fields_divider">
     <el-divider v-bind="widgetData.options">
       {{ widgetData.options.label }}
     </el-divider>
@@ -11,10 +11,3 @@ import { desFieldsProps } from "./fields";
 
 defineProps(desFieldsProps);
 </script>
-
-<style lang="scss" scoped>
-.divider {
-  min-height: 30px;
-  padding: 1px;
-}
-</style>

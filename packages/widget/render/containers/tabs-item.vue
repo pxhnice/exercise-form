@@ -1,5 +1,9 @@
 <template>
-  <el-tabs v-model="activate" class="ex-drag-tabs" v-bind="widgetData.options">
+  <el-tabs
+    v-model="activate"
+    class="ex-widget-tabs"
+    v-bind="widgetData.options"
+  >
     <el-tab-pane
       class="ex-drag-tab-pane"
       v-for="tab in widgetData.children"
@@ -37,14 +41,3 @@ defineProps(renContainerProps);
 
 const activate = ref("tab1");
 </script>
-
-<style lang="scss" scoped>
-.ex-drag-tabs {
-  padding: 2px;
-  margin: 3px 0;
-}
-.ex-drag-tab-pane {
-  width: 100%;
-  min-height: 40px;
-}
-</style>

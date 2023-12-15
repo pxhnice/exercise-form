@@ -1,6 +1,19 @@
 {
   "name": "@exercise-form/theme",
   "version": "0.0.1",
-  "main": "index.ts",
+  "style": "index.css",
+  "scripts": {
+    "build": "gulp -f gulpFile.ts"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.17",
+    "@types/gulp-autoprefixer": "^0.0.37",
+    "@types/gulp-clean-css": "^4.3.4",
+    "@types/gulp-sass": "^5.0.4",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-clean-css": "^4.3.0"
+  },
   "license": "ISC"
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="alert">
+  <div class="ex-fields_alert">
     <el-alert v-bind="widgetData.options" />
   </div>
 </template>
@@ -9,9 +9,3 @@ import { desFieldsProps } from "./fields";
 
 defineProps(desFieldsProps);
 </script>
-
-<style lang="scss" scoped>
-.alert {
-  padding: 2px;
-}
-</style>

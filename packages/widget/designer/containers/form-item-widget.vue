@@ -12,7 +12,7 @@
       :label="widgetData.options.label"
       :required="widgetData.options.required"
       :label-width="widgetData.options.labelWidth"
-      @click.stop="onClickItem"
+      @click.prevent="onClickItem"
     >
       <component
         v-if="widgetData.type"
@@ -27,7 +27,7 @@
       v-else
       :is="`${widgetData.type}-widget`"
       :widget-data="widgetData"
-      @click.stop="onClickItem"
+      @click.prevent="onClickItem"
     />
   </container-wrapper>
 </template>
@@ -39,7 +39,7 @@ import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
 
-const fieldValue: any = ref(null);
+const fieldValue = ref(null);
 
 watch(
   () => props.widgetData.options?.modelDefaultValue,

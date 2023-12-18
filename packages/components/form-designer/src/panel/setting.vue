@@ -316,14 +316,3 @@ const cancel = () => {
   isShowCss.value = false;
 };
 </script>
-<style scoped lang="scss">
-.ex-setting-label {
-  :deep(.el-form-item__label) {
-    font-size: 13px;
-    font-weight: 400;
-  }
-  :deep(.el-form-item--small) {
-    margin-bottom: 12px !important;
-  }
-}
-</style>

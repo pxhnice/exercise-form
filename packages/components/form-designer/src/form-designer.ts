@@ -98,5 +98,12 @@ export const formDesignerProps = {
     }
   },
   // 主题
+  /**
+   * @description  主题颜色
+   */
+  themeColor: String,
+  /**
+   * @description  主题模式
+   */
   dark: Boolean
 };

@@ -1,7 +1,5 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import Draggable from "vuedraggable";
-import "virtual:svg-icons-register";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import ExForm from "../../packages";
@@ -11,7 +9,6 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 import "../../packages/theme/src/index.scss";
 
 const app = createApp(App);
-app.component("Draggable", Draggable);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }

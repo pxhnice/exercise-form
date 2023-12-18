@@ -6,3 +6,4 @@ export * from "./util";
 export * from "./types";
 export * from "./designer";
 export * from "./storage";
+export * from "./theme";

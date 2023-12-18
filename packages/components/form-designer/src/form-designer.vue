@@ -1,5 +1,5 @@
 <template>
-  <div class="ex-form-layout">
+  <div id="ex-designer" class="ex-form-layout">
     <el-container class="ex-layout-container">
       <el-aside class="ex-layout-aside_left">
         <ex-widget-panel
@@ -46,12 +46,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, provide } from "vue";
+import { ref, watch, provide, onMounted } from "vue";
 import {
+  themeSwitcher,
   createDesigner,
   traverseFieldWidget,
   isArray,
-  isObject
+  isObject,
+  cutNight
 } from "@exercise-form/utils";
 import {
   MODEL_TYPE_LIST,
@@ -132,6 +134,15 @@ watch(desFormConfig.value, (val) => {
 
 provide(optionsKeys, optionsData);
 provide(bannedWidgetKeys, bannedWidgets);
+
+onMounted(() => {
+  if (props.themeColor) {
+    themeSwitcher(props.themeColor);
+  }
+  if (props.dark) {
+    cutNight(props.dark);
+  }
+});
 
 defineExpose({
   widgetList,

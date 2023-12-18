@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ex-toolbar">
     <div class="ex-toolbar-header">
       <div class="ex-toolbar-header-left">
         <div class="ex-operation">
@@ -199,7 +199,7 @@
       @open="handelOpen"
       :before-close="close"
     >
-      <div class="drawer-tree">
+      <div class="ex-toolbar-drawer_tree">
         <el-tree
           ref="treeRef"
           :data="widgetList"
@@ -381,56 +381,3 @@ const close = () => {
   drawer.value = false;
 };
 </script>
-<style scoped lang="scss">
-:deep(.el-drawer__header) {
-  margin: 0px;
-}
-.drawer-tree {
-  :deep(.el-tree-node) {
-    position: relative;
-    padding-left: 20px;
-    font-size: 13px;
-  }
-  :deep(.el-tree-node::before) {
-    content: "";
-    position: absolute;
-    border-left: 1px dashed var(--el-color-primary);
-    left: 5px;
-    height: 100%;
-    top: 0px;
-    width: 1px;
-  }
-  :deep(.el-tree-node:after) {
-    content: "";
-    left: 5px;
-    position: absolute;
-    border-width: 1px;
-    border-top: 1px dashed var(--el-color-primary);
-    height: 20px;
-    top: 12px;
-    width: 15px;
-  }
-  :deep(.el-tree-node__content) {
-    padding: 0px !important;
-    height: 26px;
-  }
-  :deep(.el-tree-node__expand-icon) {
-    padding: 0px !important;
-  }
-  :deep(.is-leaf) {
-    display: none;
-  }
-  :deep(.el-tree-node__label) {
-    padding-left: 5px;
-  }
-  :deep(.el-tree-node.is-current > .el-tree-node__content) {
-    background-color: var(--el-color-primary-light-3);
-    color: #fff;
-  }
-}
-.footer-btns {
-  :deep(.el-button) {
-    line-height: normal;
-  }
-}
-</style>

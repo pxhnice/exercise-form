@@ -1,9 +1,13 @@
 <template>
-  <ex-form-designer :form-data="formData" :form-json="formJson" />
+  <ex-form-designer
+    dark
+    theme-color="#0D4E8D"
+    :form-data="formData"
+    :form-json="formJson"
+  />
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-// import { ExFormDesigner } from "../../packages";
 const formData = ref({ aaa: 1111 });
 const formJson = reactive({
   formConfig: {

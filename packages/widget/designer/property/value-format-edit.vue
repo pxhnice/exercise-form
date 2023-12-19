@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item label="绑定值格式">
-      <el-select v-model="optionsModel.valueFormat">
+      <el-select v-model="optionsModel.valueFormat" :teleported="false">
         <el-option value="YYYY-MM-DD" label="YYYY-MM-DD" />
         <el-option value="YYYY-MM-DD HH:mm:ss" label="YYYY-MM-DD HH:mm:ss" />
       </el-select>

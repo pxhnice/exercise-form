@@ -16,13 +16,3 @@ const svgClass = computed(() => {
   return props.className ? `svg-icon ${props.className}` : "svg-icon";
 });
 </script>
-<style>
-.svg-icon {
-  width: 1em;
-  height: 1em;
-  fill: currentcolor;
-  vertical-align: middle;
-  color: inherit;
-  outline: none;
-}
-</style>

@@ -4,21 +4,24 @@
     <el-form-item label-width="0">
       <draggable
         tag="ul"
-        class="row"
+        class="ex-property-row"
         :list="children"
         handle=".pane-mover"
         item-key="id"
       >
         <template #item="{ element, index }">
-          <li class="col">
+          <li class="ex-property-col">
             <el-checkbox
               v-model="element.options.active"
               disabled
               label="激活"
               size="small"
             />
-            <el-input class="put" v-model="element.options.label" />
-            <ex-svg-icon class="ft-20 pane-mover ft" name="drag" />
+            <el-input
+              class="ex-property-tab_put ex-mgl-10"
+              v-model="element.options.label"
+            />
+            <ex-svg-icon class="ex-property_ft22 pane-mover" name="drag" />
             <el-button
               @click="handelDel(index)"
               class="btn"

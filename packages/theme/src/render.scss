@@ -1,17 +1,24 @@
+.ex-render {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
 .ex-render-form {
-  table {
+  .ex-table {
     width: 100%;
+    table-layout: fixed;
     min-height: 40px;
     border-collapse: collapse;
   }
 
-  th,
-  td {
+  .ex-table_th,
+  .ex-table_td {
     border: 1px solid;
     border-color: var(--el-border-color);
   }
 
-  td {
+  .ex-table_td {
     height: 40px;
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item label="显示格式">
-      <el-select v-model="optionsModel.format">
+      <el-select v-model="optionsModel.format" :teleported="false">
         <el-option
           v-for="item in options"
           :key="item.value"

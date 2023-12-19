@@ -1,9 +1,9 @@
-import { css } from '@codemirror/lang-css';
-import { html } from '@codemirror/lang-html';
-import { javascript } from '@codemirror/lang-javascript';
-import { json } from '@codemirror/lang-json';
-import { vue } from '@codemirror/lang-vue';
-import { definePropType } from '@exercise-form/utils';
+import { css } from "@codemirror/lang-css";
+import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
+import { vue } from "@codemirror/lang-vue";
+import { definePropType } from "@exercise-form/utils";
 
 import type { CSSProperties } from "vue";
 export const codeEditorEmits = {
@@ -43,7 +43,8 @@ export const codeEditorProps = {
   /**
    * @description 禁用
    */
-  disabled: Boolean
+  disabled: Boolean,
+  dark: Boolean
 };
 
 export const langs: { [key: string]: any } = {

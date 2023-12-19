@@ -9,6 +9,7 @@
         :format="optionsModel.format"
         :value-format="optionsModel.valueFormat"
         :is-range="optionsModel.isRange"
+        placement="left"
         clearable
       >
         <template v-if="settingData.type === 'select'">

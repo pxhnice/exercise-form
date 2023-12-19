@@ -2,10 +2,12 @@
 @use "./dark/variables.scss" as *;
 
 .ex-dark {
-  --el-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.36), 0px 8px 20px rgba(0, 0, 0, 0.72);
+  --el-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.36),
+    0 8px 20px rgba(0, 0, 0, 0.72);
   --el-box-shadow-light: 0px 0px 12px rgba(0, 0, 0, 0.72);
   --el-box-shadow-lighter: 0px 0px 6px rgba(0, 0, 0, 0.72);
-  --el-box-shadow-dark: 0px 16px 48px 16px rgba(0, 0, 0, 0.72), 0px 12px 32px #000000, 0px 8px 16px -8px #000000;
+  --el-box-shadow-dark: 0px 16px 48px 16px rgba(0, 0, 0, 0.72), 0 12px 32px #000,
+    0 8px 16px -8px #000;
   --el-bg-color-page: #0a0a0a;
   --el-bg-color: #141414;
   --el-bg-color-overlay: #1d1e1f;
@@ -38,18 +40,7 @@
   --el-border-width: 1px;
   --el-border-style: solid;
   --el-border-color-hover: var(--el-text-color-disabled);
-  --el-border: var(--el-border-width) var(--el-border-style) var(--el-border-color);
+  --el-border: var(--el-border-width) var(--el-border-style)
+    var(--el-border-color);
   --el-svg-monochrome-grey: var(--el-border-color);
-
-  @include bg_color($background-color-dark);
-
-  .ex-forms-container {
-    border: 1px solid;
-    border-color: var(--el-border-color);
-    @include bg_color($background-color-dark);
-  }
-
-  .el-scrollbar__wrap {
-    @include bg_color($background-color-dark);
-  }
 }

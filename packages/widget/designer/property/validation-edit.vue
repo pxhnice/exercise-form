@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item label="字段校验">
-      <el-select v-model="optionsModel.validation">
+      <el-select v-model="optionsModel.validation" :teleported="false">
         <el-option
           v-for="item in validationOptions"
           :key="item.type"

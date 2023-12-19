@@ -27,6 +27,8 @@ export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 
+export const darkKeys: InjectionKey<Ref<boolean>> = Symbol();
+
 export const formDesignerEmits = {
   change: (desData: formJsonType) => desData
 };
@@ -97,13 +99,15 @@ export const formDesignerProps = {
       return [];
     }
   },
-  // 主题
   /**
    * @description  主题颜色
    */
   themeColor: String,
   /**
    * @description  主题模式
+   * ？？？ 由于部分element组件使用Teleport被插入到body下，导致无法修改样式
+   * 推荐使用element=> <html class="dark">
+   * vue-codemirror需要dark为true
    */
   dark: Boolean
 };

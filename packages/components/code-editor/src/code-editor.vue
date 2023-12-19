@@ -16,12 +16,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Codemirror } from "vue-codemirror";
+import { oneDark } from "@codemirror/theme-one-dark";
 import { codeEditorProps, codeEditorEmits, langs } from "./code-editor";
 
 defineOptions({ name: "ex-code-editor" });
 const emits = defineEmits(codeEditorEmits);
 const props = defineProps(codeEditorProps);
-const extensions = [langs[props.lang]];
+const extensions = props.dark
+  ? [langs[props.lang], oneDark]
+  : [langs[props.lang]];
 
 const codeValue = computed({
   get: () => props.modelValue,
@@ -32,18 +35,3 @@ const onChange = (value: string) => {
   emits("update:modelValue", value);
 };
 </script>
-<style lang="scss" scoped>
-:deep(.cm-editor) {
-  outline: none;
-}
-
-:deep(.cm-focused) {
-  border: none !important;
-}
-
-:deep(.cm-scroller) {
-  font-family: inherit;
-  line-height: 1.6;
-  font-size: 12px;
-}
-</style>

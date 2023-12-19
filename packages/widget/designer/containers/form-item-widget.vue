@@ -19,6 +19,7 @@
         @click.stop
         :is="`el-${widgetData.type}`"
         v-model="fieldValue"
+        :teleported="false"
         v-bind="widgetData.options"
       />
       <slot v-else></slot>

@@ -13,6 +13,7 @@
       :is="`el-${widgetData.type}`"
       v-model="formData[widgetData.id]"
       v-bind="widgetData.options"
+      :teleported="false"
     />
     <slot v-else></slot>
   </el-form-item>

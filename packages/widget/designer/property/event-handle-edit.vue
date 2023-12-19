@@ -15,7 +15,7 @@
     >
       <div class="ex-dialog-box">
         <div class="name-front">{{ firstName }}</div>
-        <ex-code-editor v-model="code" />
+        <ex-code-editor v-model="code" :dark="dark" />
         <div class="name-back">{{ lastName }}</div>
       </div>
       <template #footer>
@@ -31,8 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import ExCodeEditor from "@exercise-form/components/code-editor";
+import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
 
 interface EventEditType {
   settingData: any;
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<EventEditType>(), {
   eventName: ""
 });
 
+const dark = inject(darkKeys);
 const isShowEvent = ref(false);
 const code = ref("");
 const fnName = ref(`${props.eventName}(){}`);

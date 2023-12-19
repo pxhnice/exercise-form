@@ -1,11 +1,15 @@
 <template>
   <div>
     <el-form-item label="自定义CSS样式">
-      <el-select v-model="optionsModel.customClass" multiple>
+      <el-select
+        v-model="optionsModel.customClass"
+        multiple
+        :teleported="false"
+      >
         <el-option
           v-for="name in globalCssList"
           :key="name"
-          :lable="name"
+          :label="name"
           :value="name"
         />
       </el-select>

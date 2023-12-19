@@ -1,5 +1,5 @@
 <template>
-  <div class="form-widget">
+  <div class="ex-render">
     <div class="ex-forms-container bg">
       <div class="ex-forms-container-box">
         <el-scrollbar
@@ -96,14 +96,3 @@ defineExpose({
   originalData
 });
 </script>
-
-<style lang="scss" scoped>
-.form-widget {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-.bg {
-  background: #fff;
-}
-</style>

@@ -16,7 +16,7 @@
             <el-collapse v-model="activeNames">
               <el-collapse-item title="基本属性" name="1">
                 <el-form-item label="全局组件大小">
-                  <el-select v-model="formConfig.size">
+                  <el-select v-model="formConfig.size" :teleported="false">
                     <el-option label="large" value="large" />
                     <el-option label="default" value="default" />
                     <el-option label="small" value="small" />
@@ -53,7 +53,11 @@
                   </el-button>
                 </el-form-item>
                 <el-form-item label="自定义CSS样式">
-                  <el-select v-model="formConfig.customClass" multiple>
+                  <el-select
+                    v-model="formConfig.customClass"
+                    multiple
+                    :teleported="false"
+                  >
                     <el-option
                       v-for="css in globalCss"
                       :key="css"
@@ -172,7 +176,7 @@
     >
       <div class="ex-dialog-box">
         <div class="name-front">{{ firstName }}</div>
-        <ex-code-editor v-model="code" />
+        <ex-code-editor v-model="code" :dark="dark" />
         <div class="name-back">{{ lastName }}</div>
       </div>
       <template #footer>
@@ -190,7 +194,7 @@
       destroy-on-close
       :close-on-click-modal="false"
     >
-      <ex-code-editor v-model="code" />
+      <ex-code-editor v-model="code" :dark="dark" />
       <template #footer>
         <span>
           <el-button @click="cancel">取消</el-button>
@@ -206,7 +210,7 @@
       destroy-on-close
       :close-on-click-modal="false"
     >
-      <ex-code-editor v-model="code" lang="css" />
+      <ex-code-editor v-model="code" :dark="dark" lang="css" />
       <template #footer>
         <span>
           <el-button @click="cancel">取消</el-button>
@@ -218,7 +222,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, inject } from "vue";
+import { darkKeys } from "../form-designer";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
 import { desPanelProps } from "./panel";
 
@@ -230,6 +235,7 @@ const formOptions = {
   labelPosition: "left"
 };
 const formConfig = props.formConfig;
+const dark = inject(darkKeys);
 const formComRef = ref();
 const groupValue = ref("bd");
 const activeNames = ref(["1", "2"]);

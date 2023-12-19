@@ -65,7 +65,7 @@ export function themeSwitcher(color: string) {
 export function cutNight(isNight: boolean) {
   const el = document.getElementById("ex-designer");
   if (el) {
-    if (isNight) el.setAttribute("class", "ex-form-layout ex-dark");
-    else el.setAttribute("class", "ex-form-layout");
+    if (isNight) el.setAttribute("class", "ex-dark");
+    else el.setAttribute("class", "");
   }
 }

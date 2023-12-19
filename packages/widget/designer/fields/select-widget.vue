@@ -4,7 +4,7 @@
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
   >
-    <el-select v-model="value">
+    <el-select v-model="value" :teleported="false">
       <el-option
         v-for="item in optionsItem"
         :key="item.value"

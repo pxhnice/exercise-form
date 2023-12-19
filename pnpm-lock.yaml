@@ -23,6 +23,9 @@ importers:
       '@codemirror/lang-vue':
         specifier: ^0.1.2
         version: 0.1.2
+      '@codemirror/theme-one-dark':
+        specifier: ^6.1.2
+        version: 6.1.2
       '@element-plus/icons-vue':
         specifier: ^2.3.1
         version: 2.3.1(vue@3.3.11)
@@ -698,6 +701,15 @@ packages:
 
   /@codemirror/state@6.3.3:
     resolution: {integrity: sha512-0wufKcTw2dEwEaADajjHf6hBy1sh3M6V0e+q4JKIhLuiMSe5td5HOWpUdvKth1fT1M9VYOboajoBHpkCd7PG7A==}
+    dev: false
+
+  /@codemirror/theme-one-dark@6.1.2:
+    resolution: {integrity: sha512-F+sH0X16j/qFLMAfbciKTxVOwkdAS336b7AXTKOZhy8BR3eH/RelsnLgLFINrpST63mmN2OuwUt0W2ndUgYwUA==}
+    dependencies:
+      '@codemirror/language': 6.9.3
+      '@codemirror/state': 6.3.3
+      '@codemirror/view': 6.22.2
+      '@lezer/highlight': 1.2.0
     dev: false
 
   /@codemirror/view@6.22.2:

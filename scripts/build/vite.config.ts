@@ -39,6 +39,7 @@ export default defineConfig({
         "@codemirror/lang-javascript",
         "@codemirror/lang-json",
         "@codemirror/lang-vue",
+        "@codemirror/theme-one-dark",
         "file-saver",
         "prettier/plugins/html",
         "prettier/plugins/postcss",

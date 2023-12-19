@@ -26,6 +26,8 @@ module.exports = {
     "selector-type-no-unknown": null,
     "selector-max-compound-selectors": null,
     "selector-no-qualifying-type": null,
-    "selector-class-pattern": null
+    "selector-class-pattern": null,
+    "color-function-notation": null,
+    "alpha-value-notation": null
   }
 };

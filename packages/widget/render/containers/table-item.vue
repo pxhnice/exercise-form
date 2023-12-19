@@ -1,9 +1,9 @@
 <template>
-  <table class="drag-table" v-bind="widgetData.options">
+  <table class="ex-table" v-bind="widgetData.options">
     <tbody>
-      <tr class="drag-tr" v-for="row in widgetData.children" :key="row.id">
+      <tr v-for="row in widgetData.children" :key="row.id">
         <template v-for="cell in row.children" :key="cell.id">
-          <td v-if="cell.merged">
+          <td v-if="cell.merged" class="ex-table_td">
             <template v-for="item in cell.children">
               <template v-if="item.category === 'container'">
                 <component

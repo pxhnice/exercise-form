@@ -65,6 +65,7 @@
     "@codemirror/lang-javascript": "^6.2.1",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-vue": "^0.1.2",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "@element-plus/icons-vue": "^2.3.1",
     "@exercise-form/components": "workspace:^",
     "@exercise-form/constants": "workspace:^",

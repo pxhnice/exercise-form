@@ -87,6 +87,7 @@
       <ex-code-editor
         v-model="codeValue"
         :height="500"
+        :dark="dark"
         :disabled="true"
         lang="json"
       />
@@ -135,6 +136,7 @@
       <ex-code-editor
         v-model="codeValue"
         :height="500"
+        :dark="dark"
         :disabled="true"
         lang="vue"
       />
@@ -229,11 +231,12 @@ import {
 } from "@exercise-form/utils";
 import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
-import { optionsKeys } from "../form-designer";
+import { optionsKeys, darkKeys } from "../form-designer";
 
 const props = defineProps(desPanelProps);
 
 const optionsData = inject(optionsKeys);
+const dark = inject(darkKeys);
 const isShowJSON = ref(false);
 const isShowSFC = ref(false);
 const isShowRender = ref(false);
@@ -314,7 +317,7 @@ const prettierCode = async (code: string) => {
     return await prettier.format(code, {
       parser: "vue",
       plugins: [parserHtml, parserBabel, parserEstree, parserCss],
-      tabWidth: 4,
+      tabWidth: 2,
       printWidth: 60,
       trailingComma: "none",
       htmlWhitespaceSensitivity: "ignore",

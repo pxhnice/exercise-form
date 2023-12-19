@@ -1,7 +1,7 @@
 <template>
   <div v-if="initType(settingData)">
     <el-form-item label="类型选择">
-      <el-select v-model="optionsModel.type">
+      <el-select v-model="optionsModel.type" :teleported="false">
         <el-option
           v-for="item in options"
           :key="item.value"

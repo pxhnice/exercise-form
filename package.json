@@ -11,7 +11,10 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint:script": "eslint --ext .js,.jsx,.vue,.ts,.tsx --fix --quiet ./",
-    "lint:style": "stylelint --fix ./**/*.{css,scss}"
+    "lint:style": "stylelint --fix ./**/*.{css,scss}",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
   },
   "author": "",
   "license": "ISC",
@@ -56,6 +59,7 @@
     "vite": "^5.0.2",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-svg-icons": "^2.0.1",
+    "vitepress": "1.0.0-rc.32",
     "vitest": "^0.34.6",
     "vue": "^3.2.36"
   },

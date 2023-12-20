@@ -1,0 +1,14 @@
+{
+  "name": "@exercise-form/docs",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "serve": "vitepress serve"
+  },
+  "devDependencies": {
+    "vitepress": "1.0.0-rc.32"
+  },
+  "license": "ISC"
+}

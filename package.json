@@ -12,9 +12,9 @@
     "coverage": "vitest run --coverage",
     "lint:script": "eslint --ext .js,.jsx,.vue,.ts,.tsx --fix --quiet ./",
     "lint:style": "stylelint --fix ./**/*.{css,scss}",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:dev": "pnpm run -C docs dev",
+    "docs:build": "pnpm run -C docs build",
+    "docs:serve": "pnpm run -C docs serve"
   },
   "author": "",
   "license": "ISC",

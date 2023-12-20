@@ -1,21 +1,23 @@
 import type { UserConfig } from "vitepress";
 
 export const config: UserConfig = {
-  title: "ExForm",
+  title: "Exercise Form",
   description: "a Vue 3 based component library for designers and developers",
+  base: "/exercise-form/",
+  lastUpdated: true,
   themeConfig: {
-    logo: "/images/vite.svg",
+    logo: "/images/logo.svg",
     footer: {
       message: "Released under the MIT License.",
       copyright: "Copyright © 2023-PRESENT vangleer and Vangle contributors"
     },
     algolia: {
       apiKey: "your_api_key",
-      indexName: "index_name"
+      indexName: "exercise-form"
     },
     nav: [
       { text: "指南", link: "/guide/design" },
-      { text: "组件", link: "/components/form-designer" }
+      { text: "组件", link: "/components/designer" }
     ],
     socialLinks: [
       { icon: "github", link: "https://gitee.com/pxhgood/exercise-form.git" }
@@ -23,45 +25,46 @@ export const config: UserConfig = {
     sidebar: {
       "/guide/": [
         {
-          text: "基础",
+          text: "Components",
           items: [
-            { 
-              text: "设计", 
-              link: "/guide/design" },
             {
-              text: "安装",
-              link: "/guide/install"
+              text: "FormDesigner",
+              link: "/components/designer"
             },
             {
-              text: "主题",
-              link: "/guide/theme"
+              text: "FormRender",
+              link: "/components/render"
             },
             {
-              text: "黑夜模式",
-              link: "/guide/dark"
+              text: "CodeEditor",
+              link: "/components/code"
+            },
+            {
+              text: "SvgIcon",
+              link: "/components/icon"
             }
           ]
         }
       ],
       "/components/": [
         {
-          text: "基础组件",
+          text: "Components",
           items: [
             {
-              text: "Form Designer",
-              link: "/components/form-designer"
+              text: "FormDesigner",
+              link: "/components/designer"
             },
             {
-              text: "Form Render",
-              link: "/components/form-render"
+              text: "FormRender",
+              link: "/components/render"
             },
             {
-              text: "Code Editor",
-              link: "/components/code-editor"
+              text: "CodeEditor",
+              link: "/components/code"
             },
             {
-              text: "Svg Icon",
-              link: "/components/svg-icon"
+              text: "SvgIcon",
+              link: "/components/icon"
             }
           ]
         }

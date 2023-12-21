@@ -1,5 +1,5 @@
-import "virtual:svg-icons-register";
-import Draggable from "vuedraggable";
+import Draggable from 'vuedraggable';
+
 import type { App, Plugin } from "vue";
 
 export const makeInstaller = (components: Plugin[] = []) => {

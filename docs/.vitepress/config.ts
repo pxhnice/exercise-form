@@ -3,8 +3,11 @@ import type { UserConfig } from "vitepress";
 export const config: UserConfig = {
   title: "Exercise Form",
   description: "a Vue 3 based component library for designers and developers",
-  base: "/exercise-form/",
   lastUpdated: true,
+  head: [
+    // 图标配置
+    ["link", { rel: "icon", href: "/images/logo.svg" }]
+  ],
   themeConfig: {
     logo: "/images/logo.svg",
     footer: {
@@ -38,11 +41,11 @@ export const config: UserConfig = {
             {
               text: "CodeEditor",
               link: "/components/code"
-            },
-            {
-              text: "SvgIcon",
-              link: "/components/icon"
             }
+            // {
+            //   text: "SvgIcon",
+            //   link: "/components/icon"
+            // }
           ]
         }
       ],
@@ -61,11 +64,11 @@ export const config: UserConfig = {
             {
               text: "CodeEditor",
               link: "/components/code"
-            },
-            {
-              text: "SvgIcon",
-              link: "/components/icon"
             }
+            // {
+            //   text: "SvgIcon",
+            //   link: "/components/icon"
+            // }
           ]
         }
       ]

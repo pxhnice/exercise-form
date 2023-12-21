@@ -5,12 +5,16 @@
         <img
           style="width: 25px; height: 25px"
           class="ex-mgr-10"
-          src="../static/logo.svg"
-          alt=""
+          src="./assets/svg/logo.svg"
         />
-        <span class="name ex-mgr-10">ExForm 表单构建器</span>
+        <span class="name ex-mgr-10">Exercise Form 表单构建器</span>
         <span class="ver">V0.0.0-dev.1</span>
       </div>
+      <!-- <el-icon style="margin-left: 5px" :size="20"> <Logo /></el-icon>
+      <el-icon style="margin-left: 5px" color="red" :size="20">
+        <Copy
+      /></el-icon>
+      <el-icon style="margin-left: 5px" :size="20"> <All /></el-icon> -->
       <div class="demo-header-box">
         <div class="ex-mgr-10">
           <span>主题色：</span>
@@ -24,9 +28,15 @@
             inactive-action-icon="Sunny"
           />
         </div>
+        <div class="ex-mgl-10">
+          <el-link @click="to('https://exercise-form.surge.sh/')">
+            文档
+            <el-icon style="margin-left: 5px" :size="20"><Coin /></el-icon>
+          </el-link>
+        </div>
         <div>
           <ex-svg-icon
-            @click="toGit"
+            @click="to('https://gitee.com/pxhgood/exercise-form.git')"
             style="font-size: 25px"
             class="ex-mgl-10"
             name="github-fill"
@@ -46,82 +56,15 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 const dark = ref(false);
-const color = ref("#0a6f91");
+const color = ref("#409eff");
 const formData = ref({});
 const formJson = reactive({
-  formConfig: {
-    size: "default",
-    labelPosition: "left",
-    align: "left",
-    labelWidth: 90,
-    modelName: "formData",
-    formName: "formRef",
-    rulesName: "rules",
-    patternType: "pc",
-    isPageType: "page",
-    hideRequiredAsterisk: false,
-    cssCode: "",
-    customClass: []
-  },
-  widgetList: [
-    {
-      name: "栅格",
-      iconName: "grid",
-      category: "container",
-      type: "grid",
-      children: [
-        {
-          name: "栅格列",
-          iconName: "",
-          type: "grid-col",
-          category: "container",
-          children: [],
-          options: {
-            customClass: "",
-            hidden: false,
-            name: "grid-col_bnny8",
-            span: 12,
-            offset: 0,
-            push: 0,
-            pull: 0
-          },
-          id: "grid-col_bnny8"
-        },
-        {
-          name: "栅格列",
-          iconName: "",
-          type: "grid-col",
-          category: "container",
-          children: [],
-          options: {
-            customClass: "",
-            hidden: false,
-            name: "grid-col_uj6t7",
-            span: 12,
-            offset: 0,
-            push: 0,
-            pull: 0
-          },
-          id: "grid-col_uj6t7"
-        }
-      ],
-      options: {
-        colHeight: "",
-        customClass: "",
-        gutter: 10,
-        hidden: false,
-        name: "gridxa6vh",
-        style: {
-          minHeight: "40px"
-        }
-      },
-      id: "gridxa6vh"
-    }
-  ]
+  formConfig: {},
+  widgetList: []
 });
 
-const toGit = () => {
-  window.open("https://gitee.com/pxhgood/exercise-form.git", "_blank");
+const to = (url: string) => {
+  window.open(url, "_blank");
 };
 </script>
 <style>
@@ -145,9 +88,13 @@ body {
     display: flex;
     justify-content: space-between;
     height: 50px;
+    font-size: 14px;
     .demo-header-box {
       display: flex;
       align-items: center;
+      .logo {
+        font-size: 25px;
+      }
       .name {
         font-size: 18px;
         font-weight: bold;

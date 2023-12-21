@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "pnpm -C play dev",
     "build": "pnpm run -C scripts/build start",
+    "build:play": "pnpm -C play build",
     "build:theme": "pnpm run -C packages/theme build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
@@ -84,6 +85,7 @@
     "file-saver": "^2.0.5",
     "gulp-clean-css": "^4.3.0",
     "prettier": "^3.1.0",
+    "vite-svg-loader": "^5.1.0",
     "vue-codemirror": "^6.1.1",
     "vuedraggable": "^4.0.0"
   }

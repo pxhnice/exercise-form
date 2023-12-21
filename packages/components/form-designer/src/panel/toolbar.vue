@@ -9,7 +9,9 @@
             @click="handleRetreat"
             link
           >
-            <ex-svg-icon class="ex-icon-ft-20" name="retreat" />
+            <el-icon class="ex-mgr-10" :size="20">
+              <ex-icon-retreat />
+            </el-icon>
           </el-button>
           <el-button
             :type="redoEnabled ? 'primary' : ''"
@@ -17,7 +19,9 @@
             @click="handleAdvance"
             link
           >
-            <ex-svg-icon class="ex-icon-ft-20" name="advance" />
+            <el-icon class="ex-mgr-10" :size="20">
+              <ex-icon-advance />
+            </el-icon>
           </el-button>
         </div>
         <el-radio-group v-model="formConfig.patternType">
@@ -31,7 +35,9 @@
           class="ex-mgl-10"
         >
           <div title="组件层次结构树">
-            <ex-svg-icon class="ex-icon-ft-20" name="tree" />
+            <el-icon :size="20">
+              <ex-icon-tree />
+            </el-icon>
           </div>
         </el-button>
       </div>

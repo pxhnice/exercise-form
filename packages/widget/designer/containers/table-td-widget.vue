@@ -45,16 +45,19 @@
       <div class="ex-title">{{ widgetData.name }}</div>
       <div class="ex-operation-row">
         <div title="选中父组件">
-          <ex-svg-icon
-            @click.stop="handleParentChecked"
-            style="font-size: 14px"
+          <el-icon
             class="ex-mgr-10"
-            name="arrow-left"
-          />
+            @click.stop="handleParentChecked"
+            :size="14"
+          >
+            <ex-icon-arrow-left />
+          </el-icon>
         </div>
         <div title="单元格操作">
           <el-tooltip effect="light" placement="bottom" trigger="click">
-            <ex-svg-icon @click.stop class="ex-icon-ft-16" name="all" />
+            <el-icon class="ex-mgr-10" @click.stop :size="16">
+              <ex-icon-all />
+            </el-icon>
             <template #content>
               <div class="ex-widget-td_buttons">
                 <el-button link @click.stop="insertLeftCol">

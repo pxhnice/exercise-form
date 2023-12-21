@@ -45,40 +45,33 @@
       <div class="ex-title">{{ widgetData.name }}</div>
       <div class="ex-operation-row">
         <div title="选中父组件">
-          <ex-svg-icon
-            @click.stop="handleParentChecked"
-            style="font-size: 14px"
+          <el-icon
             class="ex-mgr-10"
-            name="arrow-left"
-          />
+            @click.stop="handleParentChecked"
+            :size="14"
+          >
+            <ex-icon-arrow-left />
+          </el-icon>
         </div>
         <div v-if="widgetSub != 0" title="上移">
-          <ex-svg-icon
-            @click.stop="handleMoveUp"
-            class="ex-icon-ft-16 ex-mgr-10"
-            name="move-up"
-          />
+          <el-icon class="ex-mgr-10" @click.stop="handleMoveUp" :size="16">
+            <ex-icon-move-up />
+          </el-icon>
         </div>
         <div v-if="widgetSub < parentList.length - 1" title="下移">
-          <ex-svg-icon
-            @click.stop="handleMoveDown"
-            class="ex-icon-ft-16 ex-mgr-10"
-            name="shift-down"
-          />
+          <el-icon class="ex-mgr-10" @click.stop="handleMoveDown" :size="16">
+            <ex-icon-shift-down />
+          </el-icon>
         </div>
         <div title="复制">
-          <ex-svg-icon
-            @click.stop="handleCopy"
-            class="ex-icon-ft-16 ex-mgr-10"
-            name="copy"
-          />
+          <el-icon class="ex-mgr-10" @click.stop="handleCopy" :size="16">
+            <ex-icon-copy />
+          </el-icon>
         </div>
         <div title="删除">
-          <ex-svg-icon
-            @click.stop="handleDel"
-            class="ex-icon-ft-16"
-            name="delete"
-          />
+          <el-icon class="ex-mgr-10" @click.stop="handleDel" :size="16">
+            <ex-icon-delete />
+          </el-icon>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
         item-key="id"
       >
         <template #item="{ element, index }">
-          <li class="ex-property-col">
+          <li class="ex-property-col ex-mgb-10">
             <el-checkbox
               v-model="element.options.active"
               disabled
@@ -21,7 +21,9 @@
               class="ex-property-tab_put ex-mgl-10"
               v-model="element.options.label"
             />
-            <ex-svg-icon class="ex-property_ft22 pane-mover" name="drag" />
+            <el-icon class="pane-mover" :size="22">
+              <ex-icon-drag />
+            </el-icon>
             <el-button
               @click="handelDel(index)"
               class="btn"

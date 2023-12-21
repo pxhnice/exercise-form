@@ -1,11 +1,9 @@
 <template>
   <div style="position: relative" class="ex-widget-operation">
     <div v-if="isSelect" title="手动拖拽" class="ex-title drag-mover">
-      <ex-svg-icon
-        style="font-size: 14px"
-        class="ex-mgr-10"
-        name="widget-drag"
-      />
+      <el-icon class="ex-mgr-10" :size="14">
+        <ex-icon-widget-drag />
+      </el-icon>
       <span class="ex-title-name">{{ widgetData.name }}</span>
     </div>
     <div :class="{ 'ex-is-container-drag': isSelect }">
@@ -13,53 +11,39 @@
     </div>
     <div v-if="isSelect" class="ex-operation-row">
       <div title="选中父组件">
-        <ex-svg-icon
-          @click.stop="handleParentChecked"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="arrow-left"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="handleParentChecked" :size="16">
+          <ex-icon-arrow-left />
+        </el-icon>
       </div>
       <div v-if="widgetSub != 0" title="上移">
-        <ex-svg-icon
-          @click.stop="handleMoveUp"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="move-up"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="handleMoveUp" :size="16">
+          <ex-icon-move-up />
+        </el-icon>
       </div>
       <div v-if="widgetSub < parentList.length - 1" title="下移">
-        <ex-svg-icon
-          @click.stop="handleMoveDown"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="shift-down"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="handleMoveDown" :size="16">
+          <ex-icon-shift-down />
+        </el-icon>
       </div>
       <div v-if="widgetData.type === 'table'" title="插入新行">
-        <ex-svg-icon
-          @click.stop="insertNewRow"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="insert-rows"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="insertNewRow" :size="16">
+          <ex-icon-insert-rows />
+        </el-icon>
       </div>
       <div v-if="widgetData.type === 'table'" title="插入新列">
-        <ex-svg-icon
-          @click.stop="insertNewCol"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="insert-column"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="insertNewCol" :size="16">
+          <ex-icon-insert-column />
+        </el-icon>
       </div>
       <div title="复制">
-        <ex-svg-icon
-          @click.stop="handleCopy"
-          class="ex-icon-ft-16 ex-mgr-10"
-          name="copy"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="handleCopy" :size="16">
+          <ex-icon-copy />
+        </el-icon>
       </div>
       <div title="删除">
-        <ex-svg-icon
-          @click.stop="handleDel"
-          class="ex-icon-ft-16"
-          name="delete"
-        />
+        <el-icon class="ex-mgr-10" @click.stop="handleDel" :size="16">
+          <ex-icon-delete />
+        </el-icon>
       </div>
     </div>
   </div>

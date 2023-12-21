@@ -13,7 +13,9 @@
           <li class="options-col">
             <el-input class="options-put" v-model="element.value" />
             <el-input class="options-put" v-model="element.label" />
-            <ex-svg-icon class="ex-property_ft22 pane-mover" name="drag" />
+            <el-icon class="pane-mover" :size="22">
+              <ex-icon-drag />
+            </el-icon>
             <el-button
               @click="handelDel(index)"
               class="options-btn"

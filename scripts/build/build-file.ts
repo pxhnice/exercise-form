@@ -1,7 +1,7 @@
-import path from "path";
-import { copyFile, mkdir } from "fs/promises";
-import { series, parallel } from "gulp";
-import { delPath, run, exPath, buildPath, themePath, pkgPath } from "./src";
+import { copyFile, mkdir } from 'fs/promises';
+import { parallel, series } from 'gulp';
+
+import { buildPath, delPath, exPath, pkgPath, run, themePath } from './src';
 
 // 删除打包文件
 export const removeDist = () => {

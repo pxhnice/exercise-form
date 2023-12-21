@@ -10,11 +10,6 @@
         <span class="name ex-mgr-10">Exercise Form 表单构建器</span>
         <span class="ver">V0.0.0-dev.1</span>
       </div>
-      <!-- <el-icon style="margin-left: 5px" :size="20"> <Logo /></el-icon>
-      <el-icon style="margin-left: 5px" color="red" :size="20">
-        <Copy
-      /></el-icon>
-      <el-icon style="margin-left: 5px" :size="20"> <All /></el-icon> -->
       <div class="demo-header-box">
         <div class="ex-mgr-10">
           <span>主题色：</span>
@@ -35,12 +30,13 @@
           </el-link>
         </div>
         <div>
-          <ex-svg-icon
-            @click="to('https://gitee.com/pxhgood/exercise-form.git')"
-            style="font-size: 25px"
+          <el-icon
             class="ex-mgl-10"
-            name="github-fill"
-          />
+            @click="to('https://gitee.com/pxhgood/exercise-form.git')"
+            :size="25"
+          >
+            <ex-icon-github-fill />
+          </el-icon>
         </div>
       </div>
     </el-header>

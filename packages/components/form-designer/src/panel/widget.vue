@@ -21,10 +21,9 @@
               >
                 <template #item="{ element }">
                   <div class="ex-drag-tainer">
-                    <ex-svg-icon
-                      class="ex-icon-ft-20 ex-mgr-10"
-                      :name="element.iconName"
-                    />
+                    <el-icon class="ex-mgr-10" :size="20">
+                      <component :is="`ex-icon-${element.iconName}`" />
+                    </el-icon>
                     {{ element.name }}
                   </div>
                 </template>
@@ -41,10 +40,9 @@
               >
                 <template #item="{ element }">
                   <div class="ex-drag-tainer">
-                    <ex-svg-icon
-                      class="ex-icon-ft-20 ex-mgr-10"
-                      :name="element.iconName"
-                    />
+                    <el-icon class="ex-mgr-10" :size="20">
+                      <component :is="`ex-icon-${element.iconName}`" />
+                    </el-icon>
                     {{ element.name }}
                   </div>
                 </template>
@@ -61,10 +59,9 @@
               >
                 <template #item="{ element }">
                   <div class="ex-drag-tainer">
-                    <ex-svg-icon
-                      class="ex-icon-ft-20 ex-mgr-10"
-                      :name="element.iconName"
-                    />
+                    <el-icon class="ex-mgr-10" :size="20">
+                      <component :is="`ex-icon-${element.iconName}`" />
+                    </el-icon>
                     {{ element.name }}
                   </div>
                 </template>

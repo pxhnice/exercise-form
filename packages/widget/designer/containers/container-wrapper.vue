@@ -10,41 +10,66 @@
       <slot></slot>
     </div>
     <div v-if="isSelect" class="ex-operation-row">
-      <div title="选中父组件">
-        <el-icon class="ex-mgr-10" @click.stop="handleParentChecked" :size="16">
-          <ex-icon-arrow-left />
-        </el-icon>
-      </div>
-      <div v-if="widgetSub != 0" title="上移">
-        <el-icon class="ex-mgr-10" @click.stop="handleMoveUp" :size="16">
-          <ex-icon-move-up />
-        </el-icon>
-      </div>
-      <div v-if="widgetSub < parentList.length - 1" title="下移">
-        <el-icon class="ex-mgr-10" @click.stop="handleMoveDown" :size="16">
-          <ex-icon-shift-down />
-        </el-icon>
-      </div>
-      <div v-if="widgetData.type === 'table'" title="插入新行">
-        <el-icon class="ex-mgr-10" @click.stop="insertNewRow" :size="16">
-          <ex-icon-insert-rows />
-        </el-icon>
-      </div>
-      <div v-if="widgetData.type === 'table'" title="插入新列">
-        <el-icon class="ex-mgr-10" @click.stop="insertNewCol" :size="16">
-          <ex-icon-insert-column />
-        </el-icon>
-      </div>
-      <div title="复制">
-        <el-icon class="ex-mgr-10" @click.stop="handleCopy" :size="16">
-          <ex-icon-copy />
-        </el-icon>
-      </div>
-      <div title="删除">
-        <el-icon class="ex-mgr-10" @click.stop="handleDel" :size="16">
-          <ex-icon-delete />
-        </el-icon>
-      </div>
+      <el-icon
+        title="选中父组件"
+        class="ex-mgr-10"
+        @click.stop="handleParentChecked"
+        :size="16"
+      >
+        <ex-icon-arrow-left />
+      </el-icon>
+      <el-icon
+        v-if="widgetSub != 0"
+        title="上移"
+        class="ex-mgr-10"
+        @click.stop="handleMoveUp"
+        :size="16"
+      >
+        <ex-icon-move-up />
+      </el-icon>
+      <el-icon
+        v-if="widgetSub < parentList.length - 1"
+        title="下移"
+        class="ex-mgr-10"
+        @click.stop="handleMoveDown"
+        :size="16"
+      >
+        <ex-icon-shift-down />
+      </el-icon>
+      <el-icon
+        v-if="widgetData.type === 'table'"
+        title="插入新行"
+        class="ex-mgr-10"
+        @click.stop="insertNewRow"
+        :size="16"
+      >
+        <ex-icon-insert-rows />
+      </el-icon>
+      <el-icon
+        v-if="widgetData.type === 'table'"
+        title="插入新列"
+        class="ex-mgr-10"
+        @click.stop="insertNewCol"
+        :size="16"
+      >
+        <ex-icon-insert-column />
+      </el-icon>
+      <el-icon
+        title="复制"
+        class="ex-mgr-10"
+        @click.stop="handleCopy"
+        :size="16"
+      >
+        <ex-icon-copy />
+      </el-icon>
+      <el-icon
+        title="删除"
+        class="ex-mgr-10"
+        @click.stop="handleDel"
+        :size="18"
+      >
+        <ex-icon-delete />
+      </el-icon>
     </div>
   </div>
 </template>

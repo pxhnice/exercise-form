@@ -277,7 +277,14 @@ const openJsonDialog = () => {
   title.value = "导出JSON";
   form.value.importName = `form${new Date().getTime()}.json`;
   let widgetList = deepClone(props.designer.widgetList.value);
-  const jsonString = JSON.stringify(widgetList, null, 2);
+  const jsonString = JSON.stringify(
+    {
+      formConfig: props.formConfig,
+      widgetList
+    },
+    null,
+    2
+  );
   codeValue.value = jsonString;
   isShowJSON.value = true;
 };

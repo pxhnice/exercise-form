@@ -9,7 +9,7 @@
     <div class="ex-widget-container">
       <div class="ex-widget-container-box">
         <el-scrollbar class="ex-widget-box-scrollbar">
-          <el-collapse v-model="activeNames">
+          <el-collapse v-if="groupValue == 'ZJ'" v-model="activeNames">
             <el-collapse-item title="容器组件" name="1">
               <draggable
                 :group="group"
@@ -68,6 +68,60 @@
               </draggable>
             </el-collapse-item>
           </el-collapse>
+          <div v-else>
+            <el-card class="ex-widget-temp ex-mgt-10" shadow="never">
+              <el-tooltip
+                placement="right"
+                :offset="30"
+                :effect="dark ? 'dark' : 'light'"
+              >
+                <template #content>
+                  <div style="width: 500px">
+                    <img
+                      style="width: 100%"
+                      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                      alt=""
+                    />
+                  </div>
+                </template>
+                <img
+                  style="width: 100%"
+                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  alt=""
+                />
+              </el-tooltip>
+              <div class="ex-temp-btn ex-mgt-10">
+                <div>#模版名称</div>
+                <el-button type="primary" link>加载此模板</el-button>
+              </div>
+            </el-card>
+            <el-card class="ex-widget-temp ex-mgt-10" shadow="never">
+              <el-tooltip
+                placement="right"
+                :offset="30"
+                :effect="dark ? 'dark' : 'light'"
+              >
+                <template #content>
+                  <div style="width: 500px">
+                    <img
+                      style="width: 100%"
+                      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                      alt=""
+                    />
+                  </div>
+                </template>
+                <img
+                  style="width: 100%"
+                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  alt=""
+                />
+              </el-tooltip>
+              <div class="ex-temp-btn ex-mgt-10">
+                <div>#模版名称</div>
+                <el-button type="primary" link>加载此模板</el-button>
+              </div>
+            </el-card>
+          </div>
         </el-scrollbar>
       </div>
     </div>
@@ -77,7 +131,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
 import { containers, baseFields, customs } from "@exercise-form/constants";
-import { optionsKeys, bannedWidgetKeys } from "../form-designer";
+import { optionsKeys, bannedWidgetKeys, darkKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 
 const props = defineProps(desPanelProps);
@@ -89,6 +143,7 @@ const group = {
 };
 const optionsData = inject(optionsKeys);
 const bannedWidgets = inject(bannedWidgetKeys);
+const dark = inject(darkKeys);
 const groupValue = ref("ZJ");
 const activeNames = ref(["1", "2", "3"]);
 const containerList = computed(() => {

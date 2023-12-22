@@ -381,3 +381,12 @@
   width: 100%;
   min-height: 100%;
 }
+
+.ex-widget-temp {
+  .ex-temp-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+}

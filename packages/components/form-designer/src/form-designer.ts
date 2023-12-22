@@ -59,7 +59,7 @@ export const formDesignerProps = {
     type: definePropType<DesOptionsDataType>(Object),
     default() {
       return {
-        templateButton: false, //是否显示模版栏
+        templateButton: true, //是否显示模版栏
         treeFormButton: true, //是否显示预览表单按钮
         previewFormButton: true, //是否显示预览表单按钮
         exportJsonButton: true, //是否显示导出JSON器按钮

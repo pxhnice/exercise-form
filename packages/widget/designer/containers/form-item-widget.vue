@@ -12,7 +12,7 @@
       :label="widgetData.options.label"
       :required="widgetData.options.required"
       :label-width="widgetData.options.labelWidth"
-      @click.prevent="onClickItem"
+      @click.stop="onClickItem"
     >
       <component
         v-if="widgetData.type"
@@ -28,7 +28,7 @@
       v-else
       :is="`${widgetData.type}-widget`"
       :widget-data="widgetData"
-      @click.prevent="onClickItem"
+      @click.stop="onClickItem"
     />
   </container-wrapper>
 </template>

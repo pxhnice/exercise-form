@@ -81,7 +81,8 @@ export const createDesigner = () => {
         let newRows: DesWidgetConfigType = {
           name: "tr",
           type: "table-tr",
-          id: "table-tr-" + getUniqueId(),
+          id: "table-tr_" + getUniqueId(),
+          category: "container",
           options: {},
           children: []
         };
@@ -138,7 +139,6 @@ export const createDesigner = () => {
     copyWidget(parentList: DesWidgetListType, widget: DesWidgetConfigType) {
       let newWidget = this.copyDeepWidget(deepClone(widget));
       parentList.push(newWidget);
-
       this.emitHistoryChange();
     },
 
@@ -191,6 +191,7 @@ export const createDesigner = () => {
         name: "tr",
         type: "table-tr",
         id: "table-tr-" + getUniqueId(),
+        category: "container",
         options: {},
         children: []
       };

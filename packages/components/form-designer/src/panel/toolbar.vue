@@ -92,7 +92,7 @@
       </el-form>
       <ex-code-editor
         v-model="codeValue"
-        :height="500"
+        :height="400"
         :dark="dark"
         :disabled="true"
         lang="json"
@@ -141,7 +141,7 @@
       </el-form>
       <ex-code-editor
         v-model="codeValue"
-        :height="500"
+        :height="400"
         :dark="dark"
         :disabled="true"
         lang="vue"

@@ -14,10 +14,6 @@ export const config: UserConfig = {
       message: "Released under the MIT License.",
       copyright: "Copyright © 2023-PRESENT vangleer and Vangle contributors"
     },
-    algolia: {
-      apiKey: "your_api_key",
-      indexName: "exercise-form"
-    },
     nav: [
       { text: "指南", link: "/guide/design" },
       { text: "组件", link: "/components/designer" }

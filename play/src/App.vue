@@ -2,11 +2,7 @@
   <div class="home">
     <el-header class="demo-header">
       <div class="demo-header-box">
-        <img
-          style="width: 25px; height: 25px"
-          class="ex-mgr-10"
-          src="./assets/svg/logo.svg"
-        />
+        <el-icon class="ex-mgr-10" :size="25"> <Logo /></el-icon>
         <span class="name ex-mgr-10">Exercise Form 表单构建器</span>
         <span class="ver">V0.0.0-dev.1</span>
       </div>
@@ -24,7 +20,11 @@
           />
         </div>
         <div class="ex-mgl-10">
-          <el-link @click="to('https://exercise-form.surge.sh/')">
+          <el-link
+            @click="
+              to('https://pxhnice.github.io/exercise-form-docs.github.io/')
+            "
+          >
             文档
             <el-icon style="margin-left: 5px" :size="20"><Coin /></el-icon>
           </el-link>
@@ -53,6 +53,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { templateList } from "./constants/temp";
+import Logo from "@/assets/svg/logo.svg";
 const dark = ref(false);
 const color = ref("#409eff");
 const formData = ref({});

@@ -1,19 +1,16 @@
 {
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
-    "strict": true,
-    "allowJs": false,
-    "noUnusedLocals": true,
-    "removeComments": false,
-    "target": "ESNext",
+    "lib": ["ESNext","DOM"],
     "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "target": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*":["./src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

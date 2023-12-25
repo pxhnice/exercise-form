@@ -4,9 +4,13 @@ export const config: UserConfig = {
   title: "Exercise Form",
   description: "a Vue 3 based component library for designers and developers",
   lastUpdated: true,
+  base: "/exercise-form-docs.github.io/",
   head: [
     // 图标配置
-    ["link", { rel: "icon", href: "/images/logo.svg" }]
+    [
+      "link",
+      { rel: "icon", href: "/exercise-form-docs.github.io/images/logo.svg" }
+    ]
   ],
   themeConfig: {
     logo: "/images/logo.svg",

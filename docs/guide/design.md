@@ -7,7 +7,7 @@ ExFormRender负责将表单JSON渲染为Vue组件。其中还导出有代码编�
 
 Exercise Form提供了丰富的组件属性设置、表单交互事件和API方法，并且为开发者预留了拓展组件库的二次开发接口。
 
-[项目演示](https://ex-form-play.surge.sh/)
+[项目演示](https://pxhnice.github.io/exercise-form.github.io/)
 
 ## 安装
 

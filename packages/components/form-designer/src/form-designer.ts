@@ -23,6 +23,12 @@ type formJsonType = {
   widgetList: DesWidgetListType;
 };
 
+export type templateDataType = {
+  name: string;
+  img: string;
+  widgetList: DesWidgetListType;
+};
+
 export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
@@ -95,6 +101,15 @@ export const formDesignerProps = {
    */
   settingProperty: {
     type: Array,
+    default() {
+      return [];
+    }
+  },
+  /**
+   * @description 模板列表
+   */
+  templateList: {
+    type: definePropType<Array<templateDataType>>(Array),
     default() {
       return [];
     }

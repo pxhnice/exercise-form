@@ -3,6 +3,7 @@ import {
   DesWidgetListType,
   DesFormConfigType
 } from "@exercise-form/constants";
+import { templateDataType } from "../form-designer";
 import { definePropType } from "@exercise-form/utils";
 
 export const desPanelProps = {
@@ -33,5 +34,11 @@ export const desPanelProps = {
   selectWidgetId: {
     type: String,
     default: " "
+  },
+  templateList: {
+    type: definePropType<Array<templateDataType>>(Array),
+    default() {
+      return [];
+    }
   }
 };

@@ -69,7 +69,12 @@
             </el-collapse-item>
           </el-collapse>
           <div v-else>
-            <el-card class="ex-widget-temp ex-mgt-10" shadow="never">
+            <el-card
+              v-for="(temp, index) in templateList"
+              :key="index"
+              class="ex-widget-temp ex-mgt-10"
+              shadow="never"
+            >
               <el-tooltip
                 placement="right"
                 :offset="30"
@@ -77,48 +82,21 @@
               >
                 <template #content>
                   <div style="width: 500px">
-                    <img
-                      style="width: 100%"
-                      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                      alt=""
-                    />
+                    <img style="width: 100%" :src="temp.img" />
                   </div>
                 </template>
-                <img
-                  style="width: 100%"
-                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                  alt=""
-                />
+                <img style="width: 100%" :src="temp.img" />
               </el-tooltip>
               <div class="ex-temp-btn ex-mgt-10">
-                <div>#模版名称</div>
-                <el-button type="primary" link>加载此模板</el-button>
-              </div>
-            </el-card>
-            <el-card class="ex-widget-temp ex-mgt-10" shadow="never">
-              <el-tooltip
-                placement="right"
-                :offset="30"
-                :effect="dark ? 'dark' : 'light'"
-              >
-                <template #content>
-                  <div style="width: 500px">
-                    <img
-                      style="width: 100%"
-                      src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                      alt=""
-                    />
-                  </div>
-                </template>
-                <img
-                  style="width: 100%"
-                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                  alt=""
-                />
-              </el-tooltip>
-              <div class="ex-temp-btn ex-mgt-10">
-                <div>#模版名称</div>
-                <el-button type="primary" link>加载此模板</el-button>
+                <div style="font-weight: bold">
+                  #{{ index + 1 }}{{ temp.name }}
+                </div>
+                <el-button
+                  @click="handleLoadTemplate(temp.widgetList)"
+                  type="primary"
+                  link
+                  >加载此模板</el-button
+                >
               </div>
             </el-card>
           </div>
@@ -130,7 +108,10 @@
 
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
+import { ElMessageBox } from "element-plus";
+import type { Action } from "element-plus";
 import { containers, baseFields, customs } from "@exercise-form/constants";
+import type { DesWidgetListType } from "@exercise-form/constants";
 import { optionsKeys, bannedWidgetKeys, darkKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 
@@ -156,7 +137,22 @@ const fieldsList = computed(() =>
 const customsList = computed(() =>
   customs.filter((item) => !bannedWidgets?.value.includes(item.type))
 );
+
 const handleClone = (target: any) => {
   return props.designer.cloneWidget(target);
+};
+const handleLoadTemplate = (list: DesWidgetListType) => {
+  ElMessageBox.alert(
+    "是否加载此模板？加载后会覆盖当前表单，你可以使用“撤销”功能恢复。",
+    "提示",
+    {
+      showCancelButton: true,
+      callback: (action: Action) => {
+        if (action == "confirm") {
+          props.designer.loadWidget(list);
+        }
+      }
+    }
+  );
 };
 </script>

@@ -46,11 +46,13 @@
       :theme-color="color"
       :form-data="formData"
       :form-json="formJson"
+      :template-list="templateList"
     />
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
+import { templateList } from "./constants/temp";
 const dark = ref(false);
 const color = ref("#409eff");
 const formData = ref({});

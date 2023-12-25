@@ -486,6 +486,12 @@ export const createDesigner = () => {
       if (form) {
         this.desFormConfig.value = form as DesFormConfigType;
       }
+    },
+
+    loadWidget(list: DesWidgetListType) {
+      this.widgetList.value = list;
+
+      this.emitHistoryChange();
     }
   };
 };

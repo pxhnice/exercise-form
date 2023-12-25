@@ -10,6 +10,7 @@
             :form-config="desFormConfig"
             :select-widget="selectWidget"
             :select-widget-id="selectWidgetId"
+            :template-list="templateList"
           />
         </el-aside>
         <el-container>

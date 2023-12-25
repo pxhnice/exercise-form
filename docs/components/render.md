@@ -19,23 +19,8 @@ const widgetList = ref([]) //组件列表
 ```
 ## 属性参数
 
-<table>
-    <tr>
-      <th>属性名</th>
-      <th>说明</th>
-      <th>类型</th>
-      <th>默认值</th>
-    </tr>
-    <tr>
-      <td>form-config</td>
-      <td>表单设置参数对象</td>
-      <td>object</td>
-      <td>{}</td>
-    </tr>
-    <tr>
-      <td>widget-list</td>
-      <td>组件列表数据</td>
-      <td>array</td>
-      <td>[]</td>
-    </tr>
-  </table>
+
+| 属性名        | 描述         |  类型  | 默认值 |
+| ------------- | ------------ | :----: | :----: |
+| `form-config` | 表单设置参数 | object |   -    |
+| `widget-list` | 列表数据     | array  |   -    |

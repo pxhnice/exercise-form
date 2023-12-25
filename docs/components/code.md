@@ -14,41 +14,10 @@ const codeValue = ref()
 ```
 ## 属性参数
 
-<table>
-    <tr>
-      <th>属性名</th>
-      <th>说明</th>
-      <th>类型</th>
-      <th>默认值</th>
-    </tr>
-    <tr>
-      <td>v-model</td>
-      <td>编辑器数据</td>
-      <td>string</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td>code-style</td>
-      <td>样式</td>
-      <td>object</td>
-      <td>—</td>
-    </tr>
-     <tr>
-      <td>lang</td>
-      <td>编辑器语言</td>
-      <td>string</td>
-      <td>javascript</td>
-    </tr>
-    <tr>
-      <td>disabled</td>
-      <td>禁用</td>
-      <td>boolean</td>
-      <td>false</td>
-    </tr>
-      <tr>
-      <td>dark</td>
-      <td>黑夜模式</td>
-      <td>boolean</td>
-      <td>false</td>
-    </tr>
-  </table>
+| 属性名       | 描述     |  类型   |   默认值   |
+| ------------ | -------- | :-----: | :--------: |
+| `v-model`    | 绑定数据 | string  |     -      |
+| `code-style` | 样式     | object  |     -      |
+| `lang`       | 语言     | string  | javascript |
+| `disabled`   | 禁用     | boolean |   false    |
+| `dark`       | 黑夜模式 | boolean |   false    |

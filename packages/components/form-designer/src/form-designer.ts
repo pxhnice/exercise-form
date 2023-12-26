@@ -1,8 +1,8 @@
 import { definePropType } from "@exercise-form/utils";
 import { InjectionKey, Ref } from "vue";
 import type {
-  DesFormConfigType,
-  DesWidgetListType
+  DesFormJsonType,
+  DesTemplateDataType
 } from "@exercise-form/constants";
 
 export type DesOptionsDataType = {
@@ -18,17 +18,6 @@ export type DesOptionsDataType = {
   resetFormJson: boolean;
 };
 
-type formJsonType = {
-  formConfig: DesFormConfigType;
-  widgetList: DesWidgetListType;
-};
-
-export type templateDataType = {
-  name: string;
-  img: string;
-  widgetList: DesWidgetListType;
-};
-
 export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
@@ -36,7 +25,7 @@ export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 export const darkKeys: InjectionKey<Ref<boolean>> = Symbol();
 
 export const formDesignerEmits = {
-  change: (desData: formJsonType) => desData
+  change: (desData: DesFormJsonType) => desData
 };
 
 export const formDesignerProps = {
@@ -53,7 +42,7 @@ export const formDesignerProps = {
    * @description 构建数据
    */
   formJson: {
-    type: definePropType<formJsonType>(Object),
+    type: definePropType<DesFormJsonType>(Object),
     default() {
       return {};
     }
@@ -109,7 +98,7 @@ export const formDesignerProps = {
    * @description 模板列表
    */
   templateList: {
-    type: definePropType<Array<templateDataType>>(Array),
+    type: definePropType<Array<DesTemplateDataType>>(Array),
     default() {
       return [];
     }

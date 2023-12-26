@@ -4,29 +4,43 @@ export type DesFormAlign = "left" | "top" | "right";
 export type DesFormPageType = "dialog" | "page";
 export type DesPatternType = "pc" | "pad" | "h5";
 
+import type { DesWidgetListType } from "./widget";
+
 export type DesFormConfigType = {
-  size: DesFormSize;
-  labelPosition: DesFormLabelPosition;
-  align: DesFormAlign;
-  labelWidth: string | number;
-  modelName: string;
-  formName: string;
-  rulesName: string;
-  patternType: DesPatternType;
-  isPageType: DesFormPageType;
-  hideRequiredAsterisk: boolean;
-  cssCode: string;
-  customClass: [];
-  functions: string;
-  onFormCreated: string;
-  onFormMounted: string;
-  onFormDataChange: string;
-  [key: string]: any;
+  size?: DesFormSize;
+  labelPosition?: DesFormLabelPosition;
+  align?: DesFormAlign;
+  labelWidth?: string | number;
+  modelName?: string;
+  formName?: string;
+  rulesName?: string;
+  patternType?: DesPatternType;
+  isPageType?: DesFormPageType;
+  hideRequiredAsterisk?: boolean;
+  cssCode?: string;
+  customClass?: [];
+  functions?: string;
+  onFormCreated?: string;
+  onFormMounted?: string;
+  onFormDataChange?: string;
+  // [key: string]: any;
 };
+
 export type DesHistoryType = {
   index: number;
   maxStep: number;
   steps: any[];
+};
+// 表单JSON数据
+export type DesFormJsonType = {
+  formConfig?: DesFormConfigType;
+  widgetList: DesWidgetListType;
+};
+// 表单模板数据
+export type DesTemplateDataType = {
+  name: string;
+  img: string;
+  widgetList: DesWidgetListType;
 };
 
 // 表单配置

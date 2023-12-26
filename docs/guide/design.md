@@ -14,11 +14,14 @@ Exercise Form提供了丰富的组件属性设置、表单交互事件和API方�
 > 由于该组件基于Element Plus搭建，使用前请先安装[Element Plus](https://element-plus.org/zh-CN/guide/installation.html)、
 > 组件[图标](https://element-plus.org/zh-CN/component/icon.html)，再安装该组件，安装如下。
 
-```sh
+::: code-group
+```bash [npm]
  npm install exercise-form
- &&
+```
+```bash [pnpm]
  pnpm add exercise-form
 ```
+:::
 
 ## 开始
 

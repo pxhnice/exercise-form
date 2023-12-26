@@ -3,10 +3,12 @@ layout: home
 
 hero:
   name: Exercise Form
-  text:
+  text: 快速表单组件构建器
   tagline: 基于 Vue 3面向设计师和开发者的组件库
+  image:
+    src: /images/logo.svg
   actions:
-    - theme: alt
+    - theme: brand
       text: 快速开始
       link: /guide/design
 

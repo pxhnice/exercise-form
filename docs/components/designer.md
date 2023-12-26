@@ -8,9 +8,10 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
+import type { DesFormJsonType } from "exercise-form";
 
 const formData = ref({}); //表单数据
-const formJson = reactive({
+const formJson = reactive<DesFormJsonType>({
   formConfig: {}, //表单设置
   widgetList: [] //组件列表
 });
@@ -27,7 +28,6 @@ const formJson = reactive({
 ```html
 <ex-form-designer :theme-color="color" />
 ```
-
 
 ## 黑夜模式
 
@@ -70,10 +70,10 @@ const formJson = reactive({
 | `templateButton`    | 是否显示模版栏               | boolean |  true  |
 | `treeFormButton`    | 是否显示表单树形按钮         | boolean |  true  |
 | `previewFormButton` | 是否显示预览表单按钮         | boolean |  true  |
-| `exportJsonButton`  | 是否显示JSON按钮             | boolean |  true  |
-| `exportCodeButton`  | 是否显示代码按钮             | string  |  true  |
+| `exportJsonButton`  | 是否显示导出JSON按钮         | boolean |  true  |
+| `exportCodeButton`  | 是否显示导出代码按钮         | string  |  true  |
 | `generateSFCButton` | 是否显示生成SFC按钮          | boolean |  true  |
-| `pageTypeButton`    | 是否显示页面类型按钮         | boolean |  true  |
+| `pageTypeButton`    | 是否显示导出页面类型按钮     | boolean |  true  |
 | `copyDataButton`    | 是否显示复制按钮             | boolean |  true  |
-| `saveFileButton`    | 是否显示文件按钮             | boolean |  true  |
+| `saveFileButton`    | 是否显示导出文件按钮         | boolean |  true  |
 | `resetFormJson`     | 是否显示初始化时重置表单为空 | boolean | false  |

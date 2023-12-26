@@ -1,6 +1,7 @@
 # From Designer 表单构建器 
 
 ## 基础用法
+
 ```vue
 <template> 
   <ex-form-render
@@ -11,14 +12,15 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue"
+import type { DesWidgetListType, DesFormConfigType } from "exercise-form"
 
 const vFormRenderRef = ref()
-const formConfig = ref({}) //表单数据
-const widgetList = ref([]) //组件列表
+const formConfig = ref<DesFormConfigType>({}) //表单数据
+const widgetList = ref<DesWidgetListType>([]) //组件列表
 </script>
 ```
-## 属性参数
 
+## 属性参数
 
 | 属性名        | 描述         |  类型  | 默认值 |
 | ------------- | ------------ | :----: | :----: |

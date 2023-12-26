@@ -9,9 +9,10 @@
 <script lang="ts" setup>
 import { ref } from "vue"
 
-const codeValue = ref()
+const codeValue = ref<string>()
 </script>
 ```
+
 ## 属性参数
 
 | 属性名       | 描述     |  类型   |   默认值   |

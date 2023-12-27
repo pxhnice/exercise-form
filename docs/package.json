@@ -7,6 +7,9 @@
     "build": "vitepress build",
     "serve": "vitepress serve"
   },
+  "dependencies": {
+    "vue": "^3.2.36"
+  },
   "devDependencies": {
     "vitepress": "1.0.0-rc.32"
   },

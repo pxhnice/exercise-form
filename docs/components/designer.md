@@ -1,6 +1,7 @@
-# From Designer 表单构建器
+# 表单构建器
 
 ## 基础用法
+
 
 ```vue
 <template>

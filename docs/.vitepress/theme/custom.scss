@@ -1,7 +1,7 @@
 :root {
   --vp-button-brand-bg: #409eff;
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, #409eff 30%, #8fd3f4);
+  --vp-home-hero-name-background: linear-gradient(180deg, #409eff 20%, #8fd3f4);
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
     #409eff 30%,
@@ -9,11 +9,12 @@
   );
   --vp-home-hero-image-filter: blur(180px);
   --vp-c-brand-1: #409eff;
+  --vp-sidebar-bg-color: #fff;
+  --vp-primary-color: #409eff;
 }
 
 .VPNav {
   .VPNavBar {
-    background-color: #fff;
     border-bottom: 1px solid rgba(60, 60, 67, 0.13);
   }
 
@@ -29,7 +30,12 @@
 
   .title {
     font-size: 20px;
+    border-bottom-color: transparent !important;
   }
+}
+
+.VPNavBarSearch {
+  justify-content: flex-end;
 }
 
 .VPContent {
@@ -47,8 +53,14 @@
 }
 
 .dark {
+  --vp-sidebar-bg-color: #1b1b1f;
+
   .VPNav .VPNavBar {
-    background-color: #1e1e20;
+    background-color: transparent;
     border-bottom: 1px solid #000;
   }
+}
+
+.outline-link.active {
+  color: var(--vp-primary-color) !important;
 }

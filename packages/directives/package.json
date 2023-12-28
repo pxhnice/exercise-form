@@ -2,5 +2,5 @@
   "name": "@exercise-form/directives",
   "version": "0.0.1",
   "main": "index.ts",
-  "license": "ISC"
+  "license": "MIT"
 }

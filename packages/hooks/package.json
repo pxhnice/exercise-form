@@ -1,7 +1,6 @@
 {
   "name": "@exercise-form/hooks",
   "version": "0.0.1",
-  "description": "",
   "main": "index.ts",
-  "license": "ISC"
+  "license": "MIT"
 }

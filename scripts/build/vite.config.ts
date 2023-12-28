@@ -1,12 +1,8 @@
-import vue from '@vitejs/plugin-vue';
-import path from 'node:path';
-import DefineOptions from 'unplugin-vue-define-options/vite';
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import svgLoader from 'vite-svg-loader';
-
-// import { exPackage, exPath } from './src';
+import vue from "@vitejs/plugin-vue";
+import DefineOptions from "unplugin-vue-define-options/vite";
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
+import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   plugins: [
@@ -16,14 +12,10 @@ export default defineConfig({
         "../../packages/exercise-form/es",
         "../../packages/exercise-form/lib"
       ],
-      tsconfigPath: "../../tsconfig.json"
+      tsconfigPath: "../../tsconfig.base.json"
     }),
     DefineOptions(),
-    svgLoader(),
-    createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), "../../packages/icons/svg")],
-      symbolId: "icon-[name]"
-    })
+    svgLoader()
   ],
   build: {
     outDir: "es",
@@ -61,7 +53,7 @@ export default defineConfig({
         },
         {
           format: "cjs",
-          entryFileNames: "[name].cjs",
+          entryFileNames: "[name].js",
           preserveModules: true,
           exports: "named",
           dir: "../../packages/exercise-form/lib"

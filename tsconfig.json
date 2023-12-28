@@ -1,24 +1,7 @@
 {
-  "include": [
-    "packages",
-  ],
-  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "strict": true,
-    "allowJs": false,
-    "noUnusedLocals": true,
-    "removeComments": false,
-    "target": "ESNext",
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["node","vite/client","vite-plugin-svg-icons/client"],
-    "paths": {
-      "@exercise-form/*":["packages/*"]
-    }
-  }
+  "files": [],
+  "references": [
+    {"path": "./tsconfig.base.json"},
+    {"path": "./tsconfig.play.json"}
+  ]
 }

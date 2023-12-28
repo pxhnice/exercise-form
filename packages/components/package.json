@@ -1,7 +1,5 @@
 {
   "name": "@exercise-form/components",
   "version": "0.0.1",
-  "main": "index.ts",
-  "module": "index.ts",
-  "license": "ISC"
+  "main": "index.ts"
 }

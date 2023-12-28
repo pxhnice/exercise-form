@@ -1,21 +1,23 @@
 {
   "name": "exercise-form",
-  "version": "0.0.1-beta",
+  "version": "0.0.4-beta",
   "description": "A Component Library for Vue 3",
   "keywords": [
     "vue",
     "element-plus",
     "exercise-form"
   ],
-  "main": "lib/index.cjs",
+  "main": "lib/index.js",
   "module": "es/index.mjs",
   "types": "es/index.d.ts",
   "style": "dist/index.css",
+  "license": "MIT",
   "files": [
     "dist/*",
-    "es/*"
+    "es/*",
+    "lib/*",
+    "global.d.ts"
   ],
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://gitee.com/pxhgood/exercise-form.git"

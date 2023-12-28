@@ -2,7 +2,7 @@
   <div class="home">
     <el-header class="demo-header">
       <div class="demo-header-box">
-        <el-icon class="ex-mgr-10" :size="25"> <Logo /></el-icon>
+        <img class="ex-mgr-10" src="./assets/svg/logo.svg" alt="" />
         <span class="name ex-mgr-10">Exercise Form 表单构建器</span>
         <span class="ver">V0.0.0-dev.1</span>
       </div>
@@ -53,7 +53,6 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { templateList } from "./constants/temp";
-import Logo from "@/assets/svg/logo.svg";
 const dark = ref(false);
 const color = ref("#409eff");
 const formData = ref({});
@@ -91,6 +90,10 @@ body {
     .demo-header-box {
       display: flex;
       align-items: center;
+      img {
+        width: 25px;
+        height: 25px;
+      }
       .logo {
         font-size: 25px;
       }

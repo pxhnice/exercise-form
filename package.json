@@ -62,7 +62,6 @@
     "vite": "^5.0.2",
     "vite-plugin-dts": "^3.6.3",
     "vite-plugin-svg-icons": "^2.0.1",
-    "vitepress": "1.0.0-rc.32",
     "vitest": "^0.34.6",
     "vue": "^3.2.36"
   },

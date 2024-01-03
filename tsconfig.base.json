@@ -1,18 +1,14 @@
 {
-  "include": [
-    "packages/**/*.ts",
-    "packages/**/*.d.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue"
-  ],
+  "include": ["packages"],
   "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
     "allowJs": false,
+    "sourceMap": false,
     "noUnusedLocals": true,
     "removeComments": false,
-    "target": "ESNext",
+    "target": "es2018",
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,

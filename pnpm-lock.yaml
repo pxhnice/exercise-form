@@ -41,9 +41,6 @@ importers:
       '@exercise-form/hooks':
         specifier: workspace:^
         version: link:packages/hooks
-      '@exercise-form/plugins':
-        specifier: workspace:^
-        version: link:packages/plugins
       '@exercise-form/theme':
         specifier: workspace:^
         version: link:packages/theme
@@ -94,7 +91,7 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       '@types/node':
-        specifier: ^20.10.0
+        specifier: ^20.10.4
         version: 20.10.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.13.1
@@ -260,8 +257,6 @@ importers:
         version: 4.1.0(vue@3.4.3)
 
   packages/hooks: {}
-
-  packages/plugins: {}
 
   packages/theme:
     devDependencies:

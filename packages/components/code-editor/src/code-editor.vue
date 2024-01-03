@@ -19,7 +19,7 @@ import { Codemirror } from "vue-codemirror";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { codeEditorProps, codeEditorEmits, langs } from "./code-editor";
 
-defineOptions({ name: "ex-code-editor" });
+defineOptions({ name: "ExCodeEditor" });
 const emits = defineEmits(codeEditorEmits);
 const props = defineProps(codeEditorProps);
 const extensions = props.dark

@@ -76,7 +76,7 @@ import {
   darkKeys
 } from "./form-designer";
 
-defineOptions({ name: "ex-form-designer" });
+defineOptions({ name: "ExFormDesigner" });
 const emits = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
 

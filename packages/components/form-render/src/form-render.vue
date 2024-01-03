@@ -49,7 +49,7 @@ import { traverseFieldWidget, deepClone } from "@exercise-form/utils";
 import { MODEL_TYPE_LIST, DesWidgetConfigType } from "@exercise-form/constants";
 import { formRenderProps } from "./form-render";
 
-defineOptions({ name: "ex-form-render" });
+defineOptions({ name: "ExFormRender" });
 const props = defineProps(formRenderProps);
 
 const formRef = ref<FormInstance>();

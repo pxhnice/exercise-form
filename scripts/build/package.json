@@ -6,5 +6,5 @@
     "build": "vite build",
     "start": "gulp -f build-file.ts"
   },
-  "license": "ISC"
+  "license": "MIT"
 }

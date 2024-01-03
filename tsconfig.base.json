@@ -19,6 +19,6 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node", "vite/client", "vite-plugin-svg-icons/client"]
+    "types": ["node", "vite/client"]
   }
 }

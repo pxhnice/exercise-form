@@ -3,16 +3,20 @@ import DefineOptions from "unplugin-vue-define-options/vite";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import svgLoader from "vite-svg-loader";
+import {
+  exEsPath,
+  exLibPath,
+  pkgPath,
+  exTsConfigPath,
+  generateExternal
+} from "./src";
 
 export default defineConfig({
   plugins: [
     vue(),
     dts({
-      outDir: [
-        "../../packages/exercise-form/es",
-        "../../packages/exercise-form/lib"
-      ],
-      tsconfigPath: "../../tsconfig.base.json"
+      outDir: [exEsPath, exLibPath],
+      tsconfigPath: exTsConfigPath
     }),
     DefineOptions(),
     svgLoader()
@@ -21,42 +25,22 @@ export default defineConfig({
     outDir: "es",
     sourcemap: true,
     rollupOptions: {
-      external: [
-        "vue",
-        "element-plus",
-        "vue-codemirror",
-        "codemirror",
-        "@codemirror/lang-css",
-        "@codemirror/lang-html",
-        "@codemirror/lang-javascript",
-        "@codemirror/lang-json",
-        "@codemirror/lang-vue",
-        "@codemirror/theme-one-dark",
-        "file-saver",
-        "prettier/plugins/html",
-        "prettier/plugins/postcss",
-        "prettier/plugins/babel",
-        "prettier/plugins/estree",
-        "vuedraggable",
-        "prettier",
-        /\.scss/
-      ],
-      input: "../../packages/index.ts",
+      external: generateExternal(),
+      input: pkgPath,
       output: [
         {
           format: "es",
           entryFileNames: "[name].mjs",
           preserveModules: true,
-          preserveModulesRoot: "../../packages/exercise-form",
           exports: "named",
-          dir: "../../packages/exercise-form/es"
+          dir: exEsPath
         },
         {
           format: "cjs",
           entryFileNames: "[name].js",
           preserveModules: true,
           exports: "named",
-          dir: "../../packages/exercise-form/lib"
+          dir: exLibPath
         }
       ]
     },

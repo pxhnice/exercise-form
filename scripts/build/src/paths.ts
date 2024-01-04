@@ -11,3 +11,7 @@ export const themePath = resolve(pkgPath, "theme");
 export const compPackage = resolve(componentPath, "package.json");
 export const exPackage = resolve(exPath, "package.json");
 export const utilPackage = resolve(utilPath, "package.json");
+
+export const exEsPath = resolve(exPath, "es");
+export const exLibPath = resolve(exPath, "lib");
+export const exTsConfigPath = resolve(proPath, "tsconfig.base.json");

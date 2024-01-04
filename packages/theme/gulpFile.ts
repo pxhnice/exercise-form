@@ -1,4 +1,4 @@
-import { series, parallel, src, dest } from "gulp";
+import { src, dest } from "gulp";
 import autoprefixer from "gulp-autoprefixer";
 import gulpSass from "gulp-sass";
 import cleanCSS from "gulp-clean-css";
@@ -13,6 +13,5 @@ export const buildStyle = () => {
     .pipe(cleanCSS())
     .pipe(dest("dist"));
 };
-const build = parallel(series(buildStyle));
 
-export default build;
+export default buildStyle;

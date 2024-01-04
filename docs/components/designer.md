@@ -18,6 +18,9 @@ const formJson = reactive<DesFormJsonType>({
 });
 </script>
 ```
+::: warning
+使用时注意构建器高度问题，默认高度`100v`，自定义高度更改`style`即可。
+:::
 
 ## 主题
 
@@ -48,7 +51,7 @@ const formJson = reactive<DesFormJsonType>({
 | `form-json`      | 构建器数据     | object  |     -     |
 | `options-data`   | 构造器按钮配置 | object  |     -     |
 | `banned-widgets` | 禁用组件       |  array  |     -     |
-| `theme-color`    | 表单数据       | string  | `#409eff` |
+| `theme-color`    | 主题颜色       | string  | `#409eff` |
 | `dark`           | 黑夜模式       | boolean |   false   |
 
 #### formConfig
@@ -72,7 +75,7 @@ const formJson = reactive<DesFormJsonType>({
 | `treeFormButton`    | 是否显示表单树形按钮         | boolean |  true  |
 | `previewFormButton` | 是否显示预览表单按钮         | boolean |  true  |
 | `exportJsonButton`  | 是否显示导出JSON按钮         | boolean |  true  |
-| `exportCodeButton`  | 是否显示导出代码按钮         | string  |  true  |
+| `exportCodeButton`  | 是否显示导出代码按钮         | boolean |  true  |
 | `generateSFCButton` | 是否显示生成SFC按钮          | boolean |  true  |
 | `pageTypeButton`    | 是否显示导出页面类型按钮     | boolean |  true  |
 | `copyDataButton`    | 是否显示复制按钮             | boolean |  true  |

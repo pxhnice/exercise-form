@@ -22,6 +22,10 @@
     "type": "git",
     "url": "https://gitee.com/pxhgood/exercise-form.git"
   },
+  "peerDependencies": {
+    "vue": "^3.2.36",
+    "element-plus": "^2.4.3"
+  },
   "dependencies": {
     "@codemirror/lang-css": "^6.2.1",
     "@codemirror/lang-html": "^6.4.7",

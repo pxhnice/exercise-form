@@ -50,9 +50,10 @@
 .ex-is-container-drag::before {
   content: "";
   position: absolute;
-  top: -2px;
-  left: -2px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: 2px solid var(--el-color-primary) !important;
+  box-sizing: border-box;
 }

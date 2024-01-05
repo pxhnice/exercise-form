@@ -1,4 +1,4 @@
-export * from "@exercise-form/components/index";
+export * from "@exercise-form/components";
 export * from "@exercise-form/constants";
 export * from "@exercise-form/utils";
 

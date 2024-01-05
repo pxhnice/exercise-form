@@ -6,7 +6,7 @@ import ExForm from "../../packages/exercise-form";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import "element-plus/theme-chalk/dark/css-vars.css";
-import "../../packages/exercise-form/dist/index.css";
+import "../../packages/theme/src/index.scss";
 
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -14,6 +14,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // app.use(installIcon);
-app.use(ElementPlus, { locale: zhCn });
-app.use(ExForm);
+app.use(ElementPlus, { locale: zhCn, size: "default" });
+app.use(ExForm as any);
 app.mount("#app");

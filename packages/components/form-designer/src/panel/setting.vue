@@ -234,7 +234,7 @@ const formOptions = {
   labelWidth: "130px",
   labelPosition: "left"
 };
-const formConfig = props.formConfig;
+const formConfig = props.formConfig as { [key: string]: any };
 const dark = inject(darkKeys);
 const formComRef = ref();
 const groupValue = ref("bd");
@@ -247,8 +247,8 @@ const title = ref("");
 const fnName = ref("");
 const codeName = ref("");
 const globalCss = computed(() => {
-  let str = formConfig.cssCode.replaceAll("\n", "");
-  let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
+  let str = formConfig.cssCode?.replaceAll("\n", "");
+  let rules = str?.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
   rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
   rules = Array.from(new Set([...rules])) as RegExpMatchArray;
   return rules;

@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <el-form-item label="显示格式">
-      <el-select v-model="optionsModel.format" :teleported="false">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-        />
-      </el-select>
-    </el-form-item>
-  </div>
+  <el-form-item label="显示格式">
+    <el-select v-model="optionsModel.format" :teleported="false">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+      />
+    </el-select>
+  </el-form-item>
 </template>
 
 <script setup lang="ts">

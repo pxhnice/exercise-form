@@ -1,20 +1,14 @@
 <template>
-  <div>
-    <el-form-item label="自定义CSS样式">
-      <el-select
-        v-model="optionsModel.customClass"
-        multiple
-        :teleported="false"
-      >
-        <el-option
-          v-for="name in globalCssList"
-          :key="name"
-          :label="name"
-          :value="name"
-        />
-      </el-select>
-    </el-form-item>
-  </div>
+  <el-form-item label="自定义CSS样式">
+    <el-select v-model="optionsModel.customClass" multiple :teleported="false">
+      <el-option
+        v-for="name in globalCssList"
+        :key="name"
+        :label="name"
+        :value="name"
+      />
+    </el-select>
+  </el-form-item>
 </template>
 
 <script setup lang="ts">

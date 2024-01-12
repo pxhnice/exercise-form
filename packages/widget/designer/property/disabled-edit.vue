@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <el-form-item label="禁用">
-      <el-switch v-model="optionsModel.disabled" />
-    </el-form-item>
-  </div>
+  <el-form-item label="禁用">
+    <el-switch v-model="optionsModel.disabled" />
+  </el-form-item>
 </template>
 
 <script setup lang="ts">

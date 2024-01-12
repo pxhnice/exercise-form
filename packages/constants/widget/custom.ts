@@ -1,6 +1,6 @@
-import type { DesWidgetListType } from "./container";
+import type { DesWidgetList } from "./container";
 
-export const customs: DesWidgetListType = [
+export const customs: DesWidgetList = [
   {
     name: "图片",
     iconName: "image",

@@ -225,6 +225,7 @@
 import { ref, computed, watch, inject } from "vue";
 import { darkKeys } from "../form-designer";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
+import { getGlobalCss } from "@exercise-form/utils";
 import { desPanelProps } from "./panel";
 
 const props = defineProps(desPanelProps);
@@ -248,10 +249,7 @@ const fnName = ref("");
 const codeName = ref("");
 const globalCss = computed(() => {
   let str = formConfig.cssCode?.replaceAll("\n", "");
-  let rules = str?.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
-  rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
-  rules = Array.from(new Set([...rules])) as RegExpMatchArray;
-  return rules;
+  return getGlobalCss(str);
 });
 const firstName = computed(() => {
   return fnName.value.slice(0, fnName.value.length - 1);

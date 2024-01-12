@@ -46,7 +46,7 @@
 import { ref, onMounted } from "vue";
 import type { FormInstance } from "element-plus";
 import { traverseFieldWidget, deepClone } from "@exercise-form/utils";
-import { MODEL_TYPE_LIST, DesWidgetConfigType } from "@exercise-form/constants";
+import { MODEL_TYPE_LIST, DesWidget } from "@exercise-form/constants";
 import { formRenderProps } from "./form-render";
 
 defineOptions({ name: "ExFormRender" });
@@ -58,7 +58,7 @@ const originalData = ref<{ [key: string]: any }>({});
 const disabled = ref(false);
 
 const buildDefaultValueListFn = () => {
-  return function (widget: DesWidgetConfigType) {
+  return function (widget: DesWidget) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
       let { modelDefaultValue, name } = widget.options;
       formData.value[name] = modelDefaultValue ?? null;

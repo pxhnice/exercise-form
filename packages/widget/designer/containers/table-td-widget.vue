@@ -128,7 +128,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type { DesWidgetConfigType } from "@exercise-form/constants";
+import type { DesWidget } from "@exercise-form/constants";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
@@ -137,7 +137,7 @@ const isSelect = computed(
   () => props.designer.selectWidgetId.value == props.widgetData.id
 );
 
-const onDragAdd = (e: any, parent: DesWidgetConfigType) => {
+const onDragAdd = (e: any, parent: DesWidget) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);
@@ -172,20 +172,31 @@ const isMergeRight = computed(() => {
 });
 
 const isUpMerge = computed(() => {
+  let options: any;
+  let widgetTarget = props.parentList[props.widgetRow - 1];
+  if (widgetTarget) {
+    let children = widgetTarget.children;
+    if (children) options = children[props.widgetSub].options;
+  }
   return (
-    props.widgetRow <= 0 ||
-    props.parentList[props.widgetRow - 1].children[props.widgetSub].options
-      .colspan !== props.widgetData.options.colspan
+    props.widgetRow <= 0 || options.colspan !== props.widgetData.options.colspan
   );
 });
 
 const isDownMerge = computed(() => {
   let belowRowIndex = props.widgetRow + props.widgetData.options.rowspan;
+  let options: any;
+  let widgetTarget = props.parentList[belowRowIndex];
+  if (widgetTarget) {
+    let children = widgetTarget.children;
+    if (children) {
+      options = children[props.widgetSub].options;
+    }
+  }
   return (
     props.widgetRow >= props.rowLength - 1 ||
     belowRowIndex > props.rowLength - 1 ||
-    props.parentList[belowRowIndex].children[props.widgetSub].options
-      .colspan !== props.widgetData.options.colspan
+    options.colspan !== props.widgetData.options.colspan
   );
 });
 

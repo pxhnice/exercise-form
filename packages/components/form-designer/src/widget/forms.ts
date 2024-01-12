@@ -1,7 +1,4 @@
-import type {
-  DesWidgetListType,
-  DesFormConfigType
-} from "@exercise-form/constants";
+import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
 export const desFormsProps = {
@@ -12,13 +9,13 @@ export const desFormsProps = {
     }
   },
   formConfig: {
-    type: definePropType<DesFormConfigType>(Object),
+    type: definePropType<DesFormConfig>(Object),
     default() {
       return {};
     }
   },
   widgetList: {
-    type: definePropType<DesWidgetListType>(Array),
+    type: definePropType<DesWidgetList>(Array),
     default() {
       return [];
     }

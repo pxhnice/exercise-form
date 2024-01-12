@@ -5,7 +5,7 @@ import type {
   DesTemplateDataType
 } from "@exercise-form/constants";
 
-export type DesOptionsDataType = {
+export type DesOptions = {
   templateButton: boolean;
   previewFormButton: boolean;
   treeFormButton: boolean;
@@ -18,7 +18,7 @@ export type DesOptionsDataType = {
   resetFormJson: boolean;
 };
 
-export const optionsKeys: InjectionKey<Ref<DesOptionsDataType>> = Symbol();
+export const optionsKeys: InjectionKey<Ref<DesOptions>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 
@@ -50,8 +50,8 @@ export const formDesignerProps = {
   /**
    * @description 构造器显示配置项
    */
-  optionsData: {
-    type: definePropType<DesOptionsDataType>(Object),
+  options: {
+    type: definePropType<DesOptions>(Object),
     default() {
       return {
         templateButton: true, //是否显示模版栏

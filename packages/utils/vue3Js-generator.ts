@@ -1,16 +1,16 @@
-import { getRegExp, MODEL_TYPE_LIST } from '@exercise-form/constants';
+import { getRegExp, MODEL_TYPE_LIST } from "@exercise-form/constants";
 
 import type {
-  DesWidgetConfigType,
-  DesWidgetListType,
-  DesFormConfigType
+  DesWidget,
+  DesWidgetList,
+  DesFormConfig
 } from "@exercise-form/constants";
 
 export function traverseFieldWidget(
-  widgetList: DesWidgetListType,
-  cd: (wt: DesWidgetConfigType) => void
+  widgetList: DesWidgetList,
+  cd: (wt: DesWidget) => void
 ) {
-  widgetList.forEach((widget: DesWidgetConfigType) => {
+  widgetList.forEach((widget: DesWidget) => {
     if (widget.category === "container") {
       traverseFieldWidget(widget.children, cd);
     } else {
@@ -20,7 +20,7 @@ export function traverseFieldWidget(
 }
 
 export function buildDefaultValueListFn(defaultValueList: [string]) {
-  return function (widget: DesWidgetConfigType) {
+  return function (widget: DesWidget) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
       let modelDefaultValue = widget.options.modelDefaultValue;
       defaultValueList.push(
@@ -31,7 +31,7 @@ export function buildDefaultValueListFn(defaultValueList: [string]) {
 }
 
 function buildRulesListFn(rulesList: [string]) {
-  return function (widget: DesWidgetConfigType) {
+  return function (widget: DesWidget) {
     let { required, validation, validationHint } = widget.options;
     if (required || validation) {
       let requiredText = required
@@ -52,7 +52,7 @@ function buildRulesListFn(rulesList: [string]) {
 }
 
 function buildOptionsItemListFn(optionsValueList: [string]) {
-  return function (widget: DesWidgetConfigType) {
+  return function (widget: DesWidget) {
     let { optionsItem } = widget.options;
     if (optionsItem) {
       optionsValueList.push(
@@ -63,14 +63,14 @@ function buildOptionsItemListFn(optionsValueList: [string]) {
 }
 
 export function genVue3JS(
-  formConfig: DesFormConfigType,
-  widgetList: DesWidgetListType
+  formConfig: DesFormConfig,
+  widgetList: DesWidgetList
 ) {
   let defaultValueList: any = [];
   let rulesList: any = [];
   let optionsList: any = [];
   let { formName, modelName, rulesName } = formConfig;
-  traverseFieldWidget(widgetList, (widget: DesWidgetConfigType) => {
+  traverseFieldWidget(widgetList, (widget: DesWidget) => {
     buildDefaultValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
     buildOptionsItemListFn(optionsList)(widget);

@@ -1,9 +1,9 @@
-# 表单渲染器 
+# 表单渲染器
 
 ## 基础用法
 
 ```vue
-<template> 
+<template>
   <ex-form-render
     ref="vFormRenderRef"
     :widget-list="widgetList"
@@ -11,12 +11,12 @@
   />
 </template>
 <script lang="ts" setup>
-import { ref } from "vue"
-import type { DesWidgetListType, DesFormConfigType } from "exercise-form"
+import { ref } from "vue";
+import type { DesWidgetList, DesFormConfig } from "exercise-form";
 
-const vFormRenderRef = ref()
-const formConfig = ref<DesFormConfigType>({}) //表单数据
-const widgetList = ref<DesWidgetListType>([]) //组件列表
+const vFormRenderRef = ref();
+const formConfig = ref<DesFormConfig>({}); //表单数据
+const widgetList = ref<DesWidgetList>([]); //组件列表
 </script>
 ```
 

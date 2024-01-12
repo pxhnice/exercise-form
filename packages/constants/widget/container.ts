@@ -1,16 +1,16 @@
-export type DesWidgetConfigType = {
+export type DesWidget = {
   name: string;
   iconName?: string;
   category?: string;
   type: string;
-  // children?: Array<WidgetConfigType>;
+  children?: DesWidget[];
   options: { [key: string]: any };
   [key: string]: any;
 };
 
-export type DesWidgetListType = Array<DesWidgetConfigType>;
+export type DesWidgetList = Array<DesWidget>;
 
-export const containers: DesWidgetListType = [
+export const containers: DesWidgetList = [
   {
     name: "栅格",
     iconName: "grid",

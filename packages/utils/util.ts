@@ -18,3 +18,11 @@ export function getUniqueId() {
   let uuid = Math.random().toString(36).substr(2, 5);
   return uuid;
 }
+
+// 获取全局css
+export function getGlobalCss(str: string) {
+  let rules: Array<string> = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
+  rules = rules.map((item) => item.trim());
+  rules = Array.from(new Set([...rules]));
+  return rules;
+}

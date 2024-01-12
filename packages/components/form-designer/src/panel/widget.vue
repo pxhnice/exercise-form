@@ -111,7 +111,7 @@ import { ref, computed, inject } from "vue";
 import { ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
 import { containers, baseFields, customs } from "@exercise-form/constants";
-import type { DesWidgetListType } from "@exercise-form/constants";
+import type { DesWidgetList } from "@exercise-form/constants";
 import { optionsKeys, bannedWidgetKeys, darkKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 
@@ -141,7 +141,7 @@ const customsList = computed(() =>
 const handleClone = (target: any) => {
   return props.designer.cloneWidget(target);
 };
-const handleLoadTemplate = (list: DesWidgetListType) => {
+const handleLoadTemplate = (list: DesWidgetList) => {
   ElMessageBox.alert(
     "是否加载此模板？加载后会覆盖当前表单，你可以使用“撤销”功能恢复。",
     "提示",

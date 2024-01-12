@@ -1,49 +1,74 @@
-import {
-  baseFields,
-  containers,
-  customs,
-  DES_FORM_CONFIG,
-  DES_HISTORY
-} from "@exercise-form/constants";
+import { baseFields, containers, customs } from "@exercise-form/constants";
 import { reactive, toRefs } from "vue";
-
-import { localStorageUtils } from "./storage";
-import { deepClone, getUniqueId } from "./util";
-
+import {
+  localStorageUtils,
+  deepClone,
+  getUniqueId
+} from "@exercise-form/utils";
 import type {
-  DesFormConfigType,
-  DesWidgetConfigType,
-  DesWidgetListType
+  DesFormConfig,
+  DesWidget,
+  DesWidgetList
 } from "@exercise-form/constants";
-const desFormConfig = deepClone(DES_FORM_CONFIG);
-const desHistory = deepClone(DES_HISTORY);
-const widgetList: DesWidgetListType = []; //组件数据列表
-const selectWidgetId = ""; //当前选中ID
-const selectWidget = {} as DesWidgetConfigType; //当前选中表单组件
 
-const createTarget = () => {
-  return {
-    desFormConfig,
-    desHistory,
-    widgetList,
-    selectWidgetId,
-    selectWidget
-  };
+export type DesHistory = {
+  index: number;
+  maxStep: number;
+  steps: any[];
 };
 
-export const createDesigner = () => {
+export type Designer = {
+  desFormConfig: { [key: string]: any }; //表单配置
+  desHistory: DesHistory; //历史记录
+  widgetList: DesWidgetList; //表单列表
+  selectWidgetId: string; //选择ID
+  selectWidget: DesWidget;
+};
+
+const selectWidget = {} as DesWidget; //当前选中表单组件
+
+export function useDesigner() {
   return {
-    ...toRefs(reactive(createTarget())),
+    ...toRefs(
+      reactive<Designer>({
+        desFormConfig: {
+          size: "default",
+          labelPosition: "left",
+          align: "left",
+          labelWidth: 100,
+          modelName: "formData",
+          formName: "formRef",
+          rulesName: "rules",
+          patternType: "pc",
+          isPageType: "page",
+          hideRequiredAsterisk: false,
+          cssCode: "",
+          customClass: [],
+          functions: "",
+          onFormCreated: "",
+          onFormMounted: "",
+          onFormDataChange: ""
+        },
+        desHistory: {
+          index: -1,
+          maxStep: 10,
+          steps: []
+        },
+        widgetList: [],
+        selectWidgetId: "",
+        selectWidget
+      })
+    ),
     initDesigner() {
       console.log(
         `%cExForm %cv:0.0.0-dev_1 \nhttps://gitee.com/pxhgood/exercise-form.git`,
         `color: #409EFF;font-size:20px;font-weight:bold`,
         `color:#666`
       );
-      this.initHistoryData();
+      this.initHistory();
     },
 
-    setSelectWidget(widget: DesWidgetConfigType) {
+    setSelectWidget(widget: DesWidget) {
       if (!widget) {
         this.clearSelectWidget();
         return;
@@ -54,19 +79,19 @@ export const createDesigner = () => {
 
     clearSelectWidget() {
       this.selectWidgetId.value = "";
-      this.selectWidget.value = {} as DesWidgetConfigType;
+      this.selectWidget.value = {} as DesWidget;
     },
 
     getContainerType(type: string) {
       let allWidgets = [...containers, ...baseFields, ...customs];
-      let widgetData = {} as DesWidgetConfigType;
-      allWidgets.forEach((widget: DesWidgetConfigType) => {
+      let widgetData = {} as DesWidget;
+      allWidgets.forEach((widget: DesWidget) => {
         if (type === widget.type) widgetData = widget;
       });
       return widgetData;
     },
 
-    cloneWidget(widget: DesWidgetConfigType) {
+    cloneWidget(widget: DesWidget) {
       let newWidget = deepClone(widget);
       newWidget.id = newWidget.type + getUniqueId();
       newWidget.options.name = newWidget.id;
@@ -75,10 +100,10 @@ export const createDesigner = () => {
           let colWidget = deepClone(this.getContainerType("grid-col"));
           colWidget.id = colWidget.type + "_" + getUniqueId();
           colWidget.options.name = colWidget.id;
-          newWidget.children.push(colWidget);
+          newWidget.children?.push(colWidget);
         }
       } else if (newWidget.type == "table") {
-        let newRows: DesWidgetConfigType = {
+        let newRows: DesWidget = {
           name: "tr",
           type: "table-tr",
           id: "table-tr_" + getUniqueId(),
@@ -100,28 +125,23 @@ export const createDesigner = () => {
       return newWidget;
     },
 
-    // setPatternType(type: string) {
-    //   this.patternType.value = type as any;
-    // },
-
-    copyContainerWidget(widget: DesWidgetConfigType) {
+    copyContainerWidget(widget: DesWidget) {
       if (widget.type == "grid") {
         let colWidget = deepClone(this.getContainerType("grid-col"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
         colWidget.options.name = colWidget.id;
-        widget.children.push(colWidget);
+        widget.children?.push(colWidget);
       } else if (widget.type == "tabs") {
         let newTab = deepClone(this.getContainerType("tab-pane"));
         newTab.id = newTab.type + "_" + getUniqueId();
-        let len = widget.children.length + 1;
-        newTab.options.name = "tab" + len;
-        newTab.options.label = "tab" + len;
-        widget.children.push(newTab);
+        let len = widget.children?.length;
+        newTab.options.name = "tab" + len + 1;
+        newTab.options.label = "tab" + len + 1;
+        widget.children?.push(newTab);
       }
     },
 
-    copyContainerField() {},
-    copyDeepWidget(widget: DesWidgetConfigType) {
+    copyDeepWidget(widget: DesWidget) {
       if (widget.category === "container") {
         widget.id = widget.type + "_" + getUniqueId();
         widget.options.name = widget.id;
@@ -136,13 +156,13 @@ export const createDesigner = () => {
       return widget;
     },
 
-    copyWidget(parentList: DesWidgetListType, widget: DesWidgetConfigType) {
+    copyWidget(parentList: DesWidgetList, widget: DesWidget) {
       let newWidget = this.copyDeepWidget(deepClone(widget));
       parentList.push(newWidget);
       this.emitHistoryChange();
     },
 
-    moveUpWidget(parentList: DesWidgetListType, sub: number) {
+    moveUpWidget(parentList: DesWidgetList, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub - 1, 0, item);
@@ -150,7 +170,7 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    moveDownWidget(parentList: DesWidgetListType, sub: number) {
+    moveDownWidget(parentList: DesWidgetList, sub: number) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub + 1, 0, item);
@@ -158,7 +178,7 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    deleteWidget(parentList: DesWidgetListType, sub: number) {
+    deleteWidget(parentList: DesWidgetList, sub: number) {
       parentList.splice(sub, 1);
 
       this.emitHistoryChange();
@@ -171,7 +191,7 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    insertCell(parentList: DesWidgetListType, cell: number, type: string) {
+    insertCell(parentList: DesWidgetList, cell: number, type: string) {
       parentList.forEach((child) => {
         let colWidget = deepClone(this.getContainerType("table-td"));
         colWidget.id = colWidget.type + "_" + getUniqueId();
@@ -186,8 +206,8 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    insertRow(parentList: DesWidgetListType, row: number, type: string) {
-      let newRows: DesWidgetConfigType = {
+    insertRow(parentList: DesWidgetList, row: number, type: string) {
+      let newRows: DesWidget = {
         name: "tr",
         type: "table-tr",
         id: "table-tr-" + getUniqueId(),
@@ -209,17 +229,17 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    getMergeTarget(parentList: DesWidgetListType) {
+    getMergeTarget(parentList: DesWidgetList) {
       let deepList = deepClone(parentList);
       return deepList.map((tr) => {
-        tr.children = tr.children.filter((item: any) => item.merged);
+        tr.children = tr.children?.filter((item: any) => item.merged);
         return tr;
       });
     },
 
     getMergeTargetSub(
-      mergeList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      mergeList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number
     ) {
       let rows = mergeList[rowsub].children || [];
@@ -228,13 +248,13 @@ export const createDesigner = () => {
     },
 
     mergeRightCell(
-      parentList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      parentList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number,
       cellsub: number
     ) {
       let mergeList = this.getMergeTarget(parentList);
-      let tableRows = mergeList[rowsub].children;
+      let tableRows = mergeList[rowsub].children || [];
       let mergesub = this.getMergeTargetSub(mergeList, widgetData, rowsub);
       let parentRows = parentList[rowsub].children || [];
       let tableCell = tableRows[mergesub + 1];
@@ -257,17 +277,18 @@ export const createDesigner = () => {
           }
         }
       }
+
       this.emitHistoryChange();
     },
 
     mergeLeftCell(
-      parentList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      parentList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number
     ) {
       let mergeList = this.getMergeTarget(parentList);
       let mergesub = this.getMergeTargetSub(mergeList, widgetData, rowsub);
-      let tableRows = mergeList[rowsub].children;
+      let tableRows = mergeList[rowsub].children || [];
       let parentRows = parentList[rowsub].children || [];
       let tableCell = tableRows[mergesub - 1];
       let targetSub = parentRows.findIndex(
@@ -289,12 +310,13 @@ export const createDesigner = () => {
           }
         }
       }
+
       this.emitHistoryChange();
     },
 
     mergeUpCell(
-      parentList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      parentList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number,
       cellsub: number
     ) {
@@ -315,12 +337,13 @@ export const createDesigner = () => {
           }
         }
       }
+
       this.emitHistoryChange();
     },
 
     mergeDownCell(
-      parentList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      parentList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number,
       cellsub: number
     ) {
@@ -340,10 +363,11 @@ export const createDesigner = () => {
           }
         }
       }
+
       this.emitHistoryChange();
     },
 
-    mergeEntireRow(parentList: DesWidgetListType, rowsub: number) {
+    mergeEntireRow(parentList: DesWidgetList, rowsub: number) {
       let children = parentList[rowsub].children || [];
       for (let i = 0; i < children.length; i++) {
         if (i == 0) {
@@ -357,7 +381,7 @@ export const createDesigner = () => {
 
       this.emitHistoryChange();
     },
-    mergeEntireCol(parentList: DesWidgetListType, cellsub: number) {
+    mergeEntireCol(parentList: DesWidgetList, cellsub: number) {
       let len = parentList.length;
       parentList.forEach((p, index) => {
         if (p.children) {
@@ -371,26 +395,29 @@ export const createDesigner = () => {
           }
         }
       });
+
       this.emitHistoryChange();
     },
 
-    deleteEntireRow(parentList: DesWidgetListType, rowsub: number) {
+    deleteEntireRow(parentList: DesWidgetList, rowsub: number) {
       parentList.splice(rowsub, 1);
+
       this.clearSelectWidget();
       this.emitHistoryChange();
     },
 
-    deleteEntireCol(parentList: DesWidgetListType, rowsub: number) {
+    deleteEntireCol(parentList: DesWidgetList, rowsub: number) {
       parentList.forEach((p) => {
-        p.children.splice(rowsub, 1);
+        p.children?.splice(rowsub, 1);
       });
+
       this.clearSelectWidget();
       this.emitHistoryChange();
     },
 
     revocationMerge(
-      parentList: DesWidgetListType,
-      widgetData: DesWidgetConfigType,
+      parentList: DesWidgetList,
+      widgetData: DesWidget,
       rowsub: number,
       cellsub: number
     ) {
@@ -407,7 +434,7 @@ export const createDesigner = () => {
       this.emitHistoryChange();
     },
 
-    initHistoryData() {
+    initHistory() {
       this.loadFormContentFromStorage();
       this.desHistory.value.index++;
       this.desHistory.value.steps[this.desHistory.value.index] = {
@@ -428,6 +455,7 @@ export const createDesigner = () => {
         widgetList: deepClone(this.widgetList.value),
         desFormConfig: deepClone(this.desFormConfig.value)
       };
+
       this.saveFormContentToStorage();
     },
 
@@ -457,6 +485,7 @@ export const createDesigner = () => {
 
       this.saveFormContentToStorage();
     },
+
     undoEnabled() {
       return (
         this.desHistory.value.index > 0 &&
@@ -481,17 +510,19 @@ export const createDesigner = () => {
       let list = storage.get("ex_widget_list");
       let form = storage.get("ex_form_config");
       if (list) {
-        this.widgetList.value = list as DesWidgetListType;
+        this.widgetList.value = list as DesWidgetList;
       }
       if (form) {
-        this.desFormConfig.value = form as DesFormConfigType;
+        this.desFormConfig.value = form as DesFormConfig;
       }
     },
 
-    loadWidget(list: DesWidgetListType) {
+    loadWidget(list: DesWidgetList) {
       this.widgetList.value = list;
 
       this.emitHistoryChange();
     }
   };
-};
+}
+
+export default useDesigner;

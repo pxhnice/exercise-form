@@ -2,8 +2,8 @@ import { makeInstaller } from "./installer";
 import { ExCodeEditor } from "@exercise-form/components/code-editor";
 import { ExFormDesigner } from "@exercise-form/components/form-designer";
 import { ExFormRender } from "@exercise-form/components/form-render";
-import { desIconInstall } from "@exercise-form/utils";
 import {
+  desIconInstall,
   desContainerInstall,
   desFieldInstall,
   desPropertyInstall,

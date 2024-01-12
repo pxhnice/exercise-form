@@ -52,7 +52,6 @@
 import { ref, watch, provide } from "vue";
 import {
   themeSwitcher,
-  createDesigner,
   traverseFieldWidget,
   isArray,
   isObject,
@@ -60,8 +59,8 @@ import {
 } from "@exercise-form/utils";
 import {
   MODEL_TYPE_LIST,
-  DesWidgetConfigType,
-  DesWidgetListType
+  DesWidget,
+  DesWidgetList
 } from "@exercise-form/constants";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
@@ -75,6 +74,7 @@ import {
   bannedWidgetKeys,
   darkKeys
 } from "./form-designer";
+import useDesigner from "./designer";
 
 defineOptions({ name: "ExFormDesigner" });
 const emits = defineEmits(formDesignerEmits);
@@ -83,10 +83,10 @@ const props = defineProps(formDesignerProps);
 const colorEeg = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 const formData = ref(props.formData);
 const formJson = ref(props.formJson);
-const optionsData = ref(props.optionsData);
+const optionsData = ref(props.options);
 const bannedWidgets = ref(props.bannedWidgets);
 const dark = ref(props.dark);
-const designer = createDesigner();
+const designer = useDesigner();
 designer.initDesigner();
 const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
@@ -106,7 +106,7 @@ const initData = () => {
 };
 
 const buildDefaultValueListFn = () => {
-  return function (widget: DesWidgetConfigType) {
+  return function (widget: DesWidget) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
       let { modelDefaultValue, name } = widget.options;
       formData.value[name] = modelDefaultValue ?? null;
@@ -114,7 +114,7 @@ const buildDefaultValueListFn = () => {
   };
 };
 
-const getFormData = (val: DesWidgetListType) => {
+const getFormData = (val: DesWidgetList) => {
   //触发响应式清除空
   for (const key in formData.value) {
     delete formData.value[key];

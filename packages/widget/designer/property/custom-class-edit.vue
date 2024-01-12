@@ -14,14 +14,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { desPropertyProps } from "./property";
+import { getGlobalCss } from "@exercise-form/utils";
 
 const props = defineProps(desPropertyProps);
 
 const globalCssList = computed(() => {
   let str = props.designer.desFormConfig.value.cssCode.replaceAll("\n", "");
-  let rules = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];
-  rules = rules.map((item: any) => item.trim()) as RegExpMatchArray;
-  rules = Array.from(new Set([...rules])) as RegExpMatchArray;
-  return rules;
+  return getGlobalCss(str);
 });
 </script>

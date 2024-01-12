@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <el-form-item
-      label="唯一标识"
-      prop="options.name"
-      :rules="[{ required: true, validator: validateKey }]"
-    >
-      <el-input type="text" v-model="optionsModel.name" />
-    </el-form-item>
-  </div>
+  <el-form-item
+    label="唯一标识"
+    prop="options.name"
+    :rules="[{ required: true, validator: validateKey }]"
+  >
+    <el-input type="text" v-model="optionsModel.name" />
+  </el-form-item>
 </template>
 
 <script setup lang="ts">

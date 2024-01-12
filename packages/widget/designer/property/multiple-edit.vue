@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <el-form-item label="是否多选">
-      <el-switch v-model="optionsModel.multiple" />
-    </el-form-item>
-  </div>
+  <el-form-item label="是否多选">
+    <el-switch v-model="optionsModel.multiple" />
+  </el-form-item>
 </template>
 
 <script setup lang="ts">

@@ -5,7 +5,7 @@
         <el-option
           v-for="name in SHADOW_LIST"
           :key="name"
-          :lable="name"
+          :label="name"
           :value="name"
         />
       </el-select>

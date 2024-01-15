@@ -3,7 +3,7 @@ import {
   DesWidgetList,
   DesFormConfig
 } from "@exercise-form/constants";
-import type { DesTemplateDataType } from "@exercise-form/constants";
+import type { DesTemplateData } from "@exercise-form/constants";
 import { definePropType } from "@exercise-form/utils";
 
 export const desPanelProps = {
@@ -36,7 +36,7 @@ export const desPanelProps = {
     default: " "
   },
   templateList: {
-    type: definePropType<Array<DesTemplateDataType>>(Array),
+    type: definePropType<Array<DesTemplateData>>(Array),
     default() {
       return [];
     }

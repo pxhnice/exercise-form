@@ -1,9 +1,6 @@
 import { definePropType } from "@exercise-form/utils";
 import { InjectionKey, Ref } from "vue";
-import type {
-  DesFormJsonType,
-  DesTemplateDataType
-} from "@exercise-form/constants";
+import type { DesFormJson, DesTemplateData } from "@exercise-form/constants";
 
 export type DesOptions = {
   templateButton: boolean;
@@ -25,7 +22,7 @@ export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 export const darkKeys: InjectionKey<Ref<boolean>> = Symbol();
 
 export const formDesignerEmits = {
-  change: (desData: DesFormJsonType) => desData
+  change: (desData: DesFormJson) => desData
 };
 
 export const formDesignerProps = {
@@ -42,7 +39,7 @@ export const formDesignerProps = {
    * @description 构建数据
    */
   formJson: {
-    type: definePropType<DesFormJsonType>(Object),
+    type: definePropType<DesFormJson>(Object),
     default() {
       return {};
     }
@@ -98,7 +95,7 @@ export const formDesignerProps = {
    * @description 模板列表
    */
   templateList: {
-    type: definePropType<Array<DesTemplateDataType>>(Array),
+    type: definePropType<Array<DesTemplateData>>(Array),
     default() {
       return [];
     }

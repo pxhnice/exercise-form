@@ -12,14 +12,14 @@ export function traverseFieldWidget(
 ) {
   widgetList.forEach((widget: DesWidget) => {
     if (widget.category === "container") {
-      traverseFieldWidget(widget.children, cd);
+      traverseFieldWidget(widget?.children || [], cd);
     } else {
       cd(widget);
     }
   });
 }
 
-export function buildDefaultValueListFn(defaultValueList: [string]) {
+export function buildDefaultValueListFn(defaultValueList: string[]) {
   return function (widget: DesWidget) {
     if (MODEL_TYPE_LIST.includes(widget.type)) {
       let modelDefaultValue = widget.options.modelDefaultValue;
@@ -30,7 +30,7 @@ export function buildDefaultValueListFn(defaultValueList: [string]) {
   };
 }
 
-function buildRulesListFn(rulesList: [string]) {
+function buildRulesListFn(rulesList: string[]) {
   return function (widget: DesWidget) {
     let { required, validation, validationHint } = widget.options;
     if (required || validation) {
@@ -51,7 +51,7 @@ function buildRulesListFn(rulesList: [string]) {
   };
 }
 
-function buildOptionsItemListFn(optionsValueList: [string]) {
+function buildOptionsItemListFn(optionsValueList: string[]) {
   return function (widget: DesWidget) {
     let { optionsItem } = widget.options;
     if (optionsItem) {
@@ -66,11 +66,11 @@ export function genVue3JS(
   formConfig: DesFormConfig,
   widgetList: DesWidgetList
 ) {
-  let defaultValueList: any = [];
-  let rulesList: any = [];
-  let optionsList: any = [];
+  let defaultValueList: string[] = [];
+  let rulesList: string[] = [];
+  let optionsList: string[] = [];
   let { formName, modelName, rulesName } = formConfig;
-  traverseFieldWidget(widgetList, (widget: DesWidget) => {
+  traverseFieldWidget(widgetList, (widget) => {
     buildDefaultValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
     buildOptionsItemListFn(optionsList)(widget);

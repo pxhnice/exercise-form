@@ -1,21 +1,21 @@
 export type DesFormSize = "default" | "large" | "small";
 export type DesFormLabelPosition = "left" | "top" | "right";
 export type DesFormAlign = "left" | "top" | "right";
-export type DesFormPageType = "dialog" | "page";
-export type DesPatternType = "pc" | "pad" | "h5";
+export type DesFormPage = "dialog" | "page";
+export type DesPattern = "pc" | "pad" | "h5";
 
 import type { DesWidgetList } from "./widget";
 
 export type DesFormConfig = { [key: string]: any };
 
 // 表单JSON数据
-export type DesFormJsonType = {
+export type DesFormJson = {
   formConfig: { [key: string]: any };
   widgetList: DesWidgetList;
 };
 
 // 表单模板数据
-export type DesTemplateDataType = {
+export type DesTemplateData = {
   name: string;
   img: string;
   widgetList: DesWidgetList;

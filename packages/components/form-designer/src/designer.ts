@@ -85,7 +85,7 @@ export function useDesigner() {
     getContainerType(type: string) {
       let allWidgets = [...containers, ...baseFields, ...customs];
       let widgetData = {} as DesWidget;
-      allWidgets.forEach((widget: DesWidget) => {
+      allWidgets.forEach((widget) => {
         if (type === widget.type) widgetData = widget;
       });
       return widgetData;
@@ -146,7 +146,7 @@ export function useDesigner() {
         widget.id = widget.type + "_" + getUniqueId();
         widget.options.name = widget.id;
         widget.children &&
-          widget.children.forEach((wt: any) => {
+          widget.children.forEach((wt) => {
             wt = this.copyDeepWidget(wt);
           });
       } else {
@@ -232,7 +232,7 @@ export function useDesigner() {
     getMergeTarget(parentList: DesWidgetList) {
       let deepList = deepClone(parentList);
       return deepList.map((tr) => {
-        tr.children = tr.children?.filter((item: any) => item.merged);
+        tr.children = tr.children?.filter((item) => item.merged);
         return tr;
       });
     },
@@ -243,7 +243,7 @@ export function useDesigner() {
       rowsub: number
     ) {
       let rows = mergeList[rowsub].children || [];
-      let index = rows.findIndex((item: any) => item.id == widgetData.id);
+      let index = rows.findIndex((item) => item.id == widgetData.id);
       return index;
     },
 
@@ -256,11 +256,9 @@ export function useDesigner() {
       let mergeList = this.getMergeTarget(parentList);
       let tableRows = mergeList[rowsub].children || [];
       let mergesub = this.getMergeTargetSub(mergeList, widgetData, rowsub);
-      let parentRows = parentList[rowsub].children || [];
       let tableCell = tableRows[mergesub + 1];
-      let targetSub = parentRows.findIndex(
-        (item: any) => item.id == tableCell.id
-      );
+      let parentRows = parentList[rowsub].children || [];
+      let targetSub = parentRows.findIndex((item) => item.id == tableCell.id);
       let targetSpan = parentRows[targetSub].options.colspan;
       let { colspan, rowspan } = widgetData.options;
       let span = colspan + targetSpan;
@@ -291,9 +289,7 @@ export function useDesigner() {
       let tableRows = mergeList[rowsub].children || [];
       let parentRows = parentList[rowsub].children || [];
       let tableCell = tableRows[mergesub - 1];
-      let targetSub = parentRows.findIndex(
-        (item: any) => item.id == tableCell.id
-      );
+      let targetSub = parentRows.findIndex((item) => item.id == tableCell.id);
       let targetSpan = parentRows[targetSub].options.colspan;
       let rowspan = parentRows[targetSub].options.rowspan;
       let { colspan } = widgetData.options;

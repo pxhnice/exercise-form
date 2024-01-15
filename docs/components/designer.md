@@ -2,22 +2,22 @@
 
 ## 基础用法
 
-
 ```vue
 <template>
   <ex-form-designer :form-data="formData" :form-json="formJson" />
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import type { DesFormJsonType } from "exercise-form";
+import type { DesFormJson } from "exercise-form";
 
 const formData = ref({}); //表单数据
-const formJson = reactive<DesFormJsonType>({
+const formJson = reactive<DesFormJson>({
   formConfig: {}, //表单设置
   widgetList: [] //组件列表
 });
 </script>
 ```
+
 ::: warning
 使用时注意构建器高度问题，默认高度`100v`，自定义高度更改`style`即可。
 :::

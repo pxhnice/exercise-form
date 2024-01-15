@@ -2,7 +2,7 @@ import fs from "fs";
 import { resolve } from "path";
 import { exPath } from "./paths";
 
-const satyFile = ["package.json", "README.md", "global.d.ts"];
+const stayFile = ["package.json", "README.md", "global.d.ts"];
 
 export const delPath = async (path: string) => {
   let files: string[] = [];
@@ -13,7 +13,7 @@ export const delPath = async (path: string) => {
       if (fs.statSync(curPath).isDirectory()) {
         if (file !== "node_modules") await delPath(curPath);
       } else {
-        if (!satyFile.includes(file)) {
+        if (!stayFile.includes(file)) {
           fs.unlinkSync(curPath);
         }
       }

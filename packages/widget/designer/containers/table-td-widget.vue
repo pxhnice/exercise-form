@@ -5,122 +5,133 @@
     v-bind="widgetData.options"
     @click.stop="onClickCol"
   >
-    <draggable
-      group="componentsGroup"
-      ghost-class="ex-ghost"
-      handle=".drag-mover"
-      class="container-draggable"
-      :list="widgetData.children"
-      item-key="id"
-      :animation="300"
-      @add="onDragAdd($event, widgetData)"
-    >
-      <template #item="{ element, index }">
-        <div class="ex-widget-td_content">
-          <template v-if="element.category === 'container'">
-            <component
-              :is="`${element.type}-widget`"
-              :designer="designer"
-              :widget-data="element"
-              :parent-data="widgetData"
-              :parent-list="widgetData.children"
-              :widget-sub="index"
-              :key="element.id"
-            />
-          </template>
-          <template v-else>
-            <form-item-widget
-              :designer="designer"
-              :widget-data="element"
-              :parent-data="widgetData"
-              :parent-list="widgetData.children"
-              :widget-sub="index"
-              :key="element.id"
-            />
-          </template>
-        </div>
-      </template>
-    </draggable>
-    <div v-if="isSelect">
-      <div class="ex-title">{{ widgetData.name }}</div>
-      <div class="ex-operation-row">
-        <el-icon
-          title="选中父组件"
-          class="ex-mgr-10"
-          @click.stop="handleParentChecked"
-          :size="16"
-        >
-          <ex-icon-arrow-left />
-        </el-icon>
-        <el-tooltip effect="light" placement="bottom" trigger="click">
-          <el-icon title="单元格操作" class="ex-mgr-10" @click.stop :size="16">
-            <ex-icon-all />
+    <div style="width: 100%; height: 100%">
+      <draggable
+        group="componentsGroup"
+        ghost-class="ex-ghost"
+        handle=".drag-mover"
+        class="container-draggable"
+        :list="widgetData.children"
+        item-key="id"
+        :animation="300"
+        @add="onDragAdd($event, widgetData)"
+      >
+        <template #item="{ element, index }">
+          <div class="ex-widget-td_content">
+            <template v-if="element.category === 'container'">
+              <component
+                :is="`${element.type}-widget`"
+                :designer="designer"
+                :widget-data="element"
+                :parent-data="widgetData"
+                :parent-list="widgetData.children"
+                :widget-sub="index"
+                :key="element.id"
+              />
+            </template>
+            <template v-else>
+              <form-item-widget
+                :designer="designer"
+                :widget-data="element"
+                :parent-data="widgetData"
+                :parent-list="widgetData.children"
+                :widget-sub="index"
+                :key="element.id"
+              />
+            </template>
+          </div>
+        </template>
+      </draggable>
+      <div v-if="isSelect">
+        <div class="ex-title">{{ widgetData.name }}</div>
+        <div class="ex-operation-row">
+          <el-icon
+            title="选中父组件"
+            class="ex-mgr-10"
+            @click.stop="handleParentChecked"
+            :size="16"
+          >
+            <ex-icon-arrow-left />
           </el-icon>
-          <template #content>
-            <div class="ex-widget-td_buttons">
-              <el-button link @click.stop="insertLeftCol"> 插入左列 </el-button>
-              <el-button link @click.stop="insertRightCol">
-                插入右列
-              </el-button>
-              <el-button link @click.stop="insertUpRow"> 插入上行 </el-button>
-              <el-button link @click.stop="insertDownRow"> 插入下行 </el-button>
-              <el-divider />
-              <el-button
-                link
-                :disabled="isMergeLeft"
-                @click.stop="mergeLeftCell"
-              >
-                合并左侧单元格
-              </el-button>
-              <el-button
-                link
-                :disabled="isMergeRight"
-                @click.stop="mergeRightCell"
-              >
-                合并右侧单元格
-              </el-button>
-              <el-button link :disabled="isMergeCol" @click.stop="mergeRow">
-                合并整行
-              </el-button>
-              <el-divider />
-              <el-button link :disabled="isUpMerge" @click.stop="mergeUpCell">
-                合并上单元格
-              </el-button>
-              <el-button
-                link
-                :disabled="isDownMerge"
-                @click.stop="mergeDownCell"
-              >
-                合并下单元格
-              </el-button>
-              <el-button link :disabled="isMergeRow" @click.stop="mergeCol">
-                合并整列
-              </el-button>
-              <el-divider />
-              <el-button
-                link
-                :disabled="isRevocationRow"
-                @click.stop="revocationMerge"
-              >
-                撤销列合并
-              </el-button>
-              <el-button
-                link
-                :disabled="isRevocationCol"
-                @click.stop="revocationMerge"
-              >
-                撤销行合并
-              </el-button>
-              <el-divider />
-              <el-button link :disabled="isMergeRow" @click.stop="delCol">
-                删除整列
-              </el-button>
-              <el-button link :disabled="isMergeCol" @click.stop="delRow">
-                删除整行
-              </el-button>
-            </div>
-          </template>
-        </el-tooltip>
+          <el-tooltip effect="light" placement="bottom" trigger="click">
+            <el-icon
+              title="单元格操作"
+              class="ex-mgr-10"
+              @click.stop
+              :size="16"
+            >
+              <ex-icon-all />
+            </el-icon>
+            <template #content>
+              <div class="ex-widget-td_buttons">
+                <el-button link @click.stop="insertLeftCol">
+                  插入左列
+                </el-button>
+                <el-button link @click.stop="insertRightCol">
+                  插入右列
+                </el-button>
+                <el-button link @click.stop="insertUpRow"> 插入上行 </el-button>
+                <el-button link @click.stop="insertDownRow">
+                  插入下行
+                </el-button>
+                <el-divider />
+                <el-button
+                  link
+                  :disabled="isMergeLeft"
+                  @click.stop="mergeLeftCell"
+                >
+                  合并左侧单元格
+                </el-button>
+                <el-button
+                  link
+                  :disabled="isMergeRight"
+                  @click.stop="mergeRightCell"
+                >
+                  合并右侧单元格
+                </el-button>
+                <el-button link :disabled="isMergeCol" @click.stop="mergeRow">
+                  合并整行
+                </el-button>
+                <el-divider />
+                <el-button link :disabled="isUpMerge" @click.stop="mergeUpCell">
+                  合并上单元格
+                </el-button>
+                <el-button
+                  link
+                  :disabled="isDownMerge"
+                  @click.stop="mergeDownCell"
+                >
+                  合并下单元格
+                </el-button>
+                <el-button link :disabled="isMergeRow" @click.stop="mergeCol">
+                  合并整列
+                </el-button>
+                <el-divider />
+                <el-button
+                  link
+                  :disabled="isRevocationRow"
+                  @click.stop="revocationMerge"
+                >
+                  撤销列合并
+                </el-button>
+                <el-button
+                  link
+                  :disabled="isRevocationCol"
+                  @click.stop="revocationMerge"
+                >
+                  撤销行合并
+                </el-button>
+                <el-divider />
+                <el-button link :disabled="isMergeRow" @click.stop="delCol">
+                  删除整列
+                </el-button>
+                <el-button link :disabled="isMergeCol" @click.stop="delRow">
+                  删除整行
+                </el-button>
+              </div>
+            </template>
+          </el-tooltip>
+        </div>
       </div>
     </div>
   </td>

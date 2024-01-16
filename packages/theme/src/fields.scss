@@ -14,3 +14,17 @@ label {
 .ex-fields_text {
   min-height: 30px;
 }
+
+.ex-slot {
+  height: 30px;
+  background: linear-gradient(
+    45deg,
+    var(--el-color-primary-light-7) 25%,
+    var(--el-color-primary-light-3) 0,
+    var(--el-color-primary-light-3) 50%,
+    var(--el-color-primary-light-7) 0,
+    var(--el-color-primary-light-7) 75%,
+    var(--el-color-primary-light-3) 0
+  );
+  background-size: 20px 20px;
+}

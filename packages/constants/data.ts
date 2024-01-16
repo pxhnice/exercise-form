@@ -33,6 +33,7 @@ export const CUSTOM_LIST = [
   "select",
   "steps",
   "text",
+  "slot",
   "uploadImage",
   "uploadFile"
 ] as const;

@@ -125,7 +125,7 @@
 .ex-drag-tainer {
   display: flex;
   align-items: center;
-  height: 30px;
+  height: 26px;
   border-radius: 3px;
   border: 1px solid;
   border-color: var(--el-border-color);
@@ -390,4 +390,26 @@
     align-items: center;
     font-size: 14px;
   }
+}
+
+.ex-popup-box,
+.ex-side-drawer {
+  min-height: 100px;
+  border: 1px dashed var(--el-color-primary);
+  padding: 4px;
+  box-sizing: border-box;
+  margin: 5px 0;
+}
+
+.ex-data-table {
+  width: 100%;
+
+  .el-scrollbar__view {
+    padding: 0 !important;
+  }
+}
+
+.ex-data-tree {
+  padding: 5px;
+  box-sizing: border-box;
 }

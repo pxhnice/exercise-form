@@ -1,3 +1,6 @@
+import { tableColumns, tableData } from "./table";
+import { treeData } from "./tree";
+
 export type DesWidget = {
   name: string;
   iconName?: string;
@@ -99,6 +102,73 @@ export const containers: DesWidgetList = [
       hidden: false,
       name: "",
       rowspan: 1
+    }
+  },
+  {
+    name: "数据表格",
+    iconName: "data-table",
+    category: "container",
+    type: "data-table",
+    children: [],
+    options: {
+      border: false,
+      childrenKey: "children",
+      customClass: "",
+      fit: true,
+      highlightCurrentRow: false,
+      maxHeight: "100%",
+      name: "",
+      rowKey: "id",
+      showHeader: true,
+      size: "default",
+      stripe: false,
+      tableColumns,
+      tableData
+    }
+  },
+  {
+    name: "侧边抽屉",
+    iconName: "side-drawer",
+    category: "container",
+    type: "side-drawer",
+    children: [],
+    options: {
+      customClass: "",
+      name: ""
+    }
+  },
+  {
+    name: "弹出窗口",
+    iconName: "popup-box",
+    category: "container",
+    type: "popup-box",
+    children: [],
+    options: {
+      customClass: "",
+      name: ""
+    }
+  },
+  {
+    name: "树形",
+    iconName: "data-tree",
+    category: "container",
+    type: "data-tree",
+    children: [],
+    options: {
+      customClass: "",
+      draggable: true,
+      defaultExpandAll: true,
+      lazy: false,
+      name: "",
+      props: {
+        children: "children",
+        class: "",
+        disabled: "",
+        isLeaf: "",
+        label: "label"
+      },
+      treeData,
+      showCheckbox: true
     }
   },
   {

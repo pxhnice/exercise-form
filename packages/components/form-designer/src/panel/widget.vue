@@ -48,7 +48,26 @@
                 </template>
               </draggable>
             </el-collapse-item>
-            <el-collapse-item title="自定义组件" name="3">
+            <el-collapse-item title="高级组件" name="3">
+              <draggable
+                :group="group"
+                class="ex-form-draggable"
+                :list="advancedList"
+                item-key="id"
+                :sort="false"
+                :clone="handleClone"
+              >
+                <template #item="{ element }">
+                  <div class="ex-drag-tainer">
+                    <el-icon class="ex-mgr-10" :size="20">
+                      <component :is="`ex-icon-${element.iconName}`" />
+                    </el-icon>
+                    {{ element.name }}
+                  </div>
+                </template>
+              </draggable>
+            </el-collapse-item>
+            <el-collapse-item title="自定义扩展" name="3">
               <draggable
                 :group="group"
                 class="ex-form-draggable"
@@ -110,7 +129,12 @@
 import { ref, computed, inject } from "vue";
 import { ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
-import { containers, baseFields, customs } from "@exercise-form/constants";
+import {
+  containers,
+  baseFields,
+  advanced,
+  customs
+} from "@exercise-form/constants";
 import type { DesWidgetList } from "@exercise-form/constants";
 import { optionsKeys, bannedWidgetKeys, darkKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
@@ -133,6 +157,9 @@ const containerList = computed(() => {
 });
 const fieldsList = computed(() =>
   baseFields.filter((item) => !bannedWidgets?.value.includes(item.type))
+);
+const advancedList = computed(() =>
+  advanced.filter((item) => !bannedWidgets?.value.includes(item.type))
 );
 const customsList = computed(() =>
   customs.filter((item) => !bannedWidgets?.value.includes(item.type))

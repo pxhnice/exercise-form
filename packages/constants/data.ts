@@ -20,6 +20,16 @@ export type DesTemplateData = {
   img: string;
   widgetList: DesWidgetList;
 };
+
+export interface ProColumns<T = any> {
+  type?: "index" | "selection" | "expand";
+  prop: string;
+  label?: string;
+  children?: ProColumns[];
+  render?: (scope: { row: T }) => any;
+  [key: string]: any;
+}
+
 // 模式
 export const PATTERN_TYPE = ["pc", "pad", "h5"] as const;
 // 自定义改动表单
@@ -53,4 +63,62 @@ export const MODEL_LIST = [
   "rate",
   "slider",
   "color-picker"
+];
+
+export const columns = [
+  { type: "selection", prop: "", minWidth: 55, fixed: "left" },
+  { type: "index", prop: "", label: "#", minWidth: 55, fixed: "left" },
+  {
+    type: "expand",
+    prop: "",
+    label: "Expand",
+    minWidth: 80,
+    fixed: "left"
+  },
+  {
+    prop: "username",
+    label: "姓名",
+    minWidth: 100
+  },
+  {
+    prop: "sex",
+    label: "性别",
+    minWidth: 100
+  },
+  {
+    prop: "age",
+    label: "年龄",
+    minWidth: 100
+  },
+  {
+    prop: "IDCard",
+    label: "证件号",
+    minWidth: 200
+  },
+  {
+    prop: "email",
+    label: "邮箱",
+    minWidth: 200
+  },
+  {
+    prop: "address",
+    label: "居住地址",
+    minWidth: 200
+  },
+  {
+    prop: "hidden",
+    label: "状态",
+    minWidth: 80
+  },
+  {
+    prop: "date",
+    label: "创建时间",
+    minWidth: 180
+  },
+  {
+    prop: "operation",
+    label: "操作",
+    minWidth: 180,
+    fixed: "right"
+  }
 ];

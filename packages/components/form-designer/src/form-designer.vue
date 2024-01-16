@@ -57,11 +57,7 @@ import {
   isObject,
   cutNight
 } from "@exercise-form/utils";
-import {
-  MODEL_TYPE_LIST,
-  DesWidget,
-  DesWidgetList
-} from "@exercise-form/constants";
+import { MODEL_LIST, DesWidget, DesWidgetList } from "@exercise-form/constants";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";
@@ -107,7 +103,7 @@ const initData = () => {
 
 const buildDefaultValueListFn = () => {
   return function (widget: DesWidget) {
-    if (MODEL_TYPE_LIST.includes(widget.type)) {
+    if (MODEL_LIST.includes(widget.type)) {
       let { modelDefaultValue, name } = widget.options;
       formData.value[name] = modelDefaultValue ?? null;
     }

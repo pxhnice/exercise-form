@@ -1,4 +1,4 @@
-import { getRegExp, MODEL_TYPE_LIST } from "@exercise-form/constants";
+import { getRegExp, MODEL_LIST } from "@exercise-form/constants";
 
 import type {
   DesWidget,
@@ -21,7 +21,7 @@ export function traverseFieldWidget(
 
 export function buildDefaultValueListFn(defaultValueList: string[]) {
   return function (widget: DesWidget) {
-    if (MODEL_TYPE_LIST.includes(widget.type)) {
+    if (MODEL_LIST.includes(widget.type)) {
       let modelDefaultValue = widget.options.modelDefaultValue;
       defaultValueList.push(
         `${widget.id}:${modelDefaultValue ? `"${modelDefaultValue}"` : "null"},`

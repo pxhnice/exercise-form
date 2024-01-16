@@ -23,7 +23,7 @@ export type DesTemplateData = {
 // 模式
 export const PATTERN_TYPE = ["pc", "pad", "h5"] as const;
 // 自定义改动表单
-export const CUSTOM_DATA = [
+export const CUSTOM_LIST = [
   "alert",
   "button",
   "checkbox",
@@ -39,7 +39,7 @@ export const CUSTOM_DATA = [
 
 export const SHADOW_LIST = ["always", "never", "hover"];
 // 可输入表单
-export const MODEL_TYPE_LIST = [
+export const MODEL_LIST = [
   "input",
   "input-number",
   "radio",

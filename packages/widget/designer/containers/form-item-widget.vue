@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { CUSTOM_DATA } from "@exercise-form/constants";
+import { CUSTOM_LIST } from "@exercise-form/constants";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
@@ -51,7 +51,7 @@ watch(
 );
 
 const isWidget = (type: any) => {
-  return CUSTOM_DATA.includes(type);
+  return CUSTOM_LIST.includes(type);
 };
 
 const onClickItem = () => {

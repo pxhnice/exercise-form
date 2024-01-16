@@ -26,12 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import { CUSTOM_DATA } from "@exercise-form/constants";
+import { CUSTOM_LIST } from "@exercise-form/constants";
 import { renContainerProps } from "./container";
 
 defineProps(renContainerProps);
 
 const isWidget = (type: any) => {
-  return CUSTOM_DATA.includes(type);
+  return CUSTOM_LIST.includes(type);
 };
 </script>

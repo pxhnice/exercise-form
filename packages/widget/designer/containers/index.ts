@@ -1,6 +1,6 @@
 import type { App } from "vue";
 
-const components = import.meta.glob("./*.vue", { eager: true });
+const components = import.meta.glob("./**/*.vue", { eager: true });
 
 export default function install(app: App) {
   for (const [key, value] of Object.entries(components)) {

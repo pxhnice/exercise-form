@@ -326,29 +326,6 @@ export const baseFields: DesWidgetList = [
     }
   },
   {
-    name: "级联选择",
-    iconName: "cascader",
-    type: "cascader",
-    options: {
-      clearable: true,
-      customClass: "",
-      modelDefaultValue: null,
-      disabled: false,
-      label: "级联选择",
-      labelWidth: "",
-      name: "",
-      options: [],
-      onChange: "",
-      onValidate: "",
-      placeholder: "",
-      requiredHint: "",
-      required: false,
-      size: "default",
-      validation: "",
-      validationHint: ""
-    }
-  },
-  {
     name: "评星",
     iconName: "rate",
     type: "rate",
@@ -435,35 +412,6 @@ export const baseFields: DesWidgetList = [
       size: "default",
       validation: "",
       validationHint: ""
-    }
-  },
-  {
-    name: "提示",
-    iconName: "alert",
-    type: "alert",
-    options: {
-      closable: false,
-      customClass: "",
-      description: "more text description",
-      name: "",
-      showIcon: false,
-      type: "info",
-      title: "title"
-    }
-  },
-  {
-    name: "静态文字",
-    iconName: "text",
-    type: "text",
-    options: {
-      customClass: "",
-      content: "静态文字",
-      fontSize: "14px",
-      name: "",
-      size: "default",
-      tag: "span",
-      truncated: false,
-      type: ""
     }
   }
 ];

@@ -57,5 +57,15 @@ export const customs: DesWidgetList = [
       validationHint: "",
       withCredentials: false
     }
+  },
+  {
+    name: "插槽",
+    iconName: "slot",
+    type: "slot",
+    options: {
+      // customClass: "",
+      name: "",
+      label: "slot"
+    }
   }
 ];

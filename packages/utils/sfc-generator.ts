@@ -11,7 +11,7 @@ type DesTemplateMethod = {
 };
 
 // 不需要el-form-item的组件
-const staticTypeList = ["text", "alert", "divider"];
+const staticTypeList = ["text", "alert", "divider", "slot"];
 // 容器组件
 const containerTemplate: DesTemplateMethod = {
   grid: (widget, formConfig) => {
@@ -345,6 +345,10 @@ const elTemplates: DesTemplateMethod = {
       formConfig
     );
     return `<el-text ${fontSize} ${customClass} ${size} ${tag} ${truncated} >${widget.options.content}</el-text>`;
+  },
+  slot: (widget, formConfig) => {
+    let name = widget.options.label ? `name="${widget.options.label}"` : "";
+    return `<slot ${name}></slot>`;
   }
 };
 

@@ -1,4 +1,4 @@
-import { tableColumns, tableData } from "./table";
+import { tableColumns, tableData, operationButtons } from "./table";
 import { treeData } from "./tree";
 
 export type DesWidget = {
@@ -111,19 +111,27 @@ export const containers: DesWidgetList = [
     type: "data-table",
     children: [],
     options: {
-      border: false,
+      border: true,
       childrenKey: "children",
       customClass: "",
       fit: true,
+      height: "100%",
       highlightCurrentRow: false,
-      maxHeight: "100%",
       name: "",
-      rowKey: "id",
+      operationButtons,
+      operationAlign: "center",
+      operationLabel: "操作",
+      operationWidth: 120,
+      showCheckBox: true,
       showHeader: true,
+      showIndex: true,
+      showOperation: true,
       size: "default",
-      stripe: false,
+      stripe: true,
+      rowKey: "id",
       tableColumns,
-      tableData
+      tableData,
+      width: "100%"
     }
   },
   {
@@ -133,8 +141,15 @@ export const containers: DesWidgetList = [
     type: "side-drawer",
     children: [],
     options: {
+      closeOnClickModal: true,
+      closeOnPressEscape: true,
       customClass: "",
-      name: ""
+      direction: "rtl",
+      modal: true,
+      name: "",
+      showClose: true,
+      size: "",
+      title: ""
     }
   },
   {
@@ -144,8 +159,21 @@ export const containers: DesWidgetList = [
     type: "popup-box",
     children: [],
     options: {
+      cancelText: "",
+      center: false,
+      closeOnClickModal: true,
+      closeOnPressEscape: true,
+      confirmText: "",
       customClass: "",
-      name: ""
+      draggable: false,
+      fullscreen: false,
+      modal: true,
+      name: "",
+      showClose: true,
+      showConfirmButton: false,
+      showCancelButton: false,
+      title: "",
+      width: ""
     }
   },
   {
@@ -162,13 +190,14 @@ export const containers: DesWidgetList = [
       name: "",
       props: {
         children: "children",
-        class: "",
-        disabled: "",
-        isLeaf: "",
         label: "label"
       },
       treeData,
-      showCheckbox: true
+      showCheckbox: true,
+      showCheckAllOrCancelAll: true,
+      showFilter: true,
+      showExpandOrRetract: true,
+      showLinkage: true
     }
   },
   {

@@ -57,3 +57,31 @@
 .ex-is-drag {
   border: 2px solid var(--el-color-primary);
 }
+
+.ex-data-table {
+  // width: 100%;
+
+  .el-scrollbar__view {
+    padding: 0 !important;
+  }
+
+  .el-scrollbar__wrap {
+    padding: 0 !important;
+  }
+}
+
+.ex-data-tree {
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.pane-mover {
+  cursor: move;
+}
+
+.ex-data-table-btn {
+  .el-button {
+    display: block;
+    margin: 5px 0;
+  }
+}

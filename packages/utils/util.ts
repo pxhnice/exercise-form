@@ -19,6 +19,20 @@ export function getUniqueId() {
   return uuid;
 }
 
+// 生成随机数字
+export function getRandomNumber() {
+  let randomNumber;
+  let generatedNumbers: Array<number> = [];
+  do {
+    randomNumber = Math.floor(Math.random() * 100000000);
+  } while (
+    generatedNumbers.includes(randomNumber) ||
+    String(randomNumber).length !== 8
+  );
+  generatedNumbers.push(randomNumber);
+  return randomNumber;
+}
+
 // 获取全局css
 export function getGlobalCss(str: string) {
   let rules: Array<string> = str.match(/[^.]+(?={)|[^.]+(?=,)/g) ?? [];

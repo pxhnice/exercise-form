@@ -15,6 +15,7 @@ export const COMMON_PROPERTIES = {
   minLength: "min-length-edit",
   buttonMode: "radio-button-edit",
   border: "border-edit",
+  rowKey: "row-key-edit",
   disabled: "disabled-edit",
   readonly: "readonly-edit",
   clearable: "clearable-edit",

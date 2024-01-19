@@ -52,7 +52,7 @@ import { desPropertyProps } from "../property";
 const props = defineProps(desPropertyProps);
 
 const children = computed({
-  get: () => props.settingData.children,
+  get: () => props.settingData.children ?? [],
   set: (val) => val
 });
 

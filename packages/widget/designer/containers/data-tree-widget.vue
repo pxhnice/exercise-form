@@ -7,7 +7,29 @@
     :designer="designer"
   >
     <div class="ex-data-tree" @click.stop="onClick">
-      <el-input v-model="treeValue" prefix-icon="Search" clearable />
+      <el-input
+        v-if="widgetData.options.showFilter"
+        v-model="treeValue"
+        prefix-icon="Search"
+        clearable
+      />
+      <div>
+        <el-checkbox
+          v-if="widgetData.options.showExpandOrRetract"
+          v-model="checked1"
+          label="展开/折叠"
+        />
+        <el-checkbox
+          v-if="widgetData.options.showCheckAllOrCancelAll"
+          v-model="checked2"
+          label="全选/全不选"
+        />
+        <el-checkbox
+          v-if="widgetData.options.showLinkage"
+          v-model="checked3"
+          label="父子联动"
+        />
+      </div>
       <el-tree
         ref="treeRef"
         :data="widgetData.options.treeData"
@@ -32,6 +54,9 @@ import { desContainerProps } from "./container";
 const props = defineProps(desContainerProps);
 
 const treeValue = ref("");
+const checked1 = ref();
+const checked2 = ref();
+const checked3 = ref();
 const treeRef = ref<InstanceType<typeof ElTreeV2>>();
 
 watch(treeValue, (val) => {

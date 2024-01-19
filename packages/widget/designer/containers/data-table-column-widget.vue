@@ -4,7 +4,7 @@
     <el-table-column
       :label="cols.label"
       :width="cols.width"
-      :align="cols.align ?? 'center'"
+      :align="cols.align"
     >
       <data-table-column-widget
         v-for="(child, index) in cols.children"
@@ -13,7 +13,12 @@
       />
     </el-table-column>
   </template>
-  <el-table-column v-else v-bind="cols" :align="cols.align ?? 'center'">
+  <el-table-column
+    v-else
+    v-bind="cols"
+    :fixed="cols.fixed != '' ? cols.fixed : undefined"
+    :align="cols.align"
+  >
     <template #default="{ row, $index }">
       <component
         v-if="cols.render"

@@ -180,7 +180,7 @@
   }
 
   .el-form-item--small {
-    margin-bottom: 12px !important;
+    margin-bottom: 5px !important;
   }
 }
 
@@ -399,17 +399,4 @@
   padding: 4px;
   box-sizing: border-box;
   margin: 5px 0;
-}
-
-.ex-data-table {
-  width: 100%;
-
-  .el-scrollbar__view {
-    padding: 0 !important;
-  }
-}
-
-.ex-data-tree {
-  padding: 5px;
-  box-sizing: border-box;
 }

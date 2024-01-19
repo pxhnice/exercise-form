@@ -1,45 +1,93 @@
 export const tableColumns = [
-  { type: "selection", prop: "", minWidth: 55, fixed: "left" },
   {
-    prop: "username",
+    align: "center",
+    columnsId: 1,
     label: "姓名",
     minWidth: 100,
-    show: true
+    prop: "username",
+    show: true,
+    sortable: true
   },
   {
-    prop: "sex",
-    label: "性别",
-    minWidth: 100,
-    show: true
-  },
-  {
-    prop: "age",
+    align: "center",
+    columnsId: 3,
     label: "年龄",
     minWidth: 100,
-    show: true
+    show: true,
+    prop: "age",
+    sortable: true
   },
   {
-    prop: "birth",
+    align: "center",
+    columnsId: 4,
     label: "生日",
     minWidth: 120,
-    show: true
+    prop: "birth",
+    show: true,
+    sortable: true
   },
   {
-    prop: "phone",
+    align: "center",
+    columnsId: 5,
     label: "电话",
     minWidth: 120,
-    show: true
+    prop: "phone",
+    show: true,
+    sortable: true
   },
   {
-    prop: "email",
+    align: "center",
+    columnsId: 6,
     label: "邮箱",
     minWidth: 150,
-    show: true
+    prop: "email",
+    show: true,
+    sortable: true
   },
   {
-    prop: "address",
+    align: "center",
+    columnsId: 7,
     label: "地址",
     minWidth: 200,
+    prop: "address",
+    show: true,
+    sortable: true
+  },
+  {
+    align: "center",
+    columnsId: 8,
+    children: [
+      {
+        align: "center",
+        columnsId: 9,
+        headerFlag: true,
+        label: "表头2",
+        prop: "~",
+        children: [
+          {
+            align: "center",
+            columnsId: 10,
+            label: "列1",
+            minWidth: 100,
+            prop: "col1",
+            show: true,
+            sortable: true
+          },
+          {
+            align: "center",
+            columnsId: 11,
+            label: "列2",
+            minWidth: 100,
+            prop: "col2",
+            show: true,
+            sortable: true
+          }
+        ]
+      }
+    ],
+    headerFlag: true,
+    label: "表头1",
+    prop: "~",
     show: true
   }
 ];
@@ -74,5 +122,28 @@ export const tableData = [
     age: 30,
     phone: "19671165911",
     address: "内蒙古自治区-阜新市-漠河县"
+  }
+];
+
+export const operationButtons = [
+  {
+    disabled: false,
+    hidden: true,
+    label: "编辑",
+    name: "edit",
+    round: false,
+    size: "small",
+    text: true,
+    type: "default"
+  },
+  {
+    disabled: false,
+    hidden: true,
+    label: "删除",
+    name: "delete",
+    round: false,
+    size: "small",
+    text: true,
+    type: "default"
   }
 ];

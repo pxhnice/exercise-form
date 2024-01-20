@@ -33,19 +33,14 @@
       </el-button>
     </el-form-item>
     <el-form-item label="表格数据编辑">
-      <el-button
-        @click="isShowDataTable = true"
-        type="primary"
-        icon="Edit"
-        round
-      >
+      <el-button @click="openDataTable" type="primary" icon="Edit" round>
         编辑
       </el-button>
     </el-form-item>
     <el-form-item label="显示操作列">
       <el-switch v-model="optionsModel.showOperation" />
     </el-form-item>
-    <el-form-item label="操作按钮编辑">
+    <el-form-item v-if="optionsModel.showOperation" label="操作按钮编辑">
       <el-button
         @click="isShowOperation = true"
         type="primary"
@@ -200,18 +195,20 @@
       </template>
     </el-dialog>
     <el-dialog
+      width="800"
       v-model="isShowDataTable"
       v-bind="dialogOptions"
-      title="表格数据编辑"
+      title="表格JSON数据编辑"
       @close="cancel"
     >
+      <ex-code-editor v-model="codeValue" lang="json" :dark="dark" />
       <template #footer>
-        <span>
-          <el-button size="default" @click="cancel">取消</el-button>
-          <el-button size="default" type="primary" @click="confirm">
+        <div style="display: flex; justify-content: center">
+          <el-button type="primary" size="default" @click="confirm">
             确认
           </el-button>
-        </span>
+          <el-button size="default" @click="cancel">关闭</el-button>
+        </div>
       </template>
     </el-dialog>
     <el-dialog
@@ -253,86 +250,117 @@
           </el-col>
         </el-row>
         <el-divider content-position="left">操作按钮设置</el-divider>
-        <div v-for="(btn, index) of optionsModel.operationButtons" :key="index">
-          <el-row :gutter="10">
-            <el-col :span="1">
-              <el-icon class="pane-mover" :size="30">
-                <ex-icon-drag />
-              </el-icon>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="名称" required>
-                <el-input v-model="btn.name" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="文字">
-                <el-input v-model="btn.label" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="类型">
-                <el-select v-model="btn.type">
-                  <el-option label="left" value="left" />
-                  <el-option label="center" value="center " />
-                  <el-option label="right" value="right" />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="大小">
-                <el-select v-model="btn.size">
-                  <el-option value="large" label="large" />
-                  <el-option value="default" label="default" />
-                  <el-option value="small" label="small" />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="圆角">
-                <el-switch v-model="btn.round" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="圆形">
-                <el-switch v-model="btn.circle" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
-              <el-form-item label="禁用">
-                <el-switch v-model="btn.disabled" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="2">
-              <el-button icon="Delete" type="danger" plain circle />
-            </el-col>
-          </el-row>
-        </div>
-        <el-button type="primary" icon="Plus">添加按钮</el-button>
+        <el-scrollbar ref="scrollbarRef" max-height="300">
+          <draggable
+            :list="operationButtons"
+            handle=".pane-mover"
+            item-key="id"
+          >
+            <template #item="{ element, index }">
+              <div class="ex-data-table-operation">
+                <el-row :gutter="10">
+                  <el-col :span="1">
+                    <el-icon class="pane-mover" :size="36">
+                      <ex-icon-drag />
+                    </el-icon>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="名称" required>
+                      <el-input v-model="element.name" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="文字">
+                      <el-input v-model="element.label" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="类型">
+                      <el-select v-model="element.type">
+                        <el-option label="left" value="left" />
+                        <el-option label="center" value="center " />
+                        <el-option label="right" value="right" />
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="大小">
+                      <el-select v-model="element.size">
+                        <el-option value="large" label="large" />
+                        <el-option value="default" label="default" />
+                        <el-option value="small" label="small" />
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="圆角">
+                      <el-switch v-model="element.round" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="圆形">
+                      <el-switch v-model="element.circle" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-form-item label="禁用">
+                      <el-switch v-model="element.disabled" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">
+                    <el-button
+                      icon="Delete"
+                      @click="handleDeleteButton(index)"
+                      type="danger"
+                      plain
+                      circle
+                    />
+                  </el-col>
+                </el-row>
+              </div>
+            </template>
+          </draggable>
+        </el-scrollbar>
+        <el-button
+          class="ex-mgt-10"
+          type="primary"
+          @click="handleAddButton"
+          icon="Plus"
+        >
+          添加按钮
+        </el-button>
       </el-form>
       <template #footer>
-        <span>
-          <el-button size="default" @click="cancel">取消</el-button>
-          <el-button size="default" type="primary" @click="confirm">
-            确认
-          </el-button>
-        </span>
+        <div style="display: flex; justify-content: center">
+          <el-button size="default" @click="cancel">关闭</el-button>
+        </div>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
-import { desPropertyProps } from "../property";
-import { onMessageWarning, getRandomNumber } from "@exercise-form/utils";
+import { ref, inject, nextTick } from "vue";
+import { ElScrollbar } from "element-plus";
 import Sortable from "sortablejs";
+import { desPropertyProps } from "../property";
+import {
+  onMessageWarning,
+  onMessageError,
+  getRandomNumber
+} from "@exercise-form/utils";
+import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
 
 const props = defineProps(desPropertyProps);
 
 // TODO:数据类型待处理
+const dark = inject(darkKeys);
 const tableColumns = props.optionsModel.tableColumns as [];
+const operationButtons = props.optionsModel.operationButtons;
+const optionsModel = props.optionsModel;
+const codeValue = ref("");
 const dataTableKey = ref("dataTable");
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const dataTableRef = ref();
 const isShowRow = ref(false);
 const isShowDataTable = ref(false);
@@ -347,12 +375,24 @@ const opened = () => {
   drag();
 };
 
+const openDataTable = () => {
+  codeValue.value = JSON.stringify(props.optionsModel.tableData, null, 2);
+  isShowDataTable.value = true;
+};
+
 const confirm = () => {
-  isShowRow.value = false;
+  try {
+    optionsModel["tableData"] = JSON.parse(codeValue.value);
+    isShowDataTable.value = false;
+  } catch (error) {
+    onMessageError(`错误的选项数据:${error}`);
+  }
 };
 
 const cancel = () => {
   isShowRow.value = false;
+  isShowDataTable.value = false;
+  isShowOperation.value = false;
 };
 
 const drag = () => {
@@ -482,5 +522,24 @@ const handleDeleteRow = (index: number) => {
 
 const handleRender = (row: any) => {};
 
-onMounted(() => {});
+const handleAddButton = () => {
+  operationButtons.push({
+    disabled: false,
+    hidden: true,
+    label: "",
+    name: "",
+    round: false,
+    size: "small",
+    text: true,
+    type: "default"
+  });
+  nextTick(() => {
+    let wrapRef = scrollbarRef.value!.wrapRef;
+    scrollbarRef.value!.setScrollTop(wrapRef!.scrollHeight);
+  });
+};
+
+const handleDeleteButton = (index: number) => {
+  operationButtons.splice(index, 1);
+};
 </script>

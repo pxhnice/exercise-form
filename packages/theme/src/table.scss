@@ -79,6 +79,12 @@
   cursor: move;
 }
 
+.ex-data-table-operation {
+  margin-top: 20px;
+  border-bottom: 1px solid;
+  border-color: var(--el-border-color);
+}
+
 .ex-data-table-btn {
   .el-button {
     display: block;

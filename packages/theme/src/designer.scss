@@ -400,3 +400,9 @@
   box-sizing: border-box;
   margin: 5px 0;
 }
+
+.ex-tree-buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}

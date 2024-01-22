@@ -16,63 +16,100 @@
       <div>
         <el-checkbox
           v-if="widgetData.options.showExpandOrRetract"
-          v-model="checked1"
+          v-model="checkboxValue"
+          @change="handleExpandOrRetract"
           label="展开/折叠"
         />
         <el-checkbox
           v-if="widgetData.options.showCheckAllOrCancelAll"
-          v-model="checked2"
+          v-model="expandAllValue"
+          @change="handleSelectAll"
           label="全选/全不选"
         />
         <el-checkbox
           v-if="widgetData.options.showLinkage"
-          v-model="checked3"
+          v-model="checkStrictly"
           label="父子联动"
         />
       </div>
       <el-tree
         ref="treeRef"
-        :data="widgetData.options.treeData"
-        :props="widgetData.options.props"
-        :draggable="widgetData.options.draggable"
-        :show-checkbox="widgetData.options.showCheckbox"
-        :default-expand-all="widgetData.options.defaultExpandAll"
-        :lazy="widgetData.options.lazy"
+        :check-strictly="!checkStrictly"
+        :data="treeData"
+        v-bind="widgetData.options"
         :filter-node-method="filterNode"
-        @node-click="handleNodeClick"
-      />
+      >
+        <template #default="{ node }">
+          <div>{{ node.label }}</div>
+          <div
+            class="ex-tree-buttons"
+            v-if="widgetData.options.showOperationButton"
+          >
+            <el-button type="primary" link>添加</el-button>
+            <el-button type="primary" link>删除</el-button>
+          </div>
+        </template>
+      </el-tree>
     </div>
   </container-wrapper>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import type { ElTreeV2 } from "element-plus";
-import type { Tree } from "@exercise-form/constants";
 import { desContainerProps } from "./container";
+
+interface TreeData {
+  id: number;
+  label: string;
+  children?: TreeData[];
+}
 
 const props = defineProps(desContainerProps);
 
+const treeData = props.widgetData.options.treeData as TreeData[];
 const treeValue = ref("");
-const checked1 = ref();
-const checked2 = ref();
-const checked3 = ref();
-const treeRef = ref<InstanceType<typeof ElTreeV2>>();
+const checkboxValue = ref(true);
+const expandAllValue = ref(false);
+const checkStrictly = ref(true);
+
+const treeRef = ref();
 
 watch(treeValue, (val) => {
   treeRef.value!.filter(val);
 });
 
+const flatColumn = (columns: TreeData[], flatArr: Array<number> = []) => {
+  columns.forEach((col) => {
+    flatArr.push(col.id);
+    if (col.children?.length) {
+      flatArr.push(...flatColumn(col.children));
+    }
+  });
+  return flatArr;
+};
+
 const onClick = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 
-const filterNode = (value: string, data: Tree) => {
-  if (!value) return true;
-  return data.label.includes(value);
+const handleExpandOrRetract = (value: boolean) => {
+  let nodesMap = treeRef.value!.store.nodesMap;
+  for (let key in nodesMap) {
+    nodesMap[key].expanded = value;
+  }
 };
 
-const handleNodeClick = (data: Tree) => {
-  console.log(data);
+const handleSelectAll = (value: boolean) => {
+  if (value) {
+    let ids = flatColumn(treeData);
+    treeRef.value!.setCheckedKeys(ids);
+  } else {
+    treeRef.value!.setCheckedNodes([]);
+  }
+};
+
+const filterNode = (value: string, data: TreeData) => {
+  if (!value) return true;
+  return data.label.includes(value);
 };
 </script>

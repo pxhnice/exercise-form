@@ -1,5 +1,5 @@
-import { tableColumns, tableData, operationButtons } from "./table";
-import { treeData } from "./tree";
+import { operationButtons, tableColumns, tableData } from './table';
+import { treeData } from './tree';
 
 export type DesWidget = {
   name: string;
@@ -188,6 +188,7 @@ export const containers: DesWidgetList = [
       defaultExpandAll: true,
       lazy: false,
       name: "",
+      nodeKey: "id",
       props: {
         children: "children",
         label: "label"
@@ -197,7 +198,8 @@ export const containers: DesWidgetList = [
       showCheckAllOrCancelAll: true,
       showFilter: true,
       showExpandOrRetract: true,
-      showLinkage: true
+      showLinkage: true,
+      showOperationButton: true
     }
   },
   {

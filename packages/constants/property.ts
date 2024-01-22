@@ -21,6 +21,7 @@ export const COMMON_PROPERTIES = {
   clearable: "clearable-edit",
   editable: "editable-edit",
   required: "required-edit",
+  showLinkage: "show-linkage-edit",
   showStops: "show-stops-edit",
   requiredHint: "required-hint-edit",
   validation: "validation-edit",

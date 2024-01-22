@@ -19,8 +19,9 @@
     :fixed="cols.fixed != '' ? cols.fixed : undefined"
     :align="cols.align"
   >
-    <template #default="{ row, $index }">
-      <component
+    <template #default="{ row }">
+      <!-- TODO渲染函数 -->
+      <!-- <component
         v-if="cols.render"
         :is="cols.render"
         :row="row"
@@ -31,8 +32,8 @@
         :name="cols.prop"
         :row="row"
         :index="$index"
-      ></slot>
-      <span v-else>{{ row[cols.prop] }}</span>
+      ></slot> -->
+      <span>{{ row[cols.prop] }}</span>
     </template>
   </el-table-column>
 </template>

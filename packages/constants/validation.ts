@@ -24,3 +24,73 @@ export function getRegExp(validatorName: ValidatorNameType) {
 
   return commonRegExp[validatorName];
 }
+
+export const dataTableValidator = [
+  {
+    label: "渲染函数",
+    options: [
+      {
+        label: "render",
+        value: "render"
+      }
+    ]
+  },
+  {
+    label: "时间格式",
+    options: [
+      {
+        label: "YYYY-MM-DD",
+        value: "YYYY-MM-DD"
+      },
+      {
+        label: "yyyy/MM/dd",
+        value: "yyyy/MM/dd"
+      },
+      {
+        label: "yyyy年MM月dd日",
+        value: "yyyy年MM月dd日"
+      },
+      {
+        label: "yyyy-MM-dd HH:mm:ss",
+        value: "yyyy-MM-dd HH:mm:ss"
+      },
+      {
+        label: "yyyy-MM-dd hh:mm:ss",
+        value: "yyyy-MM-dd hh:mm:ss"
+      }
+    ]
+  },
+  {
+    label: "数字格式",
+    options: [
+      {
+        label: "###,###,###,##0.######",
+        value: "###,###,###,##0.######"
+      },
+      {
+        label: "###,###,###,##0.00####",
+        value: "###,###,###,##0.00####"
+      },
+      {
+        label: "###,###,###,##0.000000",
+        value: "###,###,###,##0.000000"
+      },
+      {
+        label: "###,###,###,##0.000",
+        value: "###,###,###,##0.000"
+      },
+      {
+        label: "###,###,###,##0.00",
+        value: "###,###,###,##0.00"
+      },
+      {
+        label: "###,###,###,##0",
+        value: "###,###,###,##0"
+      },
+      {
+        label: "###,##0.00##%",
+        value: "###,##0.00##%"
+      }
+    ]
+  }
+];

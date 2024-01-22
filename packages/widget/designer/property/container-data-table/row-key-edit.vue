@@ -83,7 +83,9 @@
         </el-table-column>
         <el-table-column width="120" label="字段名称" align="center">
           <template #default="scope">
-            <span v-if="scope.row.children">|---</span>
+            <div style="text-align: left" v-if="scope.row.children">
+              {{ getDataTableHeaderLabel(scope.row) }}
+            </div>
             <span v-else><el-input v-model="scope.row.prop" /></span>
           </template>
         </el-table-column>
@@ -131,17 +133,27 @@
         <el-table-column width="180" label="格式化" align="center">
           <template #default="scope">
             <el-select v-if="!scope.row.children" v-model="scope.row.format">
-              <el-option label="left" value="left" />
-              <el-option label="center" value="center " />
-              <el-option label="right" value="right" />
+              <el-option-group
+                v-for="group in dataTableValidator"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
             </el-select>
           </template>
         </el-table-column>
         <el-table-column width="70" label="渲染函数" align="center">
           <template #default="scope">
             <el-button
+              :disabled="scope.row.format != 'render'"
               class="ex-mgl-10"
-              @click="handleRender(scope.row)"
+              @click="openRender(scope.row)"
               icon="Edit"
               type="primary"
               plain
@@ -155,12 +167,12 @@
               <el-button icon="Plus" type="primary" plain circle />
               <template #content>
                 <div class="ex-data-table-btn">
-                  <el-button @click="insertCol(scope.row)" link>
+                  <el-button @click="insertRow(scope.row)" link>
                     插入数据列
                   </el-button>
                   <el-button
-                    @click="insertLowerCol(scope.row)"
-                    :disabled="isInsertLowerCol(scope.row)"
+                    @click="insertLowerRow(scope.row)"
+                    :disabled="isInsertLowerRow(scope.row)"
                     link
                   >
                     插入下级数据列
@@ -179,7 +191,7 @@
               </template>
             </el-tooltip>
             <el-button
-              @click="handleDeleteRow(scope.$index)"
+              @click="deleteRow(scope.row)"
               icon="Minus"
               type="danger"
               plain
@@ -204,7 +216,7 @@
       <ex-code-editor v-model="codeValue" lang="json" :dark="dark" />
       <template #footer>
         <div style="display: flex; justify-content: center">
-          <el-button type="primary" size="default" @click="confirm">
+          <el-button type="primary" size="default" @click="confirmDataTable">
             确认
           </el-button>
           <el-button size="default" @click="cancel">关闭</el-button>
@@ -336,6 +348,31 @@
         </div>
       </template>
     </el-dialog>
+    <el-dialog
+      width="800"
+      v-model="isShowRender"
+      v-bind="dialogOptions"
+      title="渲染函数"
+      @close="isShowRender = false"
+    >
+      <div class="ex-dialog-box">
+        <div class="name-front">
+          function customRender(h, params, components) {
+        </div>
+        <ex-code-editor v-model="renderValue" :dark="dark" />
+        <div class="name-back">}</div>
+      </div>
+      <template #footer>
+        <div style="display: flex; justify-content: center">
+          <el-button type="primary" size="default" @click="confirmRender">
+            确认
+          </el-button>
+          <el-button size="default" @click="isShowRender = false">
+            关闭
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -344,27 +381,41 @@ import { ref, inject, nextTick } from "vue";
 import { ElScrollbar } from "element-plus";
 import Sortable from "sortablejs";
 import { desPropertyProps } from "../property";
+import type { DesTableColumns } from "@exercise-form/constants";
+import { dataTableValidator } from "@exercise-form/constants";
 import {
   onMessageWarning,
   onMessageError,
-  getRandomNumber
+  getRandomNumber,
+  getUniqueId
 } from "@exercise-form/utils";
 import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
 
+type CurrentRowData = {
+  columns: DesTableColumns[]; //当前列表数据
+  row: DesTableColumns; //当前列
+  index: number; //下标
+  level: number; //层级
+};
+
+type CurrentRowCallBack = (params: CurrentRowData) => void;
+
 const props = defineProps(desPropertyProps);
 
-// TODO:数据类型待处理
 const dark = inject(darkKeys);
-const tableColumns = props.optionsModel.tableColumns as [];
+const tableColumns = props.optionsModel.tableColumns as DesTableColumns[];
 const operationButtons = props.optionsModel.operationButtons;
 const optionsModel = props.optionsModel;
 const codeValue = ref("");
+const renderValue = ref("");
+const columnsId = ref();
 const dataTableKey = ref("dataTable");
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const dataTableRef = ref();
 const isShowRow = ref(false);
 const isShowDataTable = ref(false);
 const isShowOperation = ref(false);
+const isShowRender = ref(false);
 const dialogOptions = {
   draggable: true,
   destroyOnClose: true,
@@ -375,12 +426,32 @@ const opened = () => {
   drag();
 };
 
+const getCurrentRow = (
+  id: number,
+  columns: DesTableColumns[],
+  cb: CurrentRowCallBack,
+  level = 1
+) => {
+  columns.forEach((row, index) => {
+    if (row.children) getCurrentRow(id, row.children, cb, level + 1);
+    if (id == row.columnsId) {
+      cb({ columns, row, index, level });
+    }
+  });
+};
+
 const openDataTable = () => {
   codeValue.value = JSON.stringify(props.optionsModel.tableData, null, 2);
   isShowDataTable.value = true;
 };
 
-const confirm = () => {
+const openRender = (row: DesTableColumns) => {
+  renderValue.value = row.render ?? "";
+  columnsId.value = row.columnsId;
+  isShowRender.value = true;
+};
+
+const confirmDataTable = () => {
   try {
     optionsModel["tableData"] = JSON.parse(codeValue.value);
     isShowDataTable.value = false;
@@ -389,10 +460,37 @@ const confirm = () => {
   }
 };
 
+const handleUpdateRender = (params: CurrentRowData) => {
+  let { row } = params;
+  if (!row.render) row.render = "";
+  row.render = renderValue.value;
+};
+
+const confirmRender = () => {
+  getCurrentRow(columnsId.value, tableColumns, handleUpdateRender);
+  isShowRender.value = false;
+};
+
 const cancel = () => {
   isShowRow.value = false;
   isShowDataTable.value = false;
   isShowOperation.value = false;
+  isShowRender.value = false;
+};
+
+const handleDragEvent = (id: number, targetId: number) => {
+  const changeDrag = (params: CurrentRowData) => {
+    let { columns, index } = params;
+    let ids = getIds(columns);
+    let sub = ids.indexOf(targetId);
+    if (sub != -1) {
+      let row = columns.splice(index, 1)[0];
+      columns.splice(sub, 0, row);
+    } else {
+      onMessageWarning("只能在同级别节点之间进行拖拽排序！");
+    }
+  };
+  getCurrentRow(id, tableColumns, changeDrag);
 };
 
 const drag = () => {
@@ -405,10 +503,10 @@ const drag = () => {
       handle: ".pane-mover",
       onEnd({ newIndex, oldIndex }) {
         if (typeof newIndex === "number" && typeof oldIndex === "number") {
-          let flatArr: any = flatColumn(tableColumns);
+          let flatArr = flatColumn(tableColumns);
           let flatRow = flatArr[oldIndex];
           let targetRow = flatArr[newIndex];
-          handleDragEvent(flatRow.columnsId, targetRow.columnsId, tableColumns);
+          handleDragEvent(flatRow.columnsId, targetRow.columnsId);
           dataTableKey.value = dataTableKey.value + Math.random();
           nextTick(() => {
             drag();
@@ -419,43 +517,38 @@ const drag = () => {
   }
 };
 
-const getIds = (list: []) => {
+const getDataTableHeaderLabel = (row: DesTableColumns) => {
+  let label = "";
+  const handleGetLabel = (params: CurrentRowData) => {
+    let { level } = params;
+    label = `${level}级表头`;
+  };
+  getCurrentRow(row.columnsId, tableColumns, handleGetLabel);
+  return label;
+};
+
+const getIds = (list: DesTableColumns[]) => {
   let ids: Array<number> = [];
-  list.forEach((item: any) => {
+  list.forEach((item) => {
     ids.push(item.columnsId);
   });
   return ids;
 };
 
-const handleDragEvent = (id: number, targetId: number, list: []) => {
-  for (let index = 0; index < list.length; index++) {
-    let item: any = list[index];
-    if (item.children) handleDragEvent(id, targetId, item.children);
-    if (id == item.columnsId) {
-      let ids = getIds(list);
-      let sub = ids.indexOf(targetId);
-      if (sub != -1) {
-        let row = list.splice(index, 1)[0];
-        list.splice(sub, 0, row);
-        return;
-      } else {
-        onMessageWarning("只能在同级别节点之间进行拖拽排序！");
-      }
-    }
-  }
-};
-
-const isInsertLowerCol = (row: any) => {
+const isInsertLowerRow = (row: DesTableColumns) => {
   return !row.children;
 };
 
-const isInsertLowerHeader = (row: any) => {
+const isInsertLowerHeader = (row: DesTableColumns) => {
   return !row.headerFlag;
 };
 
-const flatColumn = (columns: any, flatArr = []) => {
-  columns.forEach((col: any) => {
-    flatArr.push(col as never);
+const flatColumn = (
+  columns: DesTableColumns[],
+  flatArr: Array<DesTableColumns> = []
+) => {
+  columns.forEach((col) => {
+    flatArr.push(col);
     if (col.children?.length) {
       flatArr.push(...flatColumn(col.children));
     }
@@ -463,35 +556,46 @@ const flatColumn = (columns: any, flatArr = []) => {
   return flatArr;
 };
 
-const insert = (id: number, data: any, list: any, level = false) => {
-  list.forEach((item: any, index: number) => {
-    if (item.children) insert(id, data, item.children);
-    if (id == item.columnsId) {
-      if (level) {
-        if (!item.children) item.children = [];
-        let len = item.children.length;
-        len > 0
-          ? item.children.splice(index + 1, 0, data)
-          : item.children.push(data);
-      } else {
-        list.splice(index + 1, 0, data);
-      }
-    }
-  });
+const handleInsert = (id: number, data: DesTableColumns) => {
+  const insert = (params: CurrentRowData) => {
+    let { columns, index } = params;
+    columns.splice(index + 1, 0, data);
+  };
+  getCurrentRow(id, tableColumns, insert);
+};
+
+const handleInsertLevel = (id: number, data: DesTableColumns) => {
+  const insert = (params: CurrentRowData) => {
+    let { row, index } = params;
+    if (!row.children) row.children = [];
+    let len = row.children.length;
+    len > 0 ? row.children.splice(index + 1, 0, data) : row.children.push(data);
+  };
+  getCurrentRow(id, tableColumns, insert);
+};
+
+const handleDeleteRow = (params: CurrentRowData) => {
+  let { columns, index, level } = params;
+  if (level == 1 && columns.length == 1) {
+    onMessageWarning("表格至少保留一列数据！");
+    return;
+  }
+  columns.splice(index, 1);
 };
 
 const getColData = () => {
   return {
+    align: "center",
     columnsId: getRandomNumber(),
     fixed: "",
     label: "",
-    minWidth: "",
     prop: ""
   };
 };
 
 const getHeaderData = () => {
   return {
+    align: "center",
     columnsId: getRandomNumber(),
     children: [],
     headerFlag: true,
@@ -500,34 +604,33 @@ const getHeaderData = () => {
   };
 };
 
-const insertCol = (row: any) => {
-  insert(row.columnsId, getColData(), tableColumns);
+const insertRow = (row: DesTableColumns) => {
+  handleInsert(row.columnsId, getColData());
 };
 
-const insertLowerCol = (row: any) => {
-  insert(row.columnsId, getColData(), tableColumns, true);
+const insertLowerRow = (row: DesTableColumns) => {
+  handleInsertLevel(row.columnsId, getColData());
 };
 
-const insertHeader = (row: any) => {
-  insert(row.columnsId, getHeaderData(), tableColumns);
+const insertHeader = (row: DesTableColumns) => {
+  handleInsert(row.columnsId, getHeaderData());
 };
 
-const insertLowerHeader = (row: any) => {
-  insert(row.columnsId, getHeaderData(), tableColumns, true);
+const insertLowerHeader = (row: DesTableColumns) => {
+  handleInsertLevel(row.columnsId, getHeaderData());
 };
 
-const handleDeleteRow = (index: number) => {
-  tableColumns.splice(index, 1);
+const deleteRow = (row: DesTableColumns) => {
+  getCurrentRow(row.columnsId, tableColumns, handleDeleteRow);
 };
-
-const handleRender = (row: any) => {};
 
 const handleAddButton = () => {
+  let name = getUniqueId();
   operationButtons.push({
     disabled: false,
     hidden: true,
-    label: "",
-    name: "",
+    label: "new btn",
+    name,
     round: false,
     size: "small",
     text: true,

@@ -1,4 +1,18 @@
-export const tableColumns = [
+export type DesTableColumns = {
+  align: string;
+  columnsId: number;
+  children?: DesTableColumns[];
+  format?: string;
+  headerFlag?: boolean;
+  label: string;
+  minWidth?: number;
+  prop: string;
+  render?: string;
+  show?: boolean;
+  sortable?: boolean;
+};
+
+export const tableColumns: DesTableColumns[] = [
   {
     align: "center",
     columnsId: 1,

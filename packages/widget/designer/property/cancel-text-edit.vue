@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { desPropertyProps } from "../property";
+import { desPropertyProps } from "./property";
 
 defineProps(desPropertyProps);
 </script>

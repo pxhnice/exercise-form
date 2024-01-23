@@ -1,5 +1,5 @@
-import { operationButtons, tableColumns, tableData } from './table';
-import { treeData } from './tree';
+import { operationButtons, tableColumns, tableData } from "./table";
+import { treeData } from "./tree";
 
 export type DesWidget = {
   name: string;
@@ -141,13 +141,17 @@ export const containers: DesWidgetList = [
     type: "side-drawer",
     children: [],
     options: {
+      cancelText: "取消",
       closeOnClickModal: true,
       closeOnPressEscape: true,
+      confirmText: "确认",
       customClass: "",
       direction: "rtl",
       modal: true,
       name: "",
       showClose: true,
+      showConfirmButton: false,
+      showCancelButton: false,
       size: "",
       title: ""
     }
@@ -159,11 +163,11 @@ export const containers: DesWidgetList = [
     type: "popup-box",
     children: [],
     options: {
-      cancelText: "",
+      cancelText: "取消",
       center: false,
       closeOnClickModal: true,
       closeOnPressEscape: true,
-      confirmText: "",
+      confirmText: "确认",
       customClass: "",
       draggable: false,
       fullscreen: false,

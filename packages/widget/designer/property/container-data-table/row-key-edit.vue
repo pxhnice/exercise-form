@@ -83,7 +83,7 @@
         </el-table-column>
         <el-table-column width="120" label="字段名称" align="center">
           <template #default="scope">
-            <div style="text-align: left" v-if="scope.row.children">
+            <div style="text-align: left" v-if="scope.row.headerFlag">
               {{ getDataTableHeaderLabel(scope.row) }}
             </div>
             <span v-else><el-input v-model="scope.row.prop" /></span>
@@ -96,25 +96,28 @@
         </el-table-column>
         <el-table-column width="80" label="列宽(px)" align="center">
           <template #default="scope">
-            <el-input v-if="!scope.row.children" v-model="scope.row.minWidth" />
+            <el-input
+              v-if="!scope.row.headerFlag"
+              v-model="scope.row.minWidth"
+            />
           </template>
         </el-table-column>
         <el-table-column width="70" label="是否显示" align="center">
           <template #default="scope">
-            <el-switch v-if="!scope.row.children" v-model="scope.row.show" />
+            <el-switch v-if="!scope.row.headerFlag" v-model="scope.row.show" />
           </template>
         </el-table-column>
         <el-table-column width="70" label="是否排序" align="center">
           <template #default="scope">
             <el-switch
-              v-if="!scope.row.children"
+              v-if="!scope.row.headerFlag"
               v-model="scope.row.sortable"
             />
           </template>
         </el-table-column>
         <el-table-column width="100" label="是否固定" align="center">
           <template #default="scope">
-            <el-select v-model="scope.row.fixed">
+            <el-select v-if="!scope.row.headerFlag" v-model="scope.row.fixed">
               <el-option label="left" value="left" />
               <el-option label="false" value="" />
               <el-option label="right" value="right" />
@@ -132,7 +135,7 @@
         </el-table-column>
         <el-table-column width="180" label="格式化" align="center">
           <template #default="scope">
-            <el-select v-if="!scope.row.children" v-model="scope.row.format">
+            <el-select v-if="!scope.row.headerFlag" v-model="scope.row.format">
               <el-option-group
                 v-for="group in dataTableValidator"
                 :key="group.label"

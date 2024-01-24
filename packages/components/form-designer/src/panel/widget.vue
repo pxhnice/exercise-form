@@ -17,6 +17,7 @@
                 :list="containerList"
                 item-key="id"
                 :sort="false"
+                @unchoose="onUnChoose"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -36,6 +37,7 @@
                 :list="fieldsList"
                 item-key="id"
                 :sort="false"
+                @unchoose="onUnChoose"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -55,6 +57,7 @@
                 :list="advancedList"
                 item-key="id"
                 :sort="false"
+                @unchoose="onUnChoose"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -74,6 +77,7 @@
                 :list="customsList"
                 item-key="id"
                 :sort="false"
+                @unchoose="onUnChoose"
                 :clone="handleClone"
               >
                 <template #item="{ element }">
@@ -181,5 +185,9 @@ const handleLoadTemplate = (list: DesWidgetList) => {
       }
     }
   );
+};
+
+const onUnChoose = () => {
+  props.designer.setDragTarget(props.designer.selectWidget.value);
 };
 </script>

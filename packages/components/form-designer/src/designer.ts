@@ -23,9 +23,11 @@ export type Designer = {
   widgetList: DesWidgetList; //表单列表
   selectWidgetId: string; //选择ID
   selectWidget: DesWidget;
+  dragTarget: DesWidget;
 };
 
 const selectWidget = {} as DesWidget; //当前选中表单组件
+const dragTarget = {} as DesWidget; //当前拖动目标数据
 
 export function useDesigner() {
   return {
@@ -56,7 +58,8 @@ export function useDesigner() {
         },
         widgetList: [],
         selectWidgetId: "",
-        selectWidget
+        selectWidget,
+        dragTarget
       })
     ),
     initDesigner() {
@@ -93,6 +96,7 @@ export function useDesigner() {
 
     cloneWidget(widget: DesWidget) {
       let newWidget = deepClone(widget);
+      this.dragTarget.value = widget;
       newWidget.id = newWidget.type + getUniqueId();
       newWidget.options.name = newWidget.id;
       if (newWidget.type == "grid") {
@@ -511,6 +515,10 @@ export function useDesigner() {
       if (form) {
         this.desFormConfig.value = form as DesFormConfig;
       }
+    },
+
+    setDragTarget(widget: DesWidget) {
+      this.dragTarget.value = widget;
     },
 
     loadWidget(list: DesWidgetList) {

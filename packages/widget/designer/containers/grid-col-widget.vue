@@ -10,6 +10,7 @@
       ghost-class="ex-ghost"
       handle=".drag-mover"
       class="container-draggable"
+      :disabled="isDrag"
       :list="widgetData.children"
       item-key="id"
       :animation="300"
@@ -99,6 +100,10 @@ const props = defineProps(desContainerProps);
 
 const parentList = ref(props.parentList);
 
+const dragTarget = props.designer.dragTarget;
+const isDrag = computed(() =>
+  ["popup-box", "side-drawer"].includes(dragTarget.value.type)
+);
 const isSelect = computed(
   () => props.designer.selectWidgetId.value == props.widgetData.id
 );

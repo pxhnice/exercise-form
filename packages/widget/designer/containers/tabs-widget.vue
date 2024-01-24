@@ -24,6 +24,7 @@
             ghost-class="ex-ghost"
             handle=".drag-mover"
             class="container-draggable"
+            :disabled="isDrag"
             :list="tab.children"
             item-key="id"
             :animation="300"
@@ -62,13 +63,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, computed, nextTick } from "vue";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
 
 const activate = ref("tab1");
 const componentKey = ref(0);
+const dragTarget = props.designer.dragTarget;
+const isDrag = computed(() =>
+  ["popup-box", "side-drawer"].includes(dragTarget.value.type)
+);
 
 watch(
   () => props.widgetData?.children,

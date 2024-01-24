@@ -77,13 +77,27 @@ const emits = defineEmits(formDesignerEmits);
 const props = defineProps(formDesignerProps);
 
 const colorEeg = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+const defaultOptions = {
+  templateButton: true, //是否显示模版栏
+  treeFormButton: true, //是否显示预览表单按钮
+  previewFormButton: true, //是否显示预览表单按钮
+  exportJsonButton: true, //是否显示导出JSON器按钮
+  exportCodeButton: true, //是否显示导出代码按钮
+  generateSFCButton: true, //是否显示生成SFC按钮
+  pageTypeButton: true, //是否显示导出页面类型按钮
+  copyDataButton: true, //是否显示复制按钮
+  saveFileButton: true, //是否显示导出文件按钮
+  resetFormJson: false //是否初始化重置表单为空
+};
 const formData = ref(props.formData);
 const formJson = ref(props.formJson);
 const optionsData = ref(props.options);
+optionsData.value = Object.assign(defaultOptions, optionsData.value);
+console.log(optionsData.value);
 const bannedWidgets = ref(props.bannedWidgets);
 const dark = ref(props.dark);
 const designer = useDesigner();
-designer.initDesigner();
+designer.initDesigner(optionsData);
 const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
 const selectWidgetId = designer.selectWidgetId;
@@ -96,7 +110,7 @@ const initData = () => {
       props.formJson.formConfig
     );
   }
-  if (isArray(props.formJson.widgetList)) {
+  if (isArray(props.formJson.widgetList) && optionsData.value.resetFormJson) {
     widgetList.value = props.formJson.widgetList;
   }
 };

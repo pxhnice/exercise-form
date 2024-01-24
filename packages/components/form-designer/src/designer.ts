@@ -62,13 +62,15 @@ export function useDesigner() {
         dragTarget
       })
     ),
-    initDesigner() {
+    initDesigner(options: any) {
       console.log(
         `%cExForm %cv:0.0.0-dev_1 \nhttps://gitee.com/pxhgood/exercise-form.git`,
         `color: #409EFF;font-size:20px;font-weight:bold`,
         `color:#666`
       );
-      this.initHistory();
+      if (!options.value.resetFormJson) {
+        this.initHistory();
+      }
     },
 
     setSelectWidget(widget: DesWidget) {
@@ -510,6 +512,7 @@ export function useDesigner() {
       let list = storage.get("ex_widget_list");
       let form = storage.get("ex_form_config");
       if (list) {
+        console.log(list);
         this.widgetList.value = list as DesWidgetList;
       }
       if (form) {

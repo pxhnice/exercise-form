@@ -188,7 +188,7 @@ const isMergeRight = computed(() => {
 });
 
 const isUpMerge = computed(() => {
-  let options: any;
+  let options: { [key: string]: any } = {};
   let widgetTarget = props.parentList[props.widgetRow - 1];
   if (widgetTarget) {
     let children = widgetTarget.children;
@@ -200,8 +200,8 @@ const isUpMerge = computed(() => {
 });
 
 const isDownMerge = computed(() => {
+  let options: { [key: string]: any } = {};
   let belowRowIndex = props.widgetRow + props.widgetData.options.rowspan;
-  let options: any;
   let widgetTarget = props.parentList[belowRowIndex];
   if (widgetTarget) {
     let children = widgetTarget.children;

@@ -31,7 +31,7 @@ import { renContainerProps } from "./container";
 
 defineProps(renContainerProps);
 
-const isWidget = (type: any) => {
+const isWidget = (type: string) => {
   return CUSTOM_LIST.includes(type);
 };
 </script>

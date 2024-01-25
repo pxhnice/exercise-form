@@ -46,7 +46,7 @@ export const CUSTOM_LIST = [
   "slot",
   "uploadImage",
   "uploadFile"
-] as const;
+];
 
 export const SHADOW_LIST = ["always", "never", "hover"];
 // 可输入表单

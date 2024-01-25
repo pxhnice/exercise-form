@@ -95,6 +95,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { desContainerProps } from "./container";
+import type { DesWidget } from "@exercise-form/constants";
 
 const props = defineProps(desContainerProps);
 
@@ -116,7 +117,7 @@ const onClickCol = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 
-const onDragAdd = (e: any, parent: any) => {
+const onDragAdd = (e: any, parent: DesWidget) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);

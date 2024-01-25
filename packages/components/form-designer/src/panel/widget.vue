@@ -139,7 +139,7 @@ import {
   advanced,
   customs
 } from "@exercise-form/constants";
-import type { DesWidgetList } from "@exercise-form/constants";
+import type { DesWidget } from "@exercise-form/constants";
 import { optionsKeys, bannedWidgetKeys, darkKeys } from "../form-designer";
 import { desPanelProps } from "./panel";
 
@@ -169,10 +169,10 @@ const customsList = computed(() =>
   customs.filter((item) => !bannedWidgets?.value.includes(item.type))
 );
 
-const handleClone = (target: any) => {
+const handleClone = (target: DesWidget) => {
   return props.designer.cloneWidget(target);
 };
-const handleLoadTemplate = (list: DesWidgetList) => {
+const handleLoadTemplate = (list: DesWidget[]) => {
   ElMessageBox.alert(
     "是否加载此模板？加载后会覆盖当前表单，你可以使用“撤销”功能恢复。",
     "提示",

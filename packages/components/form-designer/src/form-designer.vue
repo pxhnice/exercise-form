@@ -89,15 +89,19 @@ const defaultOptions = {
   saveFileButton: true, //是否显示导出文件按钮
   resetFormJson: false //是否初始化重置表单为空
 };
+
+const dark = ref(props.dark);
 const formData = ref(props.formData);
 const formJson = ref(props.formJson);
 const optionsData = ref(props.options);
-optionsData.value = Object.assign(defaultOptions, optionsData.value);
-console.log(optionsData.value);
 const bannedWidgets = ref(props.bannedWidgets);
-const dark = ref(props.dark);
+
+optionsData.value = Object.assign(defaultOptions, optionsData.value);
+
 const designer = useDesigner();
-designer.initDesigner(optionsData);
+
+designer.initDesigner(optionsData.value.resetFormJson);
+
 const widgetList = designer.widgetList;
 const selectWidget = designer.selectWidget;
 const selectWidgetId = designer.selectWidgetId;

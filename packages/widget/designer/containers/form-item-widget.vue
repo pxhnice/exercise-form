@@ -50,7 +50,7 @@ watch(
   { immediate: true }
 );
 
-const isWidget = (type: any) => {
+const isWidget = (type: string) => {
   return CUSTOM_LIST.includes(type);
 };
 

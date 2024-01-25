@@ -235,6 +235,7 @@ import {
   getSFCGenerator,
   onMessageWarning
 } from "@exercise-form/utils";
+import type { DesWidget } from "@exercise-form/constants";
 import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
 import { optionsKeys, darkKeys } from "../form-designer";
@@ -381,11 +382,11 @@ const handelOpen = () => {
   treeRef.value!.filter();
 };
 
-const filterNode = (value: string, data: any) => {
+const filterNode = (value: string, data: DesWidget) => {
   return !(data.type === "table-td" && !data.merged);
 };
 
-const handleNodeClick = (data: any) => {
+const handleNodeClick = (data: DesWidget) => {
   if (["tab-pane", "table-tr"].includes(data.type)) {
     onMessageWarning("该节点不可选中");
     return;

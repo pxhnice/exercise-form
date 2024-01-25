@@ -62,13 +62,13 @@ export function useDesigner() {
         dragTarget
       })
     ),
-    initDesigner(options: any) {
+    initDesigner(resetFormJson: boolean) {
       console.log(
         `%cExForm %cv:0.0.0-dev_1 \nhttps://gitee.com/pxhgood/exercise-form.git`,
         `color: #409EFF;font-size:20px;font-weight:bold`,
         `color:#666`
       );
-      if (!options.value.resetFormJson) {
+      if (!resetFormJson) {
         this.initHistory();
       }
     },
@@ -511,13 +511,8 @@ export function useDesigner() {
       let storage = localStorageUtils();
       let list = storage.get("ex_widget_list");
       let form = storage.get("ex_form_config");
-      if (list) {
-        console.log(list);
-        this.widgetList.value = list as DesWidgetList;
-      }
-      if (form) {
-        this.desFormConfig.value = form as DesFormConfig;
-      }
+      if (list) this.widgetList.value = list as DesWidgetList;
+      if (form) this.desFormConfig.value = form as DesFormConfig;
     },
 
     setDragTarget(widget: DesWidget) {

@@ -65,6 +65,7 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
 import { desContainerProps } from "./container";
+import type { DesWidget } from "@exercise-form/constants";
 
 const props = defineProps(desContainerProps);
 
@@ -89,7 +90,7 @@ const onClickTabs = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 
-const onDragAdd = (e: any, parent: any) => {
+const onDragAdd = (e: any, parent: DesWidget) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);

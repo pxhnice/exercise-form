@@ -69,7 +69,10 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     operationWidth: wop.operationWidth ? `width="${wop.operationWidth}"` : "",
     operationLabel: wop.operationLabel ? `label="${wop.operationLabel}"` : "",
     operationFixed: wop.operationFixed ? `fixed="${wop.operationFixed}"` : "",
-
+    operationAlign:
+      wop.operationAlign && wop.operationAlign != "left"
+        ? `align="${wop.operationAlign}"`
+        : "",
     closeOnClickModal: !wop.closeOnClickModal
       ? `:close-on-click-modal="${wop.closeOnClickModal}`
       : "",

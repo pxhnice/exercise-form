@@ -143,7 +143,8 @@ const containerTemplate: DesTemplateMethod = {
       highlightCurrentRow,
       operationLabel,
       operationWidth,
-      operationFixed
+      operationFixed,
+      operationAlign
     } = getElAttr(widget, formConfig);
     let colIndexHtml = showIndex
       ? ` <el-table-column type="index" width="50" align="center"></el-table-column>`
@@ -152,7 +153,7 @@ const containerTemplate: DesTemplateMethod = {
       ? `<el-table-column type="selection" width="50" align="center"></el-table-column>`
       : "";
     let buttonTemplateHtml = `
-    <el-table-column ${operationLabel} ${operationWidth} ${operationFixed}>
+    <el-table-column ${operationLabel} ${operationWidth} ${operationAlign} ${operationFixed}>
       <template #default>
       ${operationButtons
         .map((btn: DesOperationButton) => {

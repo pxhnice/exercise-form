@@ -1,5 +1,5 @@
-import { tableColumns, tableData, operationButtons } from "./table";
-import { treeData } from "./tree";
+import { operationButtons, tableColumns, tableData } from './table';
+import { treeData } from './tree';
 
 export type DesWidget = {
   name: string;
@@ -115,23 +115,28 @@ export const containers: DesWidgetList = [
       childrenKey: "children",
       customClass: "",
       fit: true,
-      height: "100%",
+      height: "300px",
       highlightCurrentRow: false,
       name: "",
-      operationButtons,
       operationAlign: "center",
+      operationButtons,
+      operationFixed: "right",
       operationLabel: "操作",
       operationWidth: 120,
+      paginationAlign: "left",
       showCheckBox: true,
       showHeader: true,
       showIndex: true,
       showOperation: true,
+      showPagination: true,
+      showSummary: false,
       size: "default",
+      small: false,
       stripe: true,
       rowKey: "id",
       tableColumns,
       tableData,
-      width: "100%"
+      tableWidth: "100%"
     }
   },
   {
@@ -188,10 +193,11 @@ export const containers: DesWidgetList = [
       defaultExpandAll: true,
       lazy: false,
       name: "",
-      props: {
-        children: "children",
-        label: "label"
-      },
+      nodeKey: "id",
+      // props: {
+      //   children: "children",
+      //   label: "label"
+      // },
       treeData,
       showCheckbox: true,
       showCheckAllOrCancelAll: true,

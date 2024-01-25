@@ -85,3 +85,15 @@
     margin: 5px 0;
   }
 }
+
+.ex-pagination-left {
+  justify-content: flex-start;
+}
+
+.ex-pagination-center {
+  justify-content: center;
+}
+
+.ex-pagination-right {
+  justify-content: flex-end;
+}

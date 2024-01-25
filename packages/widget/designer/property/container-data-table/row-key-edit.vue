@@ -4,7 +4,7 @@
       <el-input v-model="optionsModel.rowKey" />
     </el-form-item>
     <el-form-item label="宽度(px/%)">
-      <el-input v-model="optionsModel.width" />
+      <el-input v-model="optionsModel.tableWidth" />
     </el-form-item>
     <el-form-item label="高度(px/%)">
       <el-input v-model="optionsModel.height" />
@@ -26,6 +26,22 @@
     </el-form-item>
     <el-form-item label="高亮当前行">
       <el-switch v-model="optionsModel.highlightCurrentRow" />
+    </el-form-item>
+    <el-form-item label="显示合计">
+      <el-switch v-model="optionsModel.showSummary" />
+    </el-form-item>
+    <el-form-item label="显示分页">
+      <el-switch v-model="optionsModel.showPagination" />
+    </el-form-item>
+    <el-form-item v-if="optionsModel.showPagination" label="分页水平对齐">
+      <el-radio-group v-model="optionsModel.paginationAlign" size="small">
+        <el-radio-button label="left">居左</el-radio-button>
+        <el-radio-button label="center">居中</el-radio-button>
+        <el-radio-button label="right">居右</el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item v-if="optionsModel.showPagination" label="小型分页">
+      <el-switch v-model="optionsModel.small" />
     </el-form-item>
     <el-form-item label="表格列编辑">
       <el-button @click="isShowRow = true" type="primary" icon="Edit" round>
@@ -334,13 +350,38 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from "vue";
 import { desPropertyProps } from "../property";
-import { onMessageWarning, getRandomNumber } from "@exercise-form/utils";
-import Sortable from "sortablejs";
+import type {
+  DesTableColumns,
+  DesOperationButton
+} from "@exercise-form/constants";
+import { dataTableValidator } from "@exercise-form/constants";
+import {
+  onMessageWarning,
+  onMessageError,
+  getRandomNumber,
+  getUniqueId
+} from "@exercise-form/utils";
+import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
+
+type CurrentRowData = {
+  columns: DesTableColumns[]; //当前列表数据
+  row: DesTableColumns; //当前列
+  index: number; //下标
+  level: number; //层级
+};
+
+type CurrentRowCallBack = (params: CurrentRowData) => void;
 
 const props = defineProps(desPropertyProps);
 
-// TODO:数据类型待处理
-const tableColumns = props.optionsModel.tableColumns as [];
+const dark = inject(darkKeys);
+const tableColumns = props.optionsModel.tableColumns as DesTableColumns[];
+const operationButtons = props.optionsModel
+  .operationButtons as DesOperationButton[];
+const optionsModel = props.optionsModel;
+const codeValue = ref("");
+const renderValue = ref("");
+const columnsId = ref();
 const dataTableKey = ref("dataTable");
 const dataTableRef = ref();
 const isShowRow = ref(false);
@@ -452,7 +493,6 @@ const insert = (id: number, data: any, list: any, level = false) => {
 const getColData = () => {
   return {
     columnsId: getRandomNumber(),
-    fixed: "",
     label: "",
     minWidth: "",
     prop: ""
@@ -489,7 +529,23 @@ const handleDeleteRow = (index: number) => {
   tableColumns.splice(index, 1);
 };
 
-const handleRender = (row: any) => {};
+const handleAddButton = () => {
+  let name = getUniqueId();
+  operationButtons.push({
+    disabled: false,
+    label: "new btn",
+    link: false,
+    name,
+    round: false,
+    size: "small",
+    text: true,
+    type: ""
+  });
+  nextTick(() => {
+    let wrapRef = scrollbarRef.value!.wrapRef;
+    scrollbarRef.value!.setScrollTop(wrapRef!.scrollHeight);
+  });
+};
 
 onMounted(() => {});
 </script>

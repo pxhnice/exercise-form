@@ -4,7 +4,7 @@
       <el-input v-model="optionsModel.rowKey" />
     </el-form-item>
     <el-form-item label="宽度(px/%)">
-      <el-input v-model="optionsModel.width" />
+      <el-input v-model="optionsModel.tableWidth" />
     </el-form-item>
     <el-form-item label="高度(px/%)">
       <el-input v-model="optionsModel.height" />
@@ -26,6 +26,22 @@
     </el-form-item>
     <el-form-item label="高亮当前行">
       <el-switch v-model="optionsModel.highlightCurrentRow" />
+    </el-form-item>
+    <el-form-item label="显示合计">
+      <el-switch v-model="optionsModel.showSummary" />
+    </el-form-item>
+    <el-form-item label="显示分页">
+      <el-switch v-model="optionsModel.showPagination" />
+    </el-form-item>
+    <el-form-item v-if="optionsModel.showPagination" label="分页水平对齐">
+      <el-radio-group v-model="optionsModel.paginationAlign" size="small">
+        <el-radio-button label="left">居左</el-radio-button>
+        <el-radio-button label="center">居中</el-radio-button>
+        <el-radio-button label="right">居右</el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item v-if="optionsModel.showPagination" label="小型分页">
+      <el-switch v-model="optionsModel.small" />
     </el-form-item>
     <el-form-item label="表格列编辑">
       <el-button @click="isShowRow = true" type="primary" icon="Edit" round>
@@ -292,9 +308,12 @@
                   <el-col :span="3">
                     <el-form-item label="类型">
                       <el-select v-model="element.type">
-                        <el-option label="left" value="left" />
-                        <el-option label="center" value="center " />
-                        <el-option label="right" value="right" />
+                        <el-option label="default" value="" />
+                        <el-option label="primary" value="primary" />
+                        <el-option label="success" value="success" />
+                        <el-option label="warning" value="warning" />
+                        <el-option label="info" value="info" />
+                        <el-option label="danger" value="danger" />
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -307,17 +326,22 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="2">
+                    <el-form-item label="链接">
+                      <el-switch v-model="element.link" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">
                     <el-form-item label="圆角">
                       <el-switch v-model="element.round" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="2">
                     <el-form-item label="圆形">
                       <el-switch v-model="element.circle" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="2">
                     <el-form-item label="禁用">
                       <el-switch v-model="element.disabled" />
                     </el-form-item>
@@ -384,7 +408,10 @@ import { ref, inject, nextTick } from "vue";
 import { ElScrollbar } from "element-plus";
 import Sortable from "sortablejs";
 import { desPropertyProps } from "../property";
-import type { DesTableColumns } from "@exercise-form/constants";
+import type {
+  DesTableColumns,
+  DesOperationButton
+} from "@exercise-form/constants";
 import { dataTableValidator } from "@exercise-form/constants";
 import {
   onMessageWarning,
@@ -407,7 +434,8 @@ const props = defineProps(desPropertyProps);
 
 const dark = inject(darkKeys);
 const tableColumns = props.optionsModel.tableColumns as DesTableColumns[];
-const operationButtons = props.optionsModel.operationButtons;
+const operationButtons = props.optionsModel
+  .operationButtons as DesOperationButton[];
 const optionsModel = props.optionsModel;
 const codeValue = ref("");
 const renderValue = ref("");
@@ -590,7 +618,6 @@ const getColData = () => {
   return {
     align: "center",
     columnsId: getRandomNumber(),
-    fixed: "",
     label: "",
     prop: ""
   };
@@ -631,13 +658,13 @@ const handleAddButton = () => {
   let name = getUniqueId();
   operationButtons.push({
     disabled: false,
-    hidden: true,
     label: "new btn",
+    link: false,
     name,
     round: false,
     size: "small",
     text: true,
-    type: "default"
+    type: ""
   });
   nextTick(() => {
     let wrapRef = scrollbarRef.value!.wrapRef;

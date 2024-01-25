@@ -10,6 +10,18 @@ export type DesTableColumns = {
   render?: string;
   show?: boolean;
   sortable?: boolean;
+  fixed?: boolean;
+};
+
+export type DesOperationButton = {
+  disabled: boolean;
+  label: string;
+  link: boolean;
+  name: string;
+  round: boolean;
+  size: string;
+  text: true;
+  type: string;
 };
 
 export const tableColumns: DesTableColumns[] = [
@@ -27,7 +39,6 @@ export const tableColumns: DesTableColumns[] = [
     columnsId: 3,
     label: "年龄",
     minWidth: 100,
-    show: true,
     prop: "age",
     sortable: true
   },
@@ -46,8 +57,7 @@ export const tableColumns: DesTableColumns[] = [
     label: "电话",
     minWidth: 120,
     prop: "phone",
-    show: true,
-    sortable: true
+    show: true
   },
   {
     align: "center",
@@ -102,7 +112,8 @@ export const tableColumns: DesTableColumns[] = [
     headerFlag: true,
     label: "表头1",
     prop: "~",
-    show: true
+    show: true,
+    sortable: true
   }
 ];
 
@@ -110,54 +121,51 @@ export const tableData = [
   {
     id: 1,
     username: "张三",
-    birth: "2006-09-18 02:39:56",
-    IDCard: "230000200009206339",
-    email: "l.mxvotnawh@qq.com",
+    birth: "2006-09-18",
+    email: "xxxxxxxxx",
     age: 26,
     phone: "14757938316",
-    address: "内蒙古自治区-阜新市-漠河县"
+    address: "四川-成都"
   },
   {
     id: 2,
     username: "李四",
-    birth: "2006-09-18 02:39:56",
-    IDCard: "230000200009206339",
-    email: "l.mxvotnawh@qq.com",
+    birth: "2006-09-18",
+    email: "xxxxxxxxx",
     age: 28,
     phone: "15006177705",
-    address: "内蒙古自治区-阜新市-漠河县"
+    address: "四川-成都"
   },
   {
     id: 3,
     username: "王麻子",
-    birth: "2006-09-18 02:39:56",
-    IDCard: "230000200009206339",
-    email: "l.mxvotnawh@qq.com",
+    birth: "2006-09-18",
+    email: "xxxxxxxxx",
     age: 30,
     phone: "19671165911",
-    address: "内蒙古自治区-阜新市-漠河县"
+    address: "四川-成都"
   }
 ];
 
 export const operationButtons = [
   {
     disabled: false,
-    hidden: true,
     label: "编辑",
+    link: true,
     name: "edit",
     round: false,
     size: "small",
     text: true,
-    type: "default"
+    type: "primary"
   },
   {
     disabled: false,
-    hidden: true,
     label: "删除",
+    link: true,
     name: "delete",
     round: false,
     size: "small",
     text: true,
-    type: "default"
+    type: "primary"
   }
-];
+] as DesOperationButton[];

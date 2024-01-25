@@ -8,7 +8,7 @@
   >
     <div style="padding: 2px" @click.stop="onClick">
       <el-table
-        style="margin-bottom: 40px"
+        :style="{ width: widgetData.options.tableWidth }"
         :data="widgetData.options.tableData"
         v-bind="widgetData.options"
         class="ex-data-table"
@@ -78,14 +78,30 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        v-if="widgetData.options.showPagination"
+        :small="widgetData.options.small"
+        :class="paginationAlign"
+        :page-sizes="[100, 200, 300, 400]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400"
+      />
     </div>
   </container-wrapper>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
+
+const paginationAlign = computed(() => {
+  let align = props.widgetData.options.paginationAlign;
+  if (align == "left") return "ex-pagination-left";
+  if (align == "right") return "ex-pagination-right";
+  return "ex-pagination-center";
+});
 
 const changeSelection = () => {};
 const onClick = () => {

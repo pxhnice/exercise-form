@@ -1,7 +1,12 @@
 import { buildFieldWidget } from "./field";
 import { getElAttr } from "./property";
 
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
+import type {
+  DesWidget,
+  DesFormConfig,
+  DesTableColumns,
+  DesOperationButton
+} from "@exercise-form/constants";
 
 type DesTemplateMethod = {
   [key: string]: (widget: DesWidget, formConfig: DesFormConfig) => string;
@@ -121,21 +126,36 @@ const containerTemplate: DesTemplateMethod = {
     </el-tabs>`;
   },
   "data-table": (widget, formConfig) => {
-    let { tableColumns, operationButtons } = widget.options;
     let {
+      tableColumns,
+      operationButtons,
+      showCheckBox,
+      showIndex,
+      small,
+      showPagination
+    } = widget.options;
+    let {
+      tableWidth,
       border,
       fit,
       height,
+      showHeader,
       highlightCurrentRow,
       operationLabel,
       operationWidth,
       operationFixed
     } = getElAttr(widget, formConfig);
+    let colIndexHtml = showIndex
+      ? ` <el-table-column type="index" width="50" align="center"></el-table-column>`
+      : "";
+    let colCheckBoxHtml = showCheckBox
+      ? `<el-table-column type="selection" width="50"></el-table-column>`
+      : "";
     let buttonTemplateHtml = `
     <el-table-column ${operationLabel} ${operationWidth} ${operationFixed}>
       <template #default>
       ${operationButtons
-        .map((btn: any) => {
+        .map((btn: DesOperationButton) => {
           let { disabled, label, round, size, text, type } = btn;
           let sizeAttr = size !== "default" ? `size="${size}"` : "";
           let typeAttr = type ? `type="${type}"` : "";
@@ -148,13 +168,17 @@ const containerTemplate: DesTemplateMethod = {
       </template>
     </el-table-column>
     `;
+    let smallAttr = small ? "small" : "";
+    let paginationHtml = showPagination
+      ? `<el-pagination ${smallAttr}:page-sizes="[100, 200, 300, 400]"
+      layout="total, sizes, prev, pager, next, jumper" :total="400" />`
+      : "";
     return `
-    <el-table
-      :data="tableData" 
-      ${border} ${fit} ${height} ${highlightCurrentRow}
-    >
+    <el-table :data="tableData" ${tableWidth} ${border} ${fit} ${height} ${showHeader} ${highlightCurrentRow}>
+    ${colIndexHtml}
+    ${colCheckBoxHtml}
     ${tableColumns
-      .map((col: any) => {
+      .map((col: DesTableColumns) => {
         let { align, label, minWidth, fixed, prop, sortable } = col;
         let alignAttr = align ? `align="${align}"` : "";
         let labelAttr = label ? `label="${label}"` : "";
@@ -169,9 +193,12 @@ const containerTemplate: DesTemplateMethod = {
       .join("\n")}
     ${buttonTemplateHtml}
     </el-table>
+    ${paginationHtml}
     `;
   },
   "side-drawer": (widget, formConfig) => {
+    let { cancelText, confirmText, showConfirmButton, showCancelButton } =
+      widget.options;
     let {
       closeOnClickModal,
       closeOnPressEscape,
@@ -180,6 +207,12 @@ const containerTemplate: DesTemplateMethod = {
       title,
       size
     } = getElAttr(widget, formConfig);
+    let confirmButtonHtml = showConfirmButton
+      ? `<el-button type="primary">${confirmText}</el-button>`
+      : "";
+    let cancelButtonHtml = showCancelButton
+      ? `<el-button>${cancelText}</el-button>`
+      : "";
     return `
     <el-drawer ${title} ${size} ${showClose} ${modal} ${closeOnClickModal} ${closeOnPressEscape}>
     ${
@@ -194,6 +227,7 @@ const containerTemplate: DesTemplateMethod = {
         })
         .join("\n")
     }
+    <div>${cancelButtonHtml} ${confirmButtonHtml}</div>
     </el-drawer>
     `;
   },

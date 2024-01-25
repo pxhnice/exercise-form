@@ -60,8 +60,9 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     rowspan: wop.rowspan > 1 ? `:rowspan="${wop.rowspan}"` : "",
 
     shadow: wop.shadow ? `:shadow="true"` : "",
-    cardWidth: wop.cardWidth ? `style="{width:${wop.cardWidth}}"` : "",
-
+    cardWidth: wop.cardWidth ? `style="width:${wop.cardWidth};"` : "",
+    tableWidth: wop.tableWidth ? `style="width:${wop.tableWidth};"` : "",
+    showHeader: wop.showHeader ? "show-header" : "",
     fit: wop.fit ? "fit" : "",
     height: wop.height ? `height=${wop.height}` : "",
     highlightCurrentRow: wop.highlightCurrentRow ? `highlight-current-row` : "",
@@ -84,7 +85,7 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     defaultExpandAll: wop.defaultExpandAll ? "default-expand-all" : "",
     lazy: wop.lazy ? "lazy" : "",
     props: wop.props ? `:props=${wop.props}` : "",
-    showLinkage: wop.showLinkage ? "showLinkage" : "",
+    showLinkage: wop.showLinkage ? "show-linkage" : "",
 
     customClass:
       wop.customClass && wop.customClass.length > 0

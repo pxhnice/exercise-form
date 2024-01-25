@@ -20,8 +20,9 @@ export type DesOperationButton = {
   name: string;
   round: boolean;
   size: string;
-  text: true;
+  text: boolean;
   type: string;
+  circle: boolean;
 };
 
 export const tableColumns: DesTableColumns[] = [
@@ -151,7 +152,7 @@ export const operationButtons = [
   {
     disabled: false,
     label: "编辑",
-    link: true,
+    link: false,
     name: "edit",
     round: false,
     size: "small",
@@ -161,7 +162,7 @@ export const operationButtons = [
   {
     disabled: false,
     label: "删除",
-    link: true,
+    link: false,
     name: "delete",
     round: false,
     size: "small",

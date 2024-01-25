@@ -327,18 +327,35 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
+                    <el-form-item label="文字">
+                      <el-switch
+                        v-model="element.text"
+                        @change="changeText($event, element)"
+                      />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">
                     <el-form-item label="链接">
-                      <el-switch v-model="element.link" />
+                      <el-switch
+                        v-model="element.link"
+                        @change="changeLink($event, element)"
+                      />
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
                     <el-form-item label="圆角">
-                      <el-switch v-model="element.round" />
+                      <el-switch
+                        v-model="element.round"
+                        @change="changeRound($event, element)"
+                      />
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
                     <el-form-item label="圆形">
-                      <el-switch v-model="element.circle" />
+                      <el-switch
+                        v-model="element.circle"
+                        @change="changeCircle($event, element)"
+                      />
                     </el-form-item>
                   </el-col>
                   <el-col :span="2">
@@ -346,7 +363,7 @@
                       <el-switch v-model="element.disabled" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="1">
                     <el-button
                       icon="Delete"
                       @click="handleDeleteButton(index)"
@@ -664,6 +681,7 @@ const handleAddButton = () => {
     round: false,
     size: "small",
     text: true,
+    circle: false,
     type: ""
   });
   nextTick(() => {
@@ -674,5 +692,37 @@ const handleAddButton = () => {
 
 const handleDeleteButton = (index: number) => {
   operationButtons.splice(index, 1);
+};
+
+const changeText = (value: boolean, element: DesOperationButton) => {
+  if (value) {
+    element.link = false;
+    element.round = false;
+    element.circle = false;
+  }
+};
+
+const changeLink = (value: boolean, element: DesOperationButton) => {
+  if (value) {
+    element.text = false;
+    element.round = false;
+    element.circle = false;
+  }
+};
+
+const changeRound = (value: boolean, element: DesOperationButton) => {
+  if (value) {
+    element.link = false;
+    element.text = false;
+    element.circle = false;
+  }
+};
+
+const changeCircle = (value: boolean, element: DesOperationButton) => {
+  if (value) {
+    element.text = false;
+    element.round = false;
+    element.link = false;
+  }
 };
 </script>

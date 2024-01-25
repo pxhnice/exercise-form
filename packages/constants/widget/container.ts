@@ -122,7 +122,7 @@ export const containers: DesWidgetList = [
       operationButtons,
       operationFixed: "right",
       operationLabel: "操作",
-      operationWidth: 120,
+      operationWidth: 150,
       paginationAlign: "left",
       showCheckBox: true,
       showHeader: true,

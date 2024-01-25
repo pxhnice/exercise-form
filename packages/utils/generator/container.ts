@@ -149,20 +149,21 @@ const containerTemplate: DesTemplateMethod = {
       ? ` <el-table-column type="index" width="50" align="center"></el-table-column>`
       : "";
     let colCheckBoxHtml = showCheckBox
-      ? `<el-table-column type="selection" width="50"></el-table-column>`
+      ? `<el-table-column type="selection" width="50" align="center"></el-table-column>`
       : "";
     let buttonTemplateHtml = `
     <el-table-column ${operationLabel} ${operationWidth} ${operationFixed}>
       <template #default>
       ${operationButtons
         .map((btn: DesOperationButton) => {
-          let { disabled, label, round, size, text, type } = btn;
+          let { disabled, label, round, size, text, type, link } = btn;
           let sizeAttr = size !== "default" ? `size="${size}"` : "";
           let typeAttr = type ? `type="${type}"` : "";
           let disabledAttr = disabled ? "disable" : "";
           let textAttr = text ? "text" : "";
           let roundAttr = round ? "round" : "";
-          return `<el-button ${typeAttr} ${sizeAttr} ${textAttr} ${roundAttr} ${disabledAttr}>${label}</el-button> `;
+          let linkAttr = link ? "link" : "";
+          return `<el-button ${typeAttr} ${sizeAttr} ${linkAttr} ${textAttr} ${roundAttr} ${disabledAttr}>${label}</el-button> `;
         })
         .join("\n")}
       </template>
@@ -180,11 +181,11 @@ const containerTemplate: DesTemplateMethod = {
     ${tableColumns
       .map((col: DesTableColumns) => {
         let { align, label, minWidth, fixed, prop, sortable } = col;
-        let alignAttr = align ? `align="${align}"` : "";
+        let alignAttr = align && align != "left" ? `align="${align}"` : "";
         let labelAttr = label ? `label="${label}"` : "";
         let minWidthAttr = minWidth ? `min-width="${minWidth}"` : "";
         let propAttr = prop ? `prop="${prop}"` : "";
-        let sortableAttr = sortable ? `:sortable` : "";
+        let sortableAttr = sortable ? `sortable` : "";
         let fixedAttr = fixed ? `fixed="${fixed}"` : "";
         return `<el-table-column ${propAttr} ${alignAttr} 
           ${labelAttr} ${minWidthAttr} ${fixedAttr} ${sortableAttr}>

@@ -108,7 +108,9 @@ function traverseOuterWidget(
   cd: (wt: DesWidget, formConfig: DesFormConfig) => void
 ) {
   widgetList.forEach((widget) => {
-    cd(widget, formConfig);
+    if (["popup-box", "side-drawer"].includes(widget.type)) {
+      cd(widget, formConfig);
+    }
   });
 }
 

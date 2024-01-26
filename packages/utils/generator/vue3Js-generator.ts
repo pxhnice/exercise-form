@@ -79,8 +79,6 @@ export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
   });
   let { outerDefaultValueList } = getOuterTemplate(widgetList, formConfig);
   let vue3JSTemplate = `import { ref , reactive  } from "vue"
-import { isArray } from '../types';
-import { json } from '@codemirror/lang-json';
   const ${formName}=ref();${
     formConfig.isPageType === "dialog" ? "const dialogVisible=ref(false);" : ""
   }

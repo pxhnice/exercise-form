@@ -52,12 +52,12 @@
 import { ref, watch, provide } from "vue";
 import {
   themeSwitcher,
-  traverseFieldWidget,
   isArray,
   isObject,
   cutNight
 } from "@exercise-form/utils";
 import { MODEL_LIST, DesWidget, DesWidgetList } from "@exercise-form/constants";
+import { traverseFieldWidget } from "@exercise-form/utils/generator/vue3Js-generator";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";

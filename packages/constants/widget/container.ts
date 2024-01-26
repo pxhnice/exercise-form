@@ -155,10 +155,10 @@ export const containers: DesWidgetList = [
       modal: true,
       name: "",
       showClose: true,
-      showConfirmButton: false,
-      showCancelButton: false,
+      showConfirmButton: true,
+      showCancelButton: true,
       size: "",
-      title: ""
+      title: "侧边抽屉"
     }
   },
   {
@@ -179,9 +179,9 @@ export const containers: DesWidgetList = [
       modal: true,
       name: "",
       showClose: true,
-      showConfirmButton: false,
-      showCancelButton: false,
-      title: "",
+      showConfirmButton: true,
+      showCancelButton: true,
+      title: "弹出窗口",
       width: ""
     }
   },

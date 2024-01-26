@@ -1,7 +1,8 @@
-import { genVue3JS } from "../vue3Js-generator";
+import { genVue3JS } from "./vue3Js-generator";
+import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
 import { buildContainerWidget } from "./container";
 import { buildFieldWidget } from "./field";
-import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
+import { getOuterTemplate } from "./outer";
 
 function buildHtmlTemplate(
   widgetList: DesWidgetList,
@@ -27,10 +28,15 @@ function buildFormTemplate(
   let { modelName, formName, size, labelPosition, rulesName, labelWidth } =
     formConfig;
   let html = buildHtmlTemplate(widgetList, formConfig);
+  let { outerTemplateList } = getOuterTemplate(widgetList, formConfig);
   let sizeAttr = size !== "default" ? `size="${size}"` : "";
+  let labelPositionAttr =
+    labelPosition && labelPosition != "right"
+      ? `label-position="${labelPosition}"`
+      : "";
   return ` <el-form ref="${formName}" :model="${modelName}" :rules="${rulesName}" ${sizeAttr}
-  label-position="${labelPosition}" label-width="${labelWidth}">
-  ${html.join("\n")}
+  ${labelPositionAttr} label-width="${labelWidth}">
+  ${html.join("\n")} ${outerTemplateList.join("\n")}
   </el-form> `;
 }
 
@@ -40,7 +46,7 @@ function buildFieldTemplate(
 ) {
   let formTemplate = buildFormTemplate(widgetList, formConfig);
   if (formConfig.isPageType === "page") {
-    return formTemplate;
+    return `${formTemplate}`;
   } else {
     return `<el-dialog v-model="dialogVisible" @open="open" @close="close" title="Dialog Title">${formTemplate}
     <template #footer>
@@ -60,6 +66,7 @@ export function getSFCGenerator(
 ) {
   let html = buildFieldTemplate(widgetList, formConfig);
   let js = genVue3JS(formConfig, widgetList);
+
   let localStyle = "";
   let sfcTemplate = `
   <template>

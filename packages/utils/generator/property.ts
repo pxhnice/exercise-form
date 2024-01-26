@@ -15,7 +15,7 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     placeholder: wop.placeholder ? `placeholder="${wop.placeholder}"` : "",
     readonly: wop.readonly ? `readonly` : "",
     required: wop.required ? `required` : "",
-    size: wop.size !== "default" ? `size="${wop.size}"` : "",
+    size: wop.size && wop.size !== "default" ? `size="${wop.size}"` : "",
     type: wop.type ? `type="${wop.type}"` : "",
     editable: wop.editable ? `editable` : "",
     border: wop.border ? `border` : "",
@@ -79,7 +79,7 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     closeOnPressEscape: !wop.closeOnPressEscape
       ? `:close-on-press-escape="${wop.closeOnPressEscape}"`
       : "",
-    showClose: wop.showClose ? "show-close" : "",
+    showClose: !wop.showClose ? `:show-close=${wop.showClose}` : "",
     modal: !wop.modal ? `:modal="${wop.modal}"` : "",
 
     width: wop.width ? `width=${wop.width}` : "",

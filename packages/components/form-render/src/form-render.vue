@@ -45,7 +45,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import type { FormInstance } from "element-plus";
-import { traverseFieldWidget, deepClone } from "@exercise-form/utils";
+import { deepClone } from "@exercise-form/utils";
+import { traverseFieldWidget } from "@exercise-form/utils/generator/vue3Js-generator";
 import { MODEL_LIST, DesWidget } from "@exercise-form/constants";
 import { formRenderProps } from "./form-render";
 

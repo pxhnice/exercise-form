@@ -27,7 +27,7 @@ const elTemplates: DesTemplateMethod = {
       widget,
       formConfig
     );
-    return `<el-input-number ${modelValue}" ${disabled} ${size} ${readonly} ${placeholder} />`;
+    return `<el-input-number ${modelValue} ${disabled} ${size} ${readonly} ${placeholder} />`;
   },
   radio: (widget, formConfig) => {
     let { modelValue, disabled, size, border } = getElAttr(widget, formConfig);

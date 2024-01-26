@@ -16,9 +16,14 @@ import { ref } from "vue";
 import { dateFormatOptions, timeFormatOptions } from "@exercise-form/constants";
 import { desPropertyProps } from "./property";
 
+interface Options {
+  value: string;
+  label: string;
+}
+
 const props = defineProps(desPropertyProps);
 
-const options: any = ref([]);
+const options = ref<Array<Options>>([]);
 
 const initOptions = () => {
   options.value =

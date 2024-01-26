@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { onMessageWarning } from "@exercise-form/utils";
-import draggable from "vuedraggable";
 
 import { desPropertyProps } from "../property";
 

@@ -81,6 +81,13 @@
 import { ref, computed } from "vue";
 import { onMessageWarning } from "@exercise-form/utils";
 import { desPropertyProps } from "./property";
+import type Node from "element-plus/es/components/tree/src/model/node";
+
+interface TreeData {
+  value: number;
+  label: string;
+  children: TreeData[];
+}
 
 const props = defineProps(desPropertyProps);
 
@@ -97,7 +104,8 @@ const handleNodeClick = () => {
   console.log(settingOptions.value);
 };
 
-const handelAddChild = (node: any) => {
+const handelAddChild = (node: Node) => {
+  console.log(node);
   let { value, children } = node.data;
   let len = children.length + 1;
   let text = value + "-" + len;
@@ -113,10 +121,11 @@ const handelAdd = () => {
   });
 };
 
-const handelDel = (node: any, data: any) => {
+const handelDel = (node: Node, data: TreeData) => {
+  console.log(node, data);
   const parent = node.parent;
-  const children = parent.data.children || parent.data;
-  const index = children.findIndex((d: any) => d.value === data.value);
+  const children = (parent.data.children as TreeData[]) || parent.data;
+  const index = children.findIndex((d) => d.value === data.value);
   if (data.children.length > 0) {
     onMessageWarning("该节点还存在子节点，无法删除");
     return;

@@ -3,7 +3,7 @@ import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
   let wop = widget.options;
   return {
-    modelValue: `v-model="${formConfig.modelName}.${widget.id}"`,
+    modelValue: `v-model="${formConfig.modelName}.${wop.name}"`,
     clearable: wop.clearable ? "clearable" : "",
     disabled: wop.disabled ? `disabled` : "",
     maxLength: wop.maxLength ? `:max-length="${wop.maxLength}"` : "",

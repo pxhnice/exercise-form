@@ -45,11 +45,13 @@ import { desPropertyProps } from "../property";
 
 const props = defineProps(desPropertyProps);
 
+const selectWidget = props.designer.selectWidget;
+
 const handelAdd = () => {
   props.designer.copyContainerWidget(props.settingData);
 };
 
 const handelDel = (index: number) => {
-  // props.optionsModel.children.splice(index, 1);
+  selectWidget.value.children.splice(index, 1);
 };
 </script>

@@ -100,11 +100,12 @@ export function useDesigner() {
       let newWidget = deepClone(widget);
       this.dragTarget.value = widget;
       newWidget.id = newWidget.type + getUniqueId();
+      newWidget.id = newWidget.id.replace(/-/g, "");
       newWidget.options.name = newWidget.id;
       if (newWidget.type == "grid") {
         for (let index = 0; index < 2; index++) {
           let colWidget = deepClone(this.getContainerType("grid-col"));
-          colWidget.id = colWidget.type + "_" + getUniqueId();
+          colWidget.id = colWidget.type + getUniqueId();
           colWidget.options.name = colWidget.id;
           newWidget.children?.push(colWidget);
         }
@@ -112,19 +113,19 @@ export function useDesigner() {
         let newRows: DesWidget = {
           name: "tr",
           type: "table-tr",
-          id: "table-tr_" + getUniqueId(),
+          id: "tabletr" + getUniqueId(),
           category: "container",
           options: {},
           children: []
         };
         let newCol = deepClone(this.getContainerType("table-td"));
-        newCol.id = newCol.type + "_" + getUniqueId();
+        newCol.id = newCol.type + getUniqueId();
         newCol.options.name = newCol.id;
         newRows.children?.push(newCol);
         newWidget.children?.push(newRows);
       } else if (newWidget.type == "tabs") {
         let newTab = deepClone(this.getContainerType("tab-pane"));
-        newTab.id = newTab.type + "_" + getUniqueId();
+        newTab.id = newTab.type + getUniqueId();
         newTab.options.name = "tab1";
         newWidget.children?.push(newTab);
       }
@@ -134,12 +135,12 @@ export function useDesigner() {
     copyContainerWidget(widget: DesWidget) {
       if (widget.type == "grid") {
         let colWidget = deepClone(this.getContainerType("grid-col"));
-        colWidget.id = colWidget.type + "_" + getUniqueId();
+        colWidget.id = colWidget.type + getUniqueId();
         colWidget.options.name = colWidget.id;
         widget.children?.push(colWidget);
       } else if (widget.type == "tabs") {
         let newTab = deepClone(this.getContainerType("tab-pane"));
-        newTab.id = newTab.type + "_" + getUniqueId();
+        newTab.id = newTab.type + getUniqueId();
         let len = widget.children?.length;
         newTab.options.name = "tab" + len + 1;
         newTab.options.label = "tab" + len + 1;
@@ -149,7 +150,7 @@ export function useDesigner() {
 
     copyDeepWidget(widget: DesWidget) {
       if (widget.category === "container") {
-        widget.id = widget.type + "_" + getUniqueId();
+        widget.id = widget.type + getUniqueId();
         widget.options.name = widget.id;
         widget.children &&
           widget.children.forEach((wt) => {
@@ -200,7 +201,7 @@ export function useDesigner() {
     insertCell(parentList: DesWidgetList, cell: number, type: string) {
       parentList.forEach((child) => {
         let colWidget = deepClone(this.getContainerType("table-td"));
-        colWidget.id = colWidget.type + "_" + getUniqueId();
+        colWidget.id = colWidget.type + getUniqueId();
         colWidget.options.name = colWidget.id;
         if (type == "left") {
           child.children?.splice(cell, 0, colWidget);
@@ -216,14 +217,14 @@ export function useDesigner() {
       let newRows: DesWidget = {
         name: "tr",
         type: "table-tr",
-        id: "table-tr-" + getUniqueId(),
+        id: "tabletr" + getUniqueId(),
         category: "container",
         options: {},
         children: []
       };
       parentList[row].children?.forEach(() => {
         let colWidget = deepClone(this.getContainerType("table-td"));
-        colWidget.id = colWidget.type + "_" + getUniqueId();
+        colWidget.id = colWidget.type + getUniqueId();
         colWidget.options.name = colWidget.id;
         newRows.children?.push(colWidget);
       });

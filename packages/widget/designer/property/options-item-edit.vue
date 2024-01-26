@@ -37,6 +37,22 @@
         <el-button @click="handelAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
+        <el-button
+          @click="handelReset(true)"
+          class="options-btn"
+          type="primary"
+          link
+        >
+          重置选中项
+        </el-button>
+        <el-button
+          @click="handelImport"
+          class="options-btn"
+          type="primary"
+          link
+        >
+          导入选项
+        </el-button>
       </el-radio-group>
       <el-checkbox-group
         v-if="settingData.type == 'checkbox'"
@@ -77,18 +93,61 @@
         <el-button @click="handelAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
+        <el-button
+          @click="handelReset(false)"
+          class="options-btn"
+          type="primary"
+          link
+        >
+          重置选中项
+        </el-button>
+        <el-button
+          @click="handelImport"
+          class="options-btn"
+          type="primary"
+          link
+        >
+          导入选项
+        </el-button>
       </el-checkbox-group>
     </el-form-item>
+    <el-dialog
+      width="800"
+      v-model="isShowData"
+      v-bind="dialogOptions"
+      title="表格JSON数据编辑"
+      @close="isShowData = false"
+    >
+      <ex-code-editor v-model="codeValue" lang="json" :dark="dark" />
+      <template #footer>
+        <div style="display: flex; justify-content: center">
+          <el-button type="primary" size="default" @click="confirm">
+            确认
+          </el-button>
+          <el-button size="default" @click="isShowData = false">关闭</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { onMessageWarning } from "@exercise-form/utils";
+import { ref, computed, inject } from "vue";
+import { onMessageWarning, onMessageError } from "@exercise-form/utils";
 import { desPropertyProps } from "./property";
+import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
 
 const props = defineProps(desPropertyProps);
 
+const dialogOptions = {
+  draggable: true,
+  destroyOnClose: true,
+  closeOnClickModal: false
+};
+const dark = inject(darkKeys);
+const isShowData = ref(false);
+const codeValue = ref();
+const optionsModel = props.optionsModel;
 const optionsItem = computed({
   get: () => props.optionsModel.optionsItem,
   set: (val) => val
@@ -106,5 +165,27 @@ const handelDel = (index: number) => {
     return;
   }
   optionsItem.value.splice(index, 1);
+};
+
+const handelReset = (is: boolean) => {
+  if (is) {
+    optionsModel.modelDefaultValue = null;
+  } else {
+    optionsModel.modelDefaultValue = [];
+  }
+};
+
+const handelImport = () => {
+  codeValue.value = JSON.stringify(optionsItem.value, null, 2);
+  isShowData.value = true;
+};
+
+const confirm = () => {
+  try {
+    optionsModel["optionsItem"] = JSON.parse(codeValue.value);
+    isShowData.value = false;
+  } catch (error) {
+    onMessageError(`错误的选项数据:${error}`);
+  }
 };
 </script>

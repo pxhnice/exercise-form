@@ -7,7 +7,7 @@
     <el-checkbox-group @click.stop v-model="fieldValue">
       <template v-if="widgetData.options.buttonMode">
         <el-checkbox-button
-          v-for="item in optionsItem"
+          v-for="item in widgetData.options.optionsItem"
           :key="item.value"
           :label="item.value"
         >
@@ -18,7 +18,7 @@
         <el-checkbox
           :border="widgetData.options.border"
           :disabled="widgetData.options.disabled"
-          v-for="item in optionsItem"
+          v-for="item in widgetData.options.optionsItem"
           :key="item.value"
           :label="item.value"
         >
@@ -35,7 +35,6 @@ import { desFieldsProps } from "./fields";
 
 const props = defineProps(desFieldsProps);
 const fieldValue = ref(props.widgetData.options.modelDefaultValue);
-const optionsItem = ref(props.widgetData.options.optionsItem);
 
 watch(
   () => props.widgetData.options.modelDefaultValue,

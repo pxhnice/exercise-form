@@ -155,12 +155,14 @@ watch(
   (val) => {
     formJson.value.widgetList = val;
     getFormData(val);
+    designer.saveFormContentToStorage();
   },
   { deep: true }
 );
 
 watch(desFormConfig.value, (val) => {
   formJson.value.formConfig = val;
+  designer.saveFormContentToStorage();
 });
 
 watch(

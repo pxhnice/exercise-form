@@ -16,6 +16,8 @@
       </template>
       <template v-else>
         <el-checkbox
+          :border="widgetData.options.border"
+          :disabled="widgetData.options.disabled"
           v-for="item in optionsItem"
           :key="item.value"
           :label="item.value"
@@ -28,10 +30,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { desFieldsProps } from "./fields";
 
 const props = defineProps(desFieldsProps);
-const fieldValue: any = ref([]);
+const fieldValue = ref(props.widgetData.options.modelDefaultValue);
 const optionsItem = ref(props.widgetData.options.optionsItem);
+
+watch(
+  () => props.widgetData.options.modelDefaultValue,
+  (val) => {
+    fieldValue.value = val;
+  }
+);
 </script>

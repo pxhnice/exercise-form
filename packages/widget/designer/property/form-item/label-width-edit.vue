@@ -1,5 +1,5 @@
 <template>
-  <el-form-item label="标签宽度">
+  <el-form-item label="标签宽度(px)">
     <el-input v-model="optionsModel.labelWidth" />
   </el-form-item>
 </template>

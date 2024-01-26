@@ -2,34 +2,82 @@
   <div class="ex-property-options">
     <el-divider> 选项设置 </el-divider>
     <el-form-item label-width="0">
-      <draggable
-        tag="ul"
-        class="options-row"
-        :list="optionsItem"
-        handle=".pane-mover"
-        item-key="id"
+      <el-radio-group
+        v-if="settingData.type == 'radio'"
+        v-model="optionsModel.modelDefaultValue"
       >
-        <template #item="{ element, index }">
-          <li class="options-col">
-            <el-input class="options-put" v-model="element.value" />
-            <el-input class="options-put" v-model="element.label" />
-            <el-icon class="pane-mover" :size="22">
-              <ex-icon-drag />
-            </el-icon>
-            <el-button
-              @click="handelDel(index)"
-              class="options-btn"
-              icon="Minus"
-              type="danger"
-              plain
-              circle
-            />
-          </li>
-        </template>
-      </draggable>
-      <el-button @click="handelAdd" class="options-btn" type="primary" link>
-        添加选项
-      </el-button>
+        <draggable
+          tag="ul"
+          class="options-row"
+          :list="optionsItem"
+          handle=".pane-mover"
+          item-key="id"
+        >
+          <template #item="{ element, index }">
+            <li class="options-col">
+              <el-radio style="margin: 0" title="默认值" :label="element.value">
+                <template></template>
+              </el-radio>
+              <el-input class="options-put" v-model="element.value" />
+              <el-input class="options-put" v-model="element.label" />
+              <el-icon class="pane-mover" :size="22">
+                <ex-icon-drag />
+              </el-icon>
+              <el-button
+                @click="handelDel(index)"
+                class="options-btn"
+                icon="Minus"
+                type="danger"
+                plain
+                circle
+              />
+            </li>
+          </template>
+        </draggable>
+        <el-button @click="handelAdd" class="options-btn" type="primary" link>
+          添加选项
+        </el-button>
+      </el-radio-group>
+      <el-checkbox-group
+        v-if="settingData.type == 'checkbox'"
+        v-model="optionsModel.modelDefaultValue"
+      >
+        <draggable
+          tag="ul"
+          class="options-row"
+          :list="optionsItem"
+          handle=".pane-mover"
+          item-key="id"
+        >
+          <template #item="{ element, index }">
+            <li class="options-col">
+              <el-checkbox
+                style="margin: 0"
+                title="默认值"
+                :label="element.value"
+              >
+                <template></template>
+              </el-checkbox>
+              <el-input class="options-put" v-model="element.value" />
+              <el-input class="options-put" v-model="element.label" />
+              <el-icon class="pane-mover" :size="22">
+                <ex-icon-drag />
+              </el-icon>
+              <el-button
+                @click="handelDel(index)"
+                class="options-btn"
+                icon="Minus"
+                type="danger"
+                plain
+                circle
+              />
+            </li>
+          </template>
+        </draggable>
+        <el-button @click="handelAdd" class="options-btn" type="primary" link>
+          添加选项
+        </el-button>
+      </el-checkbox-group>
     </el-form-item>
   </div>
 </template>

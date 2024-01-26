@@ -1,6 +1,7 @@
 import { getRegExp, MODEL_LIST } from "@exercise-form/constants";
 import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 import { getOuterTemplate } from "./outer";
+import { isArray, isObject, isNumber } from "../types";
 
 export function traverseFieldWidget(
   widgetList: DesWidget[],
@@ -19,9 +20,17 @@ export function buildDefaultValueListFn(defaultValueList: string[]) {
   return function (widget: DesWidget) {
     if (MODEL_LIST.includes(widget.type)) {
       let modelDefaultValue = widget.options.modelDefaultValue;
-      defaultValueList.push(
-        `${widget.id}:${modelDefaultValue ? `"${modelDefaultValue}"` : "null"},`
-      );
+      let value;
+      if (
+        isArray(modelDefaultValue) ||
+        isObject(modelDefaultValue) ||
+        isNumber(modelDefaultValue)
+      ) {
+        value = JSON.stringify(modelDefaultValue);
+      } else {
+        value = modelDefaultValue ? `"${modelDefaultValue}"` : "null";
+      }
+      defaultValueList.push(`${widget.options.name}:${value},`);
     }
   };
 }
@@ -70,6 +79,8 @@ export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
   });
   let { outerDefaultValueList } = getOuterTemplate(widgetList, formConfig);
   let vue3JSTemplate = `import { ref , reactive  } from "vue"
+import { isArray } from '../types';
+import { json } from '@codemirror/lang-json';
   const ${formName}=ref();${
     formConfig.isPageType === "dialog" ? "const dialogVisible=ref(false);" : ""
   }
@@ -81,8 +92,10 @@ export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
     ${rulesName}:{
       ${rulesList.join("\n")}
     }
-  }); ${optionsList.join("\n")}
-  const { ${modelName}, ${rulesName} } = state;${
+  });
+  const { ${modelName}, ${rulesName} } = state;
+  ${optionsList.join("\n")};
+  ${
     formConfig.isPageType === "dialog"
       ? "const open = (params) => {dialogVisible.value=true};const close=()=>{dialogVisible.value=false};"
       : ""

@@ -1,5 +1,5 @@
 <template>
-  <el-form-item label="默认值">
+  <el-form-item v-if="isShow(settingData)" label="默认值">
     <component
       :is="`el-${settingData.type}`"
       v-model="optionsModel.modelDefaultValue"
@@ -25,6 +25,12 @@
 
 <script setup lang="ts">
 import { desPropertyProps } from "./property";
+import type { DesWidget } from "@exercise-form/constants";
 
 defineProps(desPropertyProps);
+
+const isShow = (widget: DesWidget) => {
+  if (["radio", "checkbox"].includes(widget.type)) return false;
+  return true;
+};
 </script>

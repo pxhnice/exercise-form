@@ -80,6 +80,7 @@ export function useDesigner() {
       }
       this.selectWidgetId.value = widget.id;
       this.selectWidget.value = widget;
+      this.dragTarget.value = widget;
     },
 
     clearSelectWidget() {

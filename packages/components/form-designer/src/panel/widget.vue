@@ -130,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, nextTick } from "vue";
 import { ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
 import {
@@ -188,6 +188,8 @@ const handleLoadTemplate = (list: DesWidget[]) => {
 };
 
 const onUnChoose = () => {
-  props.designer.setDragTarget(props.designer.selectWidget.value);
+  nextTick(() => {
+    props.designer.setDragTarget(props.designer.selectWidget.value);
+  });
 };
 </script>

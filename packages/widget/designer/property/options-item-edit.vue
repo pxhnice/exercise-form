@@ -1,5 +1,11 @@
 <template>
   <div class="ex-property-options">
+    <el-form-item label="选项签名">
+      <el-input v-model="optionsModel.optionsLabel" />
+    </el-form-item>
+    <el-form-item label="选项值">
+      <el-input v-model="optionsModel.optionsValue" />
+    </el-form-item>
     <el-divider> 选项设置 </el-divider>
     <el-form-item label-width="0">
       <el-radio-group
@@ -15,11 +21,21 @@
         >
           <template #item="{ element, index }">
             <li class="options-col">
-              <el-radio style="margin: 0" title="默认值" :label="element.value">
+              <el-radio
+                style="margin: 0"
+                title="默认值"
+                :label="element[optionsModel.optionsValue]"
+              >
                 <template></template>
               </el-radio>
-              <el-input class="options-put" v-model="element.value" />
-              <el-input class="options-put" v-model="element.label" />
+              <el-input
+                class="options-put"
+                v-model="element[optionsModel.optionsValue]"
+              />
+              <el-input
+                class="options-put"
+                v-model="element[optionsModel.optionsLabel]"
+              />
               <el-icon class="pane-mover" :size="22">
                 <ex-icon-drag />
               </el-icon>
@@ -70,12 +86,18 @@
               <el-checkbox
                 style="margin: 0"
                 title="默认值"
-                :label="element.value"
+                :label="element[optionsModel.optionsValue]"
               >
                 <template></template>
               </el-checkbox>
-              <el-input class="options-put" v-model="element.value" />
-              <el-input class="options-put" v-model="element.label" />
+              <el-input
+                class="options-put"
+                v-model="element[optionsModel.optionsValue]"
+              />
+              <el-input
+                class="options-put"
+                v-model="element[optionsModel.optionsLabel]"
+              />
               <el-icon class="pane-mover" :size="22">
                 <ex-icon-drag />
               </el-icon>

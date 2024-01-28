@@ -8,10 +8,10 @@
       <template v-if="widgetData.options.buttonMode">
         <el-checkbox-button
           v-for="item in widgetData.options.optionsItem"
-          :key="item.value"
-          :label="item.value"
+          :key="item[widgetData.options.optionsValue]"
+          :label="item[widgetData.options.optionsValue]"
         >
-          {{ item.label }}
+          {{ item[widgetData.options.optionsLabel] }}
         </el-checkbox-button>
       </template>
       <template v-else>
@@ -19,10 +19,10 @@
           :border="widgetData.options.border"
           :disabled="widgetData.options.disabled"
           v-for="item in widgetData.options.optionsItem"
-          :key="item.value"
-          :label="item.value"
+          :key="item[widgetData.options.optionsValue]"
+          :label="item[widgetData.options.optionsValue]"
         >
-          {{ item.label }}
+          {{ item[widgetData.options.optionsLabel] }}
         </el-checkbox>
       </template>
     </el-checkbox-group>

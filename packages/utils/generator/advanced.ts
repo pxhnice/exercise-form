@@ -1,6 +1,6 @@
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
-import { getElAttr } from "./property";
+import { getElAttr } from './property';
 
+import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 type DesTemplateMethod = {
   [key: string]: (widget: DesWidget, formConfig: DesFormConfig) => string;
 };
@@ -137,17 +137,17 @@ const elTemplates: DesTemplateMethod = {
 };
 
 function buildRadioChildren(widget: DesWidget) {
-  let { buttonMode, border } = widget.options;
+  let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-radio-button" : "el-radio";
-  return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.value" ${borderAttr}>{{item.label}}</${tag}>`;
+  return `<${tag} v-for="item in ${widget.id}Options" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
 function buildCheckboxChildren(widget: DesWidget) {
-  let { buttonMode, border } = widget.options;
+  let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-checkbox-button" : "el-checkbox";
-  return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.value" ${borderAttr}>{{item.label}}</${tag}>`;
+  return `<${tag} v-for="item in ${widget.id}Options" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
 function buildSelectChildren(widget: DesWidget) {

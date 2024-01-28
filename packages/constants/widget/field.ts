@@ -112,6 +112,8 @@ export const baseFields: DesWidgetList = [
           label: "radio3"
         }
       ],
+      optionsLabel: "label",
+      optionsValue: "value",
       required: false,
       requiredHint: "",
       size: "default",
@@ -147,6 +149,8 @@ export const baseFields: DesWidgetList = [
           label: "checkbox3"
         }
       ],
+      optionsLabel: "label",
+      optionsValue: "value",
       required: false,
       requiredHint: "",
       size: "default",

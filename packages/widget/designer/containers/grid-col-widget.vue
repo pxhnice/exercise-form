@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { desContainerProps } from "./container";
-import type { DesWidget } from "@exercise-form/constants";
+import { DRAG_DISABLE_LIST, DesWidget } from "@exercise-form/constants";
 
 const props = defineProps(desContainerProps);
 
@@ -103,7 +103,7 @@ const parentList = ref(props.parentList);
 
 const dragTarget = props.designer.dragTarget;
 const isDrag = computed(() =>
-  ["popup-box", "side-drawer"].includes(dragTarget.value.type)
+  DRAG_DISABLE_LIST.includes(dragTarget.value.type)
 );
 const isSelect = computed(
   () => props.designer.selectWidgetId.value == props.widgetData.id

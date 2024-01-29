@@ -32,6 +32,10 @@ export interface ProColumns<T = any> {
 
 // 模式
 export const PATTERN_TYPE = ["pc", "pad", "h5"] as const;
+
+// 禁止拖入容器
+export const DRAG_DISABLE_LIST = ["popup-box", "side-drawer"];
+
 // 自定义改动表单
 export const CUSTOM_LIST = [
   "alert",

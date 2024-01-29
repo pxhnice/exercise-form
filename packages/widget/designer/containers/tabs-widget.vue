@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
 import { desContainerProps } from "./container";
-import type { DesWidget } from "@exercise-form/constants";
+import { DRAG_DISABLE_LIST, DesWidget } from "@exercise-form/constants";
 
 const props = defineProps(desContainerProps);
 
@@ -73,7 +73,7 @@ const activate = ref("tab1");
 const componentKey = ref(0);
 const dragTarget = props.designer.dragTarget;
 const isDrag = computed(() =>
-  ["popup-box", "side-drawer"].includes(dragTarget.value.type)
+  DRAG_DISABLE_LIST.includes(dragTarget.value.type)
 );
 
 watch(

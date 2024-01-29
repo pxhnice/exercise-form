@@ -49,16 +49,11 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { renContainerProps } from "./container";
-
-interface TreeData {
-  id: number;
-  label: string;
-  children?: TreeData[];
-}
+import { useTree } from "@exercise-form/hooks";
 
 const props = defineProps(renContainerProps);
 
-const treeData = props.widgetData.options.treeData as TreeData[];
+const treeData = props.widgetData.options.treeData;
 const treeValue = ref("");
 const checkboxValue = ref(true);
 const expandAllValue = ref(false);
@@ -70,34 +65,8 @@ watch(treeValue, (val) => {
   treeRef.value!.filter(val);
 });
 
-const flatColumn = (columns: TreeData[], flatArr: Array<number> = []) => {
-  columns.forEach((col) => {
-    flatArr.push(col.id);
-    if (col.children?.length) {
-      flatArr.push(...flatColumn(col.children));
-    }
-  });
-  return flatArr;
-};
-
-const handleExpandOrRetract = (value: boolean) => {
-  let nodesMap = treeRef.value!.store.nodesMap;
-  for (let key in nodesMap) {
-    nodesMap[key].expanded = value;
-  }
-};
-
-const handleSelectAll = (value: boolean) => {
-  if (value) {
-    let ids = flatColumn(treeData);
-    treeRef.value!.setCheckedKeys(ids);
-  } else {
-    treeRef.value!.setCheckedNodes([]);
-  }
-};
-
-const filterNode = (value: string, data: TreeData) => {
-  if (!value) return true;
-  return data.label.includes(value);
-};
+const { handleExpandOrRetract, handleSelectAll, filterNode } = useTree(
+  treeRef,
+  treeData
+);
 </script>

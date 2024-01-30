@@ -3,6 +3,7 @@
     <el-radio-group v-model="groupValue" class="ex-radio-group">
       <el-radio-button label="zj">组件设置</el-radio-button>
       <el-radio-button label="bd">表单设置</el-radio-button>
+      <el-radio-button label="sj">数据源</el-radio-button>
     </el-radio-group>
     <div class="ex-widget-container">
       <div class="ex-widget-container-box">
@@ -122,7 +123,7 @@
             </el-collapse>
           </el-form>
           <el-form
-            v-else
+            v-else-if="groupValue == 'bd'"
             class="ex-setting-label"
             ref="formComRef"
             :model="selectWidget"
@@ -163,6 +164,7 @@
               </el-collapse-item>
             </el-collapse>
           </el-form>
+          <ex-data-source v-else />
         </el-scrollbar>
       </div>
     </div>
@@ -227,6 +229,7 @@ import { darkKeys } from "../form-designer";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
 import { getGlobalCss } from "@exercise-form/utils";
 import { desPanelProps } from "./panel";
+import ExDataSource from "./data-source.vue";
 
 const props = defineProps(desPanelProps);
 

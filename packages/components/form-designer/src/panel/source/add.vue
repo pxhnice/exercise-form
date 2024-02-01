@@ -7,7 +7,7 @@
     destroy-on-close
     @close="cancel"
   >
-    <el-form ref="formRef" :model="form" :rules="rules" label-width="100">
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="95">
       <el-form-item label="唯一名称" prop="name">
         <el-input type="text" v-model="form.name" />
       </el-form-item>
@@ -93,84 +93,94 @@
           </el-row>
         </el-scrollbar>
       </div>
-    </el-form>
-    <el-tabs style="margin-top: 20px" type="border-card">
-      <el-tab-pane label="1.请求配置">
-        <div class="ex-dialog-box">
-          <div class="name-front">( config ) {</div>
-          <ex-code-editor
-            v-model="form.configHandlerCode"
-            :dark="dark"
-            height="250"
-            lang="json"
-          />
-          <div class="name-back">}</div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="2.数据处理">
-        <div class="ex-dialog-box">
-          <div class="name-front">( result ) {</div>
-          <ex-code-editor
-            v-model="form.dataHandlerCode"
-            :dark="dark"
-            lang="json"
-          />
-          <div class="name-back">}</div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="3.错误处理">
-        <div class="ex-dialog-box">
-          <div class="name-front">( error ) {</div>
-          <ex-code-editor
-            v-model="form.errorHandlerCode"
-            :dark="dark"
-            lang="json"
-          />
-          <div class="name-back">}</div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="4.多数据处理">
-        <div class="ex-source-multi_data">
-          <el-form-item label="开启多数据集返回" label-width="145px">
-            <el-switch v-model="form.showMultiData" />
-            <el-button
-              style="margin-left: 50px"
-              v-if="form.showMultiData"
-              type="primary"
-              @click="handleAddMultiData"
-              icon="Plus"
-              link
-              >新增数据集
-            </el-button>
-          </el-form-item>
-          <el-scrollbar v-if="form.showMultiData" max-height="240">
-            <el-form-item
-              v-for="(item, index) of form.multiData"
-              :key="index"
-              label=""
-              label-width="130px"
-            >
-              <el-row :gutter="20">
-                <el-col :span="10">
-                  <el-input v-model="item.name" placeholder="名称" />
-                </el-col>
-                <el-col :span="10">
-                  <el-input v-model="item.remark" placeholder="备注" />
-                </el-col>
-                <el-col :span="4">
-                  <el-button
-                    icon="Delete"
-                    @click="handleDeleteMultiData(index)"
-                    plain
-                    circle
-                  />
-                </el-col>
-              </el-row>
+      <el-tabs style="margin-top: 20px" type="border-card">
+        <el-tab-pane label="1.请求配置">
+          <div class="ex-dialog-box">
+            <div class="name-front">( config ) {</div>
+            <ex-code-editor
+              v-model="form.configHandlerCode"
+              :dark="dark"
+              height="250"
+              lang="json"
+            />
+            <div class="name-back">}</div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="2.数据处理">
+          <div class="ex-dialog-box">
+            <div class="name-front">( result ) {</div>
+            <ex-code-editor
+              v-model="form.dataHandlerCode"
+              :dark="dark"
+              lang="json"
+            />
+            <div class="name-back">}</div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="3.错误处理">
+          <div class="ex-dialog-box">
+            <div class="name-front">( error ) {</div>
+            <ex-code-editor
+              v-model="form.errorHandlerCode"
+              :dark="dark"
+              lang="json"
+            />
+            <div class="name-back">}</div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="4.多数据处理">
+          <div class="ex-source-multi_data">
+            <el-form-item label="开启多数据集返回" label-width="145px">
+              <el-switch v-model="form.showMultiData" />
+              <el-button
+                style="margin-left: 50px"
+                v-if="form.showMultiData"
+                type="primary"
+                @click="handleAddMultiData"
+                icon="Plus"
+                link
+                >新增数据集
+              </el-button>
             </el-form-item>
-          </el-scrollbar>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+            <el-scrollbar
+              ref="scrollbarMultiDataRef"
+              v-if="form.showMultiData"
+              max-height="240"
+            >
+              <el-form-item label="" label-width="130px">
+                <el-row
+                  v-for="(item, index) of form.multiData"
+                  :key="index"
+                  :gutter="20"
+                >
+                  <el-col :span="10">
+                    <el-form-item
+                      label=""
+                      :prop="`multiData[${index}].name`"
+                      :rules="multiDataRules.name"
+                      label-width="0"
+                    >
+                      <el-input v-model="item.name" placeholder="名称" />
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-input v-model="item.remark" placeholder="备注" />
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button
+                      icon="Delete"
+                      @click="handleDeleteMultiData(index)"
+                      plain
+                      circle
+                    />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-scrollbar>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </el-form>
     <template #footer>
       <div class="ex-source_button">
         <el-button type="primary" @click="handleOpenTest">
@@ -234,6 +244,7 @@ const dark = inject(darkKeys);
 const formRef = ref<FormInstance>();
 const exSourceTestRef = ref();
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
+const scrollbarMultiDataRef = ref<InstanceType<typeof ElScrollbar>>();
 const showAddData = ref(false);
 const form = ref<DesSourceForm>(getForm()); //编辑数据源
 const sources = ref<{ [key: string]: any }>(); //原数据源
@@ -253,6 +264,16 @@ const rules = reactive<FormRules<DesSourceForm>>({
     }
   ]
 });
+
+const multiDataRules = {
+  name: [
+    {
+      required: true,
+      message: "请填写",
+      trigger: "change"
+    }
+  ]
+};
 const optionsList = ref<optionsKeys[]>([]);
 const dataSources = ref<DesSourceForm[]>([]);
 const active = ref("headers");
@@ -335,6 +356,10 @@ const handleDelete = (index: number) => {
 
 const handleAddMultiData = () => {
   form.value.multiData.push({ name: "", remark: "" });
+  nextTick(() => {
+    let wrapRef = scrollbarMultiDataRef.value!.wrapRef;
+    scrollbarMultiDataRef.value!.setScrollTop(wrapRef!.scrollHeight);
+  });
 };
 
 const handleDeleteMultiData = (index: number) => {
@@ -351,7 +376,6 @@ const handleAddConfirm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       handleSaveKeys();
-
       let has = dataSources.value.some(
         (item) =>
           item.name == form.value.name && item.sourceId != form.value.sourceId

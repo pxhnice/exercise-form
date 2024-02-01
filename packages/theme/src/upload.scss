@@ -5,6 +5,10 @@
       display: flex;
     }
 
+    .el-form-item__content {
+      padding: 0 !important;
+    }
+
     .ex-upload-button {
       width: 110px;
       border-radius: 0;
@@ -25,6 +29,7 @@
     .ex-options_row {
       border-radius: 0;
       background: var(--el-fill-color);
+      color: var(--el-text-color-secondary);
       padding: 5px 0;
     }
 

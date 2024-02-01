@@ -38,6 +38,7 @@ export function useDesigner() {
           labelPosition: "left",
           align: "left",
           labelWidth: 100,
+          dataSources: [],
           modelName: "formData",
           formName: "formRef",
           rulesName: "rules",

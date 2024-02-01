@@ -1,0 +1,86 @@
+.ex-source {
+  width: 100%;
+  padding-bottom: 50px;
+
+  .ex-source-operation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ex-source-list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+
+    li {
+      position: relative;
+      display: flex;
+      background: var(--el-fill-color);
+      padding: 10px 5px;
+      font-size: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      border-radius: 5px;
+
+      .ex-source-list_content {
+        flex: 1;
+      }
+
+      .ex-source-list_icon {
+        display: flex;
+        width: 30px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .ex-source-list_edit {
+        position: absolute;
+        top: -10px;
+        right: 50px;
+      }
+
+      .ex-source-list_delete {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+      }
+    }
+  }
+
+  .el-tabs__content {
+    padding: 0;
+  }
+
+  .el-dialog__footer {
+    text-align: center;
+  }
+
+  .el-drawer {
+    width: 800px !important;
+  }
+
+  .el-scrollbar {
+    height: auto !important;
+  }
+
+  .ex-source_button {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ex-source-test_buttons {
+    justify-content: flex-end;
+    margin: 10px 0;
+  }
+
+  .ex-source-multi_data {
+    height: 300px;
+    border: 0 1px 1px 1px solid;
+    border-color: var(--el-border-color);
+
+    .el-form-item--default {
+      margin-bottom: 2px !important;
+    }
+  }
+}

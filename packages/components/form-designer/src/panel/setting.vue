@@ -123,7 +123,7 @@
             </el-collapse>
           </el-form>
           <el-form
-            v-else-if="groupValue == 'bd'"
+            v-else-if="groupValue == 'zj'"
             class="ex-setting-label"
             ref="formComRef"
             :model="selectWidget"
@@ -164,7 +164,11 @@
               </el-collapse-item>
             </el-collapse>
           </el-form>
-          <ex-data-source v-else />
+          <ex-data-source
+            v-else
+            :designer="designer"
+            :form-config="formConfig"
+          />
         </el-scrollbar>
       </div>
     </div>
@@ -229,7 +233,7 @@ import { darkKeys } from "../form-designer";
 import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
 import { getGlobalCss } from "@exercise-form/utils";
 import { desPanelProps } from "./panel";
-import ExDataSource from "./data-source.vue";
+import ExDataSource from "./source/index.vue";
 
 const props = defineProps(desPanelProps);
 

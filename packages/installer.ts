@@ -1,6 +1,8 @@
-import Draggable from 'vuedraggable';
-
+import Draggable from "vuedraggable";
+import axios from "axios";
 import type { App, Plugin } from "vue";
+
+window.axios = axios;
 
 export const makeInstaller = (components: Plugin[] = []) => {
   const install = (app: App) => {

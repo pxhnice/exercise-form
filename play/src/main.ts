@@ -14,5 +14,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.use(ElementPlus, { locale: zhCn, size: "default" });
-app.use(ExForm as any);
+app.use(ExForm);
+
 app.mount("#app");

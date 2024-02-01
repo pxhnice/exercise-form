@@ -1,31 +1,43 @@
 <template>
   <el-form-item
-    :label="dragData.options.label"
-    :required="dragData.options.required"
-    :label-width="dragData.options.labelWidth"
+    :label="widgetData.options.label"
+    :required="widgetData.options.required"
+    :label-width="widgetData.options.labelWidth"
   >
-    <el-upload v-model:file-list="fileList" v-bind="dragData.options">
-      <el-button style="font-style: italic" type="primary" link icon="Plus">
-        选择文件
-      </el-button>
-      <template #tip>
-        <!-- <div class="el-upload__tip">
-          jpg/png files with a size less than 500KB.
-        </div> -->
-      </template>
+    <el-upload
+      v-model:file-list="fileList"
+      v-bind="widgetData.options"
+      :accept="accept"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :on-success="handleSuccess"
+      :on-error="handleError"
+      :on-exceed="handleExceed"
+      :before-upload="beforeUpload"
+      :before-remove="beforeRemove"
+    >
+      <el-button type="primary" link icon="Plus"> 选择文件 </el-button>
     </el-upload>
   </el-form-item>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
 import type { UploadUserFile } from "element-plus";
-interface WidgetType {
-  dragData: any;
-}
+import { desFieldsProps } from "./fields";
+import { useUpload } from "@exercise-form/hooks";
 
-withDefaults(defineProps<WidgetType>(), {
-  dragData: {}
-});
+const props = defineProps(desFieldsProps);
 
 const fileList = ref<UploadUserFile[]>([]);
+
+const {
+  accept,
+  beforeUpload,
+  beforeRemove,
+  handlePreview,
+  handleRemove,
+  handleExceed,
+  handleSuccess,
+  handleError
+} = useUpload(props.widgetData);
 </script>

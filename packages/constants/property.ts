@@ -50,6 +50,7 @@ export const COMMON_PROPERTIES = {
   customClass: "custom-class-edit",
   optionsItem: "options-item-edit",
   options: "cascader-options-edit",
+  action: "action-edit",
   // 容器
   colHeight: "col-height-edit",
   cellWidth: "cell-width-edit",

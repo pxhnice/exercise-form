@@ -1,0 +1,50 @@
+.ex-upload {
+  .ex-upload-item {
+    .ex-upload-box {
+      width: 100%;
+      display: flex;
+    }
+
+    .ex-upload-button {
+      width: 110px;
+      border-radius: 0;
+    }
+
+    .ex-upload-input {
+      .el-input__wrapper {
+        border-radius: 0;
+      }
+    }
+  }
+
+  .ex-upload-options {
+    margin-top: 5px;
+    border: 1px solid;
+    border-color: var(--el-border-color);
+
+    .ex-options_row {
+      border-radius: 0;
+      background: var(--el-fill-color);
+      padding: 5px 0;
+    }
+
+    .el-scrollbar__wrap {
+      padding: 0 0 10px !important;
+    }
+  }
+
+  .ex-upload-row {
+    margin-bottom: 1px;
+
+    .ex-upload-input {
+      .el-input__wrapper {
+        border-radius: 0;
+      }
+    }
+
+    .ex-upload-del {
+      text-align: center;
+      line-height: 32px;
+    }
+  }
+}

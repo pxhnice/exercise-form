@@ -48,8 +48,8 @@ export const CUSTOM_LIST = [
   "steps",
   "text",
   "slot",
-  "uploadImage",
-  "uploadFile"
+  "upload-image",
+  "upload-file"
 ];
 
 export const SHADOW_LIST = ["always", "never", "hover"];
@@ -68,3 +68,5 @@ export const MODEL_LIST = [
   "slider",
   "color-picker"
 ];
+// 请求方式
+export const METHOD_LIST = ["GET", "POST", "PUT", "DELETE"];

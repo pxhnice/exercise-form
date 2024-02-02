@@ -43,7 +43,7 @@ export const CUSTOM_LIST = [
   "checkbox",
   "divider",
   "radio",
-  "richText",
+  "rich-text",
   "select",
   "steps",
   "text",

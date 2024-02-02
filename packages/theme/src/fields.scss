@@ -28,3 +28,19 @@ label {
   );
   background-size: 20px 20px;
 }
+
+.ex-rich-text {
+  border: 1px solid;
+  border-color: var(--el-border-color);
+  // z-index: 99999;
+
+  .ex-rich-text_toolbar {
+    border-bottom: 1px solid;
+    border-color: var(--el-border-color);
+  }
+
+  .ex-rich-text_editor {
+    height: 400px !important;
+    overflow-y: hidden;
+  }
+}

@@ -232,9 +232,9 @@ const getForm = () => {
     headers: {},
     params: {},
     data: {},
-    configHandlerCode: "",
-    dataHandlerCode: "",
-    errorHandlerCode: "",
+    configHandlerCode: "return config",
+    dataHandlerCode: "return result.data.data",
+    errorHandlerCode: "onMessageError(error)",
     showMultiData: false,
     multiData: []
   };
@@ -308,6 +308,7 @@ const handleOpen = (params: Params) => {
   }
   dataSources.value = params.dataSources;
   active.value = "headers";
+  oldActive.value = "headers";
   let headers = form.value.headers;
   optionsList.value = headers ? getKeys(headers) : [{ key: "", value: "" }];
   showAddData.value = true;

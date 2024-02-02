@@ -15,14 +15,23 @@
             <el-checkbox-group v-model="checkList" @change="changeCheckbox">
               <ul class="ex-source-list">
                 <li v-for="(item, index) of dataSources" :key="index">
-                  <div class="ex-source-list_icon">
-                    <el-icon><Platform /></el-icon>
+                  <div class="ex-source-box">
+                    <div class="ex-source-list_title">
+                      {{ item.name }}
+                    </div>
+                    <el-checkbox :label="index" size="default">
+                      导出选中
+                    </el-checkbox>
                   </div>
-                  <el-divider direction="vertical" />
-                  <div class="ex-source-list_content">{{ item.name }}</div>
-                  <el-checkbox :label="index" size="default">
-                    导出选中
-                  </el-checkbox>
+                  <div class="ex-source-list-box">
+                    <div class="ex-source-list_icon">
+                      <el-icon><Platform /></el-icon>
+                    </div>
+                    <el-divider direction="vertical" />
+                    <div class="ex-source-list_content">
+                      {{ item.requestUrl }}
+                    </div>
+                  </div>
                 </li>
               </ul>
             </el-checkbox-group>

@@ -2,27 +2,40 @@
   <div class="ex-source ex-upload">
     <ul v-if="isShow" class="ex-source-list">
       <li v-for="(item, index) of formConfig.dataSources" :key="index">
-        <div class="ex-data-source_icon">
-          <el-icon><Platform /></el-icon>
+        <div class="ex-source-box">
+          <div class="ex-source-list_title">{{ item.name }}</div>
+          <div>
+            <el-button
+              class="ex-source-list_edit"
+              type="primary"
+              @click="handleEdit(item)"
+              icon="Edit"
+              size="small"
+              circle
+            />
+            <el-button
+              class="ex-source-list_delete"
+              type="danger"
+              @click="handleDelete(index)"
+              icon="Delete"
+              size="small"
+              circle
+            />
+          </div>
         </div>
-        <el-divider direction="vertical" />
-        <div class="ex-source-list_content">{{ item.name }}</div>
-        <el-button
-          class="ex-source-list_edit"
-          type="primary"
-          @click="handleEdit(item)"
-          icon="Edit"
-          size="small"
-          circle
-        />
-        <el-button
-          class="ex-source-list_delete"
-          type="danger"
-          @click="handleDelete(index)"
-          icon="Delete"
-          size="small"
-          circle
-        />
+        <div class="ex-source-list-box">
+          <div class="ex-data-source_icon">
+            <el-icon><Platform /></el-icon>
+          </div>
+          <el-divider direction="vertical" />
+          <!-- <el-tooltip
+            effect="dark"
+            :content="item.requestUrl"
+            placement="bottom"
+          > -->
+          <div class="ex-source-list_content">{{ item.requestUrl }}</div>
+          <!-- </el-tooltip> -->
+        </div>
       </li>
     </ul>
     <el-empty v-else description="暂无数据源" />

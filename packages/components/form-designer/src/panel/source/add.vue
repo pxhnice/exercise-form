@@ -202,15 +202,10 @@
 import { ref, reactive, inject, nextTick } from "vue";
 import type { FormInstance, FormRules, ElScrollbar } from "element-plus";
 import { METHOD_LIST } from "@exercise-form/constants";
-import {
-  onMessageError,
-  isObject,
-  deepClone,
-  getRandomNumber
-} from "@exercise-form/utils";
+import { onMessageError, isObject, deepClone } from "@exercise-form/utils";
 import { darkKeys } from "../../form-designer";
 import ExSourceTest from "./test.vue";
-import { DesSourceForm } from "./source";
+import { DesSourceForm, getSourceForm } from "./source";
 
 interface Params {
   sources: DesSourceForm;
@@ -222,31 +217,13 @@ interface optionsKeys {
   value: string;
 }
 
-const getForm = () => {
-  return {
-    sourceId: getRandomNumber(),
-    name: "",
-    describe: "",
-    requestUrl: "",
-    method: "POST",
-    headers: {},
-    params: {},
-    data: {},
-    configHandlerCode: "return config",
-    dataHandlerCode: "return result.data.data",
-    errorHandlerCode: "onMessageError(error)",
-    showMultiData: false,
-    multiData: []
-  };
-};
-
 const dark = inject(darkKeys);
 const formRef = ref<FormInstance>();
 const exSourceTestRef = ref();
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollbarMultiDataRef = ref<InstanceType<typeof ElScrollbar>>();
 const showAddData = ref(false);
-const form = ref<DesSourceForm>(getForm()); //编辑数据源
+const form = ref<DesSourceForm>(getSourceForm()); //编辑数据源
 const sources = ref<{ [key: string]: any }>(); //原数据源
 const rules = reactive<FormRules<DesSourceForm>>({
   name: [
@@ -303,7 +280,7 @@ const handleOpen = (params: Params) => {
     sources.value = params.sources;
     isEdit.value = true;
   } else {
-    form.value = getForm();
+    form.value = getSourceForm();
     isEdit.value = false;
   }
   dataSources.value = params.dataSources;

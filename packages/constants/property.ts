@@ -47,6 +47,7 @@ export const COMMON_PROPERTIES = {
   direction: "direction-edit",
   allowHalf: "allow-half-edit",
   valueFormat: "value-format-edit",
+  showDataSource: "show-data-source-edit",
   customClass: "custom-class-edit",
   optionsItem: "options-item-edit",
   options: "cascader-options-edit",

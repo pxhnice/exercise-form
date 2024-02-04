@@ -9,12 +9,13 @@
       <div class="demo-header-box">
         <div class="ex-mgr-10">
           <span>主题色：</span>
-          <el-color-picker v-model="color" />
+          <el-color-picker v-model="color" @change="changColor" />
         </div>
         <div>
           <span>黑夜模式：</span>
           <el-switch
             v-model="dark"
+            @change="changDark"
             active-action-icon="Moon"
             inactive-action-icon="Sunny"
           />
@@ -43,7 +44,6 @@
     <ex-form-designer
       style="flex: 1"
       :dark="dark"
-      :theme-color="color"
       :form-data="formData"
       :form-json="formJson"
       :template-list="templateList"
@@ -51,8 +51,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { templateList } from "./constants/temp";
+import { cutNight, cutColor } from "./utils/theme";
+import { localStorageUtils } from "../../packages/utils/storage";
+
+let storage = localStorageUtils();
+
 const dark = ref(false);
 const color = ref("#409eff");
 const formData = ref({});
@@ -61,9 +66,30 @@ const formJson = reactive({
   widgetList: []
 });
 
+const changDark = (value: boolean) => {
+  cutNight(value);
+};
+
+const changColor = (value: string) => {
+  if (value) {
+    cutColor(value);
+  } else {
+    cutColor("#409EFF");
+  }
+};
+
 const to = (url: string) => {
   window.open(url, "_blank");
 };
+
+onMounted(() => {
+  let isNight = storage.get("ex-dark") as boolean;
+  let themeColor = storage.get("ex-theme-color") as string;
+  dark.value = isNight ?? false;
+  color.value = themeColor ?? "#409EFF";
+  changDark(dark.value);
+  changColor(color.value);
+});
 </script>
 <style>
 html,

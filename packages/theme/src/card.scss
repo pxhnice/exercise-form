@@ -1,7 +1,12 @@
 .ex-widget-card {
+  position: relative;
   padding: 2px;
   margin: 3px 0;
   box-sizing: border-box;
+
+  .el-card {
+    box-sizing: border-box;
+  }
 }
 
 .ex-widget-card_body {

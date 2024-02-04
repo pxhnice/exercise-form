@@ -189,6 +189,7 @@ export function useDesigner() {
 
     deleteWidget(parentList: DesWidgetList, sub: number) {
       parentList.splice(sub, 1);
+      this.clearSelectWidget();
 
       this.emitHistoryChange();
     },

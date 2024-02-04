@@ -9,7 +9,7 @@
     <el-divider> 选项设置 </el-divider>
     <el-form-item label-width="0">
       <el-radio-group
-        v-if="settingData.type == 'radio'"
+        v-if="isRadioType"
         v-model="optionsModel.modelDefaultValue"
       >
         <draggable
@@ -24,18 +24,12 @@
               <el-radio
                 style="margin: 0"
                 title="默认值"
-                :label="element[optionsModel.optionsValue]"
+                :label="element[optionsModel.value]"
               >
                 <template></template>
               </el-radio>
-              <el-input
-                class="options-put"
-                v-model="element[optionsModel.optionsValue]"
-              />
-              <el-input
-                class="options-put"
-                v-model="element[optionsModel.optionsLabel]"
-              />
+              <el-input class="options-put" v-model="element[value]" />
+              <el-input class="options-put" v-model="element[label]" />
               <el-icon class="pane-mover" :size="22">
                 <ex-icon-drag />
               </el-icon>
@@ -53,12 +47,7 @@
         <el-button @click="handelAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
-        <el-button
-          @click="handelReset(true)"
-          class="options-btn"
-          type="primary"
-          link
-        >
+        <el-button @click="handelReset" class="options-btn" type="primary" link>
           重置选中项
         </el-button>
         <el-button
@@ -71,7 +60,7 @@
         </el-button>
       </el-radio-group>
       <el-checkbox-group
-        v-if="settingData.type == 'checkbox'"
+        v-if="isMultipleType"
         v-model="optionsModel.modelDefaultValue"
       >
         <draggable
@@ -86,18 +75,12 @@
               <el-checkbox
                 style="margin: 0"
                 title="默认值"
-                :label="element[optionsModel.optionsValue]"
+                :label="element[value]"
               >
                 <template></template>
               </el-checkbox>
-              <el-input
-                class="options-put"
-                v-model="element[optionsModel.optionsValue]"
-              />
-              <el-input
-                class="options-put"
-                v-model="element[optionsModel.optionsLabel]"
-              />
+              <el-input class="options-put" v-model="element[value]" />
+              <el-input class="options-put" v-model="element[label]" />
               <el-icon class="pane-mover" :size="22">
                 <ex-icon-drag />
               </el-icon>
@@ -115,12 +98,7 @@
         <el-button @click="handelAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
-        <el-button
-          @click="handelReset(false)"
-          class="options-btn"
-          type="primary"
-          link
-        >
+        <el-button @click="handelReset" class="options-btn" type="primary" link>
           重置选中项
         </el-button>
         <el-button
@@ -154,10 +132,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from "vue";
+import { ref, computed, watch, inject } from "vue";
 import { onMessageWarning, onMessageError } from "@exercise-form/utils";
 import { desPropertyProps } from "./property";
 import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
+import { useOptions } from "@exercise-form/hooks";
 
 const props = defineProps(desPropertyProps);
 
@@ -174,6 +153,26 @@ const optionsItem = computed({
   get: () => props.optionsModel.optionsItem,
   set: (val) => val
 });
+const isRadioType = computed(() => {
+  let { type, options } = props.settingData;
+  let { multiple } = options;
+  return (!multiple && type == "select") || type == "radio";
+});
+
+const isMultipleType = computed(() => {
+  let { type, options } = props.settingData;
+  let { multiple } = options;
+  return (multiple && type == "select") || type == "checkbox";
+});
+
+watch(
+  () => props.optionsModel.multiple,
+  () => {
+    handelReset();
+  }
+);
+
+const { label, value } = useOptions(props.settingData);
 
 const handelAdd = () => {
   let len = optionsItem.value.length;
@@ -189,9 +188,9 @@ const handelDel = (index: number) => {
   optionsItem.value.splice(index, 1);
 };
 
-const handelReset = (is: boolean) => {
-  if (is) {
-    optionsModel.modelDefaultValue = null;
+const handelReset = () => {
+  if (isRadioType.value) {
+    optionsModel.modelDefaultValue = "";
   } else {
     optionsModel.modelDefaultValue = [];
   }

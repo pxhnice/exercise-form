@@ -187,6 +187,8 @@ export const baseFields: DesWidgetList = [
           label: "option3"
         }
       ],
+      optionsLabel: "label",
+      optionsValue: "value",
       required: false,
       requiredHint: "",
       size: "default",

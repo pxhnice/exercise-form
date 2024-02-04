@@ -4,25 +4,25 @@
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
   >
-    <el-checkbox-group @click.stop v-model="fieldValue">
+    <el-checkbox-group @click.stop v-model="selectValue">
       <template v-if="widgetData.options.buttonMode">
         <el-checkbox-button
-          v-for="item in widgetData.options.optionsItem"
-          :key="item[widgetData.options.optionsValue]"
-          :label="item[widgetData.options.optionsValue]"
+          v-for="item in options"
+          :key="item[value]"
+          :label="item[value]"
         >
-          {{ item[widgetData.options.optionsLabel] }}
+          {{ item[label] }}
         </el-checkbox-button>
       </template>
       <template v-else>
         <el-checkbox
           :border="widgetData.options.border"
           :disabled="widgetData.options.disabled"
-          v-for="item in widgetData.options.optionsItem"
-          :key="item[widgetData.options.optionsValue]"
-          :label="item[widgetData.options.optionsValue]"
+          v-for="item in options"
+          :key="item[value]"
+          :label="item[value]"
         >
-          {{ item[widgetData.options.optionsLabel] }}
+          {{ item[label] }}
         </el-checkbox>
       </template>
     </el-checkbox-group>
@@ -30,16 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import { desFieldsProps } from "./fields";
+import { useOptions } from "@exercise-form/hooks";
 
 const props = defineProps(desFieldsProps);
-const fieldValue = ref(props.widgetData.options.modelDefaultValue);
 
-watch(
-  () => props.widgetData.options.modelDefaultValue,
-  (val) => {
-    fieldValue.value = val;
-  }
-);
+const { selectValue, options, label, value } = useOptions(props.widgetData);
 </script>

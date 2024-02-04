@@ -1,4 +1,4 @@
-import { getElAttr } from "./property";
+import { getElAttr } from './property';
 
 import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 type DesTemplateMethod = {
@@ -169,8 +169,8 @@ function buildCheckboxChildren(widget: DesWidget) {
 }
 
 function buildSelectChildren(widget: DesWidget) {
-  let tag = "el-option";
-  return `<${tag} v-for="item in ${widget.options.name}optionsItem" :key="item.value" :label="item.label" :value="item.value"/>`;
+  let { optionsLabel, optionsValue } = widget.options;
+  return `<el-option v-for="item in ${widget.options.name}optionsItem" :key="item.${optionsValue}" :label="item.${optionsLabel}" :value="item.${optionsValue}"/>`;
 }
 
 export function buildBasicsTemplate(

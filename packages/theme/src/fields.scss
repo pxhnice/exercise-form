@@ -37,6 +37,14 @@ label {
   .ex-rich-text_toolbar {
     border-bottom: 1px solid;
     border-color: var(--el-border-color);
+
+    .w-e-bar {
+      background-color: var(--el-bg-color) !important;
+    }
+
+    .w-e-bar-divider {
+      background: var(--el-border-color) !important;
+    }
   }
 
   .ex-rich-text_editor {

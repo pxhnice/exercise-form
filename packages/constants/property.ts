@@ -21,6 +21,7 @@ export const COMMON_PROPERTIES = {
   rowKey: "row-key-edit",
   disabled: "disabled-edit",
   readonly: "readonly-edit",
+  readOnly: "read-only-edit",
   clearable: "clearable-edit",
   editable: "editable-edit",
   required: "required-edit",

@@ -1,6 +1,7 @@
 @use "./dark/mixin.scss" as *;
 @use "./dark/variables.scss" as *;
 
+// TODO:主题自行配置处理
 .ex-dark {
   --el-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.36),
     0 8px 20px rgba(0, 0, 0, 0.72);
@@ -43,4 +44,12 @@
   --el-border: var(--el-border-width) var(--el-border-style)
     var(--el-border-color);
   --el-svg-monochrome-grey: var(--el-border-color);
+  // 富文本
+  --w-e-textarea-bg-color: var(--el-bg-color);
+  --w-e-textarea-color: #fff;
+  --w-e-toolbar-bg-color: var(--el-bg-color);
+  --w-e-toolbar-border-color: var(--el-border-color);
+  --w-e-toolbar-color: var(--el-text-color-regular);
+  --w-e-toolbar-active-bg-color: var(--el-fill-color);
+  --w-e-toolbar-active-color: var(--el-text-color-regular);
 }

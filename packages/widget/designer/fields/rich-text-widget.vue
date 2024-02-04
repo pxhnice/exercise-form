@@ -4,44 +4,29 @@
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
   >
-    <div class="ex-rich-text">
-      <Toolbar
-        class="ex-rich-text_toolbar"
-        :editor="editorRef"
-        :defaultConfig="toolbarConfig"
-      />
-      <Editor
-        class="ex-rich-text_editor"
-        v-model="valueHtml"
-        :defaultConfig="editorConfig"
-        @onCreated="handleCreated"
-      />
-    </div>
+    <ex-editor
+      :key="editorKey"
+      :placeholder="widgetData.options.placeholder"
+      :read-only="widgetData.options.readOnly"
+    />
   </el-form-item>
 </template>
 
 <script setup lang="ts">
-import { ref, shallowRef, onBeforeUnmount } from "vue";
-import "@wangeditor/editor/dist/css/style.css";
-import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-import { IDomEditor } from "@wangeditor/editor";
+import { ref, watch } from "vue";
+import ExEditor from "../../components/editor/index.vue";
 import { desFieldsProps } from "./fields";
+import { getRandomNumber } from "@exercise-form/utils";
 
-defineProps(desFieldsProps);
+const props = defineProps(desFieldsProps);
 
-const editorRef = shallowRef<IDomEditor>();
-const valueHtml = ref("");
-const toolbarConfig = {};
-const editorConfig = { placeholder: "请输入内容..." };
+const editorKey = ref("edit");
 
-const handleCreated = (editor: IDomEditor) => {
-  editorRef.value = editor;
-};
-
-// 组件销毁时，也及时销毁编辑器
-onBeforeUnmount(() => {
-  const editor = editorRef.value;
-  if (editor == null) return;
-  editor.destroy();
-});
+watch(
+  () => props.widgetData.options,
+  () => {
+    editorKey.value = editorKey.value + getRandomNumber();
+  },
+  { deep: true }
+);
 </script>

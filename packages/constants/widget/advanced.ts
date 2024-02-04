@@ -53,9 +53,12 @@ export const advanced: DesWidgetList = [
     iconName: "rich-text",
     type: "rich-text",
     options: {
-      disabled: false,
+      // onMaxLength: null,
+      maxLength: null,
       label: "富文本内容",
       labelWidth: "",
+      placeholder: "请输入...",
+      readOnly: false,
       requiredHint: "",
       required: false,
       validation: "",

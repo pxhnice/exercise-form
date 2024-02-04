@@ -1,5 +1,9 @@
 import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 
+const getAccept = (fileTypes: string[]) => {
+  return fileTypes.map((t: string) => "." + t).join(",");
+};
+
 export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
   let wop = widget.options;
   return {
@@ -89,6 +93,16 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     lazy: wop.lazy ? "lazy" : "",
     props: wop.props ? `:props=${wop.props}` : "",
     showLinkage: wop.showLinkage ? "show-linkage" : "",
+
+    action: wop.action ? `action="${wop.action}"` : "",
+    accept:
+      wop.fileTypes && wop.fileTypes.length > 0
+        ? `accept="${getAccept(wop.fileTypes)}"`
+        : "",
+    method: wop.method != "POST" ? `method="${wop.method}"` : "",
+    limit: wop.limit ? `:limit="${wop.limit}"` : "",
+    data: wop.data ? `:data="${wop.name}data"` : "",
+    headers: wop.headers ? `:headers="${wop.name}headers"` : "",
 
     customClass:
       wop.customClass && wop.customClass.length > 0

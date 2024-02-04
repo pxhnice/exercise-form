@@ -3,15 +3,24 @@ import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 import { getOuterTemplate } from "./outer";
 import { isArray, isObject, isNumber } from "../types";
 
+// 数据参数属性
+const paramsKeys = [
+  "data",
+  "headers",
+  "tableData",
+  "treeData",
+  "optionsItem",
+  "options"
+];
+
 export function traverseFieldWidget(
   widgetList: DesWidget[],
   cd: (wt: DesWidget) => void
 ) {
   widgetList.forEach((widget: DesWidget) => {
+    cd(widget);
     if (widget.category === "container") {
       traverseFieldWidget(widget?.children || [], cd);
-    } else {
-      cd(widget);
     }
   });
 }
@@ -37,32 +46,37 @@ export function buildDefaultValueListFn(defaultValueList: string[]) {
 
 function buildRulesListFn(rulesList: string[]) {
   return function (widget: DesWidget) {
-    let { required, validation, validationHint } = widget.options;
-    if (required || validation) {
-      let requiredText = required
-        ? `{required:true,
-          message:"字段值不可为空"},`
-        : "";
-      let validationText = validation
-        ? `{
+    if (widget.category != "container") {
+      let { required, validation, validationHint } = widget.options;
+      if (required || validation) {
+        let message = validationHint ? validationHint : "字段值不可为空";
+        let requiredText = required
+          ? `{required:true,
+          message:"${message}"},`
+          : "";
+        let validationText = validation
+          ? `{
             pattern:${getRegExp(validation)}, 
             trigger: ['blur', 'change'],
-            message:"${validationHint}"
+            message:"${message}"
           }`
-        : "";
-      let rulesText = `${widget.id}:[${requiredText}${validationText}],`;
-      rulesList.push(rulesText);
+          : "";
+        let rulesText = `${widget.id}:[${requiredText}${validationText}],`;
+        rulesList.push(rulesText);
+      }
     }
   };
 }
 
-function buildOptionsItemListFn(optionsValueList: string[]) {
+function buildDataParams(dataParamsList: string[]) {
   return function (widget: DesWidget) {
-    let { optionsItem } = widget.options;
-    if (optionsItem) {
-      optionsValueList.push(
-        `const ${widget.id}Options=${JSON.stringify(optionsItem)}`
-      );
+    let options = widget.options;
+    for (const key in options) {
+      if (paramsKeys.includes(key)) {
+        dataParamsList.push(
+          `const ${options.name}${key}=${JSON.stringify(options[key])}`
+        );
+      }
     }
   };
 }
@@ -70,15 +84,15 @@ function buildOptionsItemListFn(optionsValueList: string[]) {
 export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
   let defaultValueList: string[] = [];
   let rulesList: string[] = [];
-  let optionsList: string[] = [];
+  let dataParamsList: string[] = [];
   let { formName, modelName, rulesName } = formConfig;
   traverseFieldWidget(widgetList, (widget) => {
     buildDefaultValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
-    buildOptionsItemListFn(optionsList)(widget);
+    buildDataParams(dataParamsList)(widget);
   });
   let { outerDefaultValueList } = getOuterTemplate(widgetList, formConfig);
-  let vue3JSTemplate = `import { ref , reactive  } from "vue"
+  let vue3JSTemplate = `import { ref, reactive } from 'vue';
   const ${formName}=ref();${
     formConfig.isPageType === "dialog" ? "const dialogVisible=ref(false);" : ""
   }
@@ -92,7 +106,7 @@ export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
     }
   });
   const { ${modelName}, ${rulesName} } = state;
-  ${optionsList.join("\n")};
+  ${dataParamsList.join("\n")}
   ${
     formConfig.isPageType === "dialog"
       ? "const open = (params) => {dialogVisible.value=true};const close=()=>{dialogVisible.value=false};"

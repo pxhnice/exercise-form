@@ -1,4 +1,4 @@
-import { getElAttr } from './property';
+import { getElAttr } from "./property";
 
 import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 type DesTemplateMethod = {
@@ -133,6 +133,24 @@ const elTemplates: DesTemplateMethod = {
   slot: (widget, formConfig) => {
     let name = widget.options.label ? `name="${widget.options.label}"` : "";
     return `<slot ${name}></slot>`;
+  },
+  "upload-image": (widget, formConfig) => {
+    let { action, accept, headers, data, method } = getElAttr(
+      widget,
+      formConfig
+    );
+    return `<el-upload v-model:file-list="fileList" ${action} ${accept} ${headers} ${data} ${method} list-type="picture-card"> <el-icon><Plus /></el-icon></el-upload>`;
+  },
+  "upload-file": (widget, formConfig) => {
+    let { action, accept, headers, data, method } = getElAttr(
+      widget,
+      formConfig
+    );
+    return `<el-upload 
+    v-model:file-list="fileList" ${action} ${accept} ${headers} ${data} ${method}></el-upload>`;
+  },
+  "rich-text": (widget, formConfig) => {
+    return ``;
   }
 };
 
@@ -140,19 +158,19 @@ function buildRadioChildren(widget: DesWidget) {
   let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-radio-button" : "el-radio";
-  return `<${tag} v-for="item in ${widget.id}Options" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
+  return `<${tag} v-for="item in ${widget.options.name}optionsItem" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
 function buildCheckboxChildren(widget: DesWidget) {
   let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-checkbox-button" : "el-checkbox";
-  return `<${tag} v-for="item in ${widget.id}Options" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
+  return `<${tag} v-for="item in ${widget.options.name}optionsItem" :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
 function buildSelectChildren(widget: DesWidget) {
   let tag = "el-option";
-  return `<${tag} v-for="item in ${widget.id}Options" :key="item.value" :label="item.label" :value="item.value"/>`;
+  return `<${tag} v-for="item in ${widget.options.name}optionsItem" :key="item.value" :label="item.label" :value="item.value"/>`;
 }
 
 export function buildBasicsTemplate(

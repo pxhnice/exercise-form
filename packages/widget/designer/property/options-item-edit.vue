@@ -15,7 +15,7 @@
         <draggable
           tag="ul"
           class="options-row"
-          :list="optionsItem"
+          :list="optionsModel.optionsItem"
           handle=".pane-mover"
           item-key="id"
         >
@@ -24,7 +24,7 @@
               <el-radio
                 style="margin: 0"
                 title="默认值"
-                :label="element[optionsModel.value]"
+                :label="element[value]"
               >
                 <template></template>
               </el-radio>
@@ -66,7 +66,7 @@
         <draggable
           tag="ul"
           class="options-row"
-          :list="optionsItem"
+          :list="optionsModel.optionsItem"
           handle=".pane-mover"
           item-key="id"
         >
@@ -115,7 +115,7 @@
       width="800"
       v-model="isShowData"
       v-bind="dialogOptions"
-      title="表格JSON数据编辑"
+      title="选项数据编辑"
       @close="isShowData = false"
     >
       <ex-code-editor v-model="codeValue" lang="json" :dark="dark" />
@@ -146,19 +146,14 @@ const dialogOptions = {
   closeOnClickModal: false
 };
 const dark = inject(darkKeys);
+const selectWidget = props.designer.selectWidget;
 const isShowData = ref(false);
 const codeValue = ref();
-const optionsModel = props.optionsModel;
-const optionsItem = computed({
-  get: () => props.optionsModel.optionsItem,
-  set: (val) => val
-});
 const isRadioType = computed(() => {
   let { type, options } = props.settingData;
   let { multiple } = options;
   return (!multiple && type == "select") || type == "radio";
 });
-
 const isMultipleType = computed(() => {
   let { type, options } = props.settingData;
   let { multiple } = options;
@@ -175,35 +170,40 @@ watch(
 const { label, value } = useOptions(props.settingData);
 
 const handelAdd = () => {
-  let len = optionsItem.value.length;
-  optionsItem.value.push({ value: len + 1, label: "new option" });
+  let { optionsItem } = props.optionsModel;
+  let len = optionsItem.length;
+  let item: { [key: string]: any } = {};
+  item[value.value] = len + 1;
+  item[label.value] = "new option";
+  selectWidget.value.options.optionsItem.push(item);
 };
 
 const handelDel = (index: number) => {
-  let len = optionsItem.value.length;
+  let { optionsItem } = props.optionsModel;
+  let len = optionsItem.length;
   if (len == 1) {
     onMessageWarning("至少保留一个选项卡");
     return;
   }
-  optionsItem.value.splice(index, 1);
+  selectWidget.value.options.optionsItem.splice(index, 1);
 };
 
 const handelReset = () => {
   if (isRadioType.value) {
-    optionsModel.modelDefaultValue = "";
+    selectWidget.value.options.modelDefaultValue = null;
   } else {
-    optionsModel.modelDefaultValue = [];
+    selectWidget.value.options.modelDefaultValue = [];
   }
 };
 
 const handelImport = () => {
-  codeValue.value = JSON.stringify(optionsItem.value, null, 2);
+  codeValue.value = JSON.stringify(props.optionsModel, null, 2);
   isShowData.value = true;
 };
 
 const confirm = () => {
   try {
-    optionsModel["optionsItem"] = JSON.parse(codeValue.value);
+    selectWidget.value.options.optionsItem = JSON.parse(codeValue.value);
     isShowData.value = false;
   } catch (error) {
     onMessageError(`错误的选项数据:${error}`);

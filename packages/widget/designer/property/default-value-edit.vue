@@ -1,6 +1,6 @@
 <template>
   <el-form-item v-if="isShow(settingData)" label="默认值">
-    <component
+    <!-- <component
       :is="`el-${settingData.type}`"
       v-model="optionsModel.modelDefaultValue"
       :type="optionsModel.type"
@@ -19,7 +19,7 @@
           :value="item.value"
         />
       </template>
-    </component>
+    </component> -->
   </el-form-item>
 </template>
 

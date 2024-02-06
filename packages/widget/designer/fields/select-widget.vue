@@ -4,7 +4,6 @@
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
   >
-    {{ selectValue }}
     <el-select
       v-model="selectValue"
       v-bind="widgetData.options"
@@ -24,6 +23,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { desFieldsProps } from "./fields";
+import { getRandomNumber } from "@exercise-form/utils";
 import { useOptions } from "@exercise-form/hooks";
 
 const props = defineProps(desFieldsProps);
@@ -35,7 +35,7 @@ const { selectValue, options, label, value } = useOptions(props.widgetData);
 watch(
   () => props.widgetData.options.multiple,
   () => {
-    selectKey.value = selectKey.value + Math.random();
+    selectKey.value = selectKey.value + getRandomNumber;
   }
 );
 </script>

@@ -555,7 +555,7 @@ const drag = () => {
           let flatRow = flatArr[oldIndex];
           let targetRow = flatArr[newIndex];
           handleDragEvent(flatRow.columnsId, targetRow.columnsId);
-          dataTableKey.value = dataTableKey.value + Math.random();
+          dataTableKey.value = dataTableKey.value + getRandomNumber();
           nextTick(() => {
             drag();
           });

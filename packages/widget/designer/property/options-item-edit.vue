@@ -151,13 +151,11 @@ const isShowData = ref(false);
 const codeValue = ref();
 const isRadioType = computed(() => {
   let { type, options } = props.settingData;
-  let { multiple } = options;
-  return (!multiple && type == "select") || type == "radio";
+  return (!options.multiple && type == "select") || type == "radio";
 });
 const isMultipleType = computed(() => {
   let { type, options } = props.settingData;
-  let { multiple } = options;
-  return (multiple && type == "select") || type == "checkbox";
+  return (options.multiple && type == "select") || type == "checkbox";
 });
 
 watch(

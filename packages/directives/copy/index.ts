@@ -3,23 +3,23 @@ import { onMessageSuccess, onMessageError } from "@exercise-form/utils";
 
 export interface ElCopyType extends HTMLElement {
   copyData: string | number;
-  _handelClick_: any;
+  _handleClick_: any;
 }
 
 const copy: Directive = {
   beforeMount(el: ElCopyType, binding: DirectiveBinding) {
     el.copyData = binding.value;
-    el.addEventListener("click", handelClick);
+    el.addEventListener("click", handleClick);
   },
   updated(el: ElCopyType, binding: DirectiveBinding) {
     el.copyData = binding.value;
   },
   beforeUnmount(el: ElCopyType) {
-    el.removeEventListener("click", handelClick);
+    el.removeEventListener("click", handleClick);
   }
 };
 
-function handelClick(this: any) {
+function handleClick(this: any) {
   try {
     const input = document.createElement("input");
     input.style.opacity = "0";

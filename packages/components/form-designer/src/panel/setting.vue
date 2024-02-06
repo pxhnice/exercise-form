@@ -45,7 +45,7 @@
                 </el-form-item>
                 <el-form-item label="表单全局CSS">
                   <el-button
-                    @click="handelCssCode('cssCode')"
+                    @click="handleCssCode('cssCode')"
                     type="primary"
                     icon="Edit"
                     round
@@ -69,7 +69,7 @@
                 </el-form-item>
                 <el-form-item label="表单全局函数">
                   <el-button
-                    @click="handelFunctionCode('functions')"
+                    @click="handleFunctionCode('functions')"
                     type="primary"
                     icon="Edit"
                     round
@@ -91,7 +91,7 @@
               <el-collapse-item title="事件属性" name="2">
                 <el-form-item label="onFormCreated">
                   <el-button
-                    @click="handelEventCode('onFormCreated')"
+                    @click="handleEventCode('onFormCreated')"
                     type="primary"
                     icon="Edit"
                     round
@@ -101,7 +101,7 @@
                 </el-form-item>
                 <el-form-item label="onFormMounted">
                   <el-button
-                    @click="handelEventCode('onFormMounted')"
+                    @click="handleEventCode('onFormMounted')"
                     type="primary"
                     icon="Edit"
                     round
@@ -111,7 +111,7 @@
                 </el-form-item>
                 <el-form-item label="onFormDataChange">
                   <el-button
-                    @click="handelEventCode('onFormDataChange')"
+                    @click="handleEventCode('onFormDataChange')"
                     type="primary"
                     icon="Edit"
                     round
@@ -293,7 +293,7 @@ const hasPropName = (name: string) => {
   }
 };
 
-const handelEventCode = (name: string) => {
+const handleEventCode = (name: string) => {
   code.value = formConfig[name];
   fnName.value = `${name}(){}`;
   codeName.value = name;
@@ -301,14 +301,14 @@ const handelEventCode = (name: string) => {
   isShowEvent.value = true;
 };
 
-const handelFunctionCode = (name: string) => {
+const handleFunctionCode = (name: string) => {
   code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局函数";
   isShowFunction.value = true;
 };
 
-const handelCssCode = (name: string) => {
+const handleCssCode = (name: string) => {
   code.value = formConfig[name];
   codeName.value = name;
   title.value = "表单全局样式";

@@ -204,7 +204,7 @@
       v-model="drawer"
       title="组件层次结构树"
       direction="ltr"
-      @open="handelOpen"
+      @open="handleOpen"
       :before-close="close"
     >
       <div class="ex-toolbar-drawer_tree">
@@ -376,7 +376,7 @@ const cancelRenderDialog = () => {
   isShowRender.value = false;
 };
 
-const handelOpen = () => {
+const handleOpen = () => {
   let id = props.designer.selectWidgetId.value;
   if (id) treeRef.value!.setCurrentKey(id);
   treeRef.value!.filter();

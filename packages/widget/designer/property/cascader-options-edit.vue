@@ -1,5 +1,14 @@
 <template>
   <div class="ex-property-cascader" v-if="!optionsModel.showDataSource">
+    <el-form-item label="选项签名">
+      <el-input v-model="optionsModel.props!.label" />
+    </el-form-item>
+    <el-form-item label="选项值">
+      <el-input v-model="optionsModel.props!.value" />
+    </el-form-item>
+    <el-form-item label="子节点属性名称">
+      <el-input v-model="optionsModel.props!.children" />
+    </el-form-item>
     <el-form-item label="级联选项设置">
       <el-button @click="visible = true" type="primary" icon="Edit" round>
         选项设置
@@ -16,17 +25,22 @@
         <el-tree
           :data="optionsModel.options"
           @node-click="handleNodeClick"
+          :key="cascaderKey"
           draggable
+          :props="options"
         >
           <template #default="{ node, data }">
             <div class="ex-property-col">
-              <el-input class="ex-property-col_put" v-model="data.value" />
+              <el-input
+                class="ex-property-col_put"
+                v-model="data[options.value]"
+              />
               <el-input
                 class="ex-property-col_put ex-mgl-10"
-                v-model="data.label"
+                v-model="data[options.label]"
               />
               <el-button
-                @click.stop="handelAddChild(node)"
+                @click.stop="handelAddChild(data)"
                 class="ex-mgl-10"
                 icon="Plus"
                 type="primary"
@@ -78,55 +92,71 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { onMessageWarning } from "@exercise-form/utils";
+import { ref, computed, watch } from "vue";
+import { onMessageWarning, getRandomNumber } from "@exercise-form/utils";
 import { desPropertyProps } from "./property";
 import type Node from "element-plus/es/components/tree/src/model/node";
 
-interface TreeData {
-  value: number;
-  label: string;
-  children: TreeData[];
-}
+type TreeData = { [key: string]: any };
 
 const props = defineProps(desPropertyProps);
 
 const visible = ref(false);
 const isImport = ref(false);
+const cascaderKey = ref(props.settingData.id);
 const code = ref("");
-
+const options = computed(() => {
+  let { label, value, children } = props.optionsModel.props;
+  return {
+    label: label ? label : "label",
+    value: value ? value : "value",
+    children: children ? children : "children"
+  };
+});
 const settingOptions = computed({
   get: () => props.optionsModel.options,
   set: (val) => val
 });
 
+watch(
+  () => props.optionsModel?.props?.children,
+  () => {
+    cascaderKey.value = cascaderKey.value + getRandomNumber();
+  }
+);
+
 const handleNodeClick = () => {
   console.log(settingOptions.value);
 };
 
-const handelAddChild = (node: Node) => {
-  console.log(node);
-  let { value, children } = node.data;
+const getOptions = (value: string | number) => {
+  let item: TreeData = {};
+  item[options.value.label] = "new option";
+  item[options.value.value] = value;
+  item[options.value.children] = [];
+  return item;
+};
+
+const handelAddChild = (data: TreeData) => {
+  if (!data[options.value.children]) data[options.value.children] = [];
+  let children = data[options.value.children];
+  let value = data[options.value.value];
   let len = children.length + 1;
   let text = value + "-" + len;
-  children.push({ value: text, label: "new option" + text, children: [] });
+  children.push(getOptions(text));
 };
 
 const handelAdd = () => {
   let len = settingOptions.value.length + 1;
-  settingOptions.value.push({
-    value: len,
-    label: "new option",
-    children: []
-  });
+  settingOptions.value.push(getOptions(len));
 };
 
 const handelDel = (node: Node, data: TreeData) => {
-  console.log(node, data);
   const parent = node.parent;
-  const children = (parent.data.children as TreeData[]) || parent.data;
+  let parentChildren = parent.data[options.value.children] as TreeData[];
+  const children = parentChildren || parent.data;
   const index = children.findIndex((d) => d.value === data.value);
-  if (data.children.length > 0) {
+  if (data.children?.length > 0) {
     onMessageWarning("该节点还存在子节点，无法删除");
     return;
   }

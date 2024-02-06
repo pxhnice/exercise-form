@@ -16,9 +16,15 @@ export const advanced: DesWidgetList = [
       labelWidth: "",
       name: "",
       options: [],
+
       onChange: "",
       onValidate: "",
       placeholder: "",
+      props: {
+        children: "children",
+        label: "label",
+        value: "value"
+      },
       requiredHint: "",
       required: false,
       size: "default",

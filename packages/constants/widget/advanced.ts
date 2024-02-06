@@ -8,6 +8,8 @@ export const advanced: DesWidgetList = [
     options: {
       clearable: true,
       customClass: "",
+      dataSourceName: "",
+      dataSourceSetName: "",
       modelDefaultValue: null,
       disabled: false,
       label: "级联选择",
@@ -20,6 +22,7 @@ export const advanced: DesWidgetList = [
       requiredHint: "",
       required: false,
       size: "default",
+      showDataSource: false,
       validation: "",
       validationHint: ""
     }

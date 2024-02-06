@@ -1,5 +1,5 @@
 <template>
-  <div class="ex-property-options">
+  <div class="ex-property-options" v-if="!optionsModel.showDataSource">
     <el-form-item label="选项签名">
       <el-input v-model="optionsModel.optionsLabel" />
     </el-form-item>

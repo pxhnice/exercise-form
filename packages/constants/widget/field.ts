@@ -92,6 +92,8 @@ export const baseFields: DesWidgetList = [
       border: false,
       buttonMode: false,
       customClass: "",
+      dataSourceName: "",
+      dataSourceSetName: "",
       modelDefaultValue: null,
       disabled: false,
       label: "单选",
@@ -117,6 +119,7 @@ export const baseFields: DesWidgetList = [
       required: false,
       requiredHint: "",
       size: "default",
+      showDataSource: false,
       validation: "",
       validationHint: ""
     }
@@ -129,6 +132,8 @@ export const baseFields: DesWidgetList = [
       border: false,
       buttonMode: false,
       customClass: "",
+      dataSourceName: "",
+      dataSourceSetName: "",
       modelDefaultValue: [],
       disabled: false,
       label: "多选",
@@ -154,6 +159,7 @@ export const baseFields: DesWidgetList = [
       required: false,
       requiredHint: "",
       size: "default",
+      showDataSource: false,
       validation: "",
       validationHint: ""
     }
@@ -166,6 +172,8 @@ export const baseFields: DesWidgetList = [
       clearable: true,
       customClass: "",
       disabled: false,
+      dataSourceName: "",
+      dataSourceSetName: "",
       modelDefaultValue: null,
       label: "下拉选",
       multiple: false,
@@ -192,6 +200,7 @@ export const baseFields: DesWidgetList = [
       required: false,
       requiredHint: "",
       size: "default",
+      showDataSource: false,
       validation: "",
       validationHint: ""
     }

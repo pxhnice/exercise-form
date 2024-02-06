@@ -1,5 +1,5 @@
 <template>
-  <div class="ex-property-cascader">
+  <div class="ex-property-cascader" v-if="!optionsModel.showDataSource">
     <el-form-item label="级联选项设置">
       <el-button @click="visible = true" type="primary" icon="Edit" round>
         选项设置

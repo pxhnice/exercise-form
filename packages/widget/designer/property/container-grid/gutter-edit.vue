@@ -24,7 +24,7 @@
             :max="24"
           />
           <el-button
-            @click="handelDel(index)"
+            @click="handleDel(index)"
             class="ex-mgl-10"
             icon="Minus"
             type="danger"
@@ -33,7 +33,7 @@
           />
         </li>
       </ul>
-      <el-button style="padding: 0px" @click="handelAdd" type="primary" link>
+      <el-button style="padding: 0px" @click="handleAdd" type="primary" link>
         添加栅格列
       </el-button>
     </el-form-item>
@@ -47,11 +47,11 @@ const props = defineProps(desPropertyProps);
 
 const selectWidget = props.designer.selectWidget;
 
-const handelAdd = () => {
+const handleAdd = () => {
   props.designer.copyContainerWidget(props.settingData);
 };
 
-const handelDel = (index: number) => {
+const handleDel = (index: number) => {
   selectWidget.value.children.splice(index, 1);
 };
 </script>

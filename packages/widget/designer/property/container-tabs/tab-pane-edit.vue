@@ -25,7 +25,7 @@
               <ex-icon-drag />
             </el-icon>
             <el-button
-              @click="handelDel(index)"
+              @click="handleDel(index)"
               class="btn"
               icon="Minus"
               type="danger"
@@ -35,7 +35,7 @@
           </li>
         </template>
       </draggable>
-      <el-button @click="handelAdd" class="btn" type="primary" link>
+      <el-button @click="handleAdd" class="btn" type="primary" link>
         添加选项卡
       </el-button>
     </el-form-item>
@@ -55,11 +55,11 @@ const children = computed({
   set: (val) => val
 });
 
-const handelAdd = () => {
+const handleAdd = () => {
   props.designer.copyContainerWidget(props.settingData);
 };
 
-const handelDel = (index: number) => {
+const handleDel = (index: number) => {
   let len = children.value.length;
   if (len == 1) {
     onMessageWarning("至少保留一个选项卡");

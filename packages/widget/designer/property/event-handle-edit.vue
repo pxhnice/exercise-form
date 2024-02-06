@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item :label="eventName">
-      <el-button @click="handelEventCode" type="primary" icon="Edit" round>
+      <el-button @click="handleEventCode" type="primary" icon="Edit" round>
         编写代码
       </el-button>
     </el-form-item>
@@ -59,7 +59,7 @@ const lastName = computed(() => {
   return fnName.value.slice(-1);
 });
 
-const handelEventCode = () => {
+const handleEventCode = () => {
   isShowEvent.value = true;
   code.value = settingOptions.value[props.eventName];
 };

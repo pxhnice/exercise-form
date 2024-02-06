@@ -40,7 +40,7 @@
                 v-model="data[options.label]"
               />
               <el-button
-                @click.stop="handelAddChild(data)"
+                @click.stop="handleAddChild(data)"
                 class="ex-mgl-10"
                 icon="Plus"
                 type="primary"
@@ -48,7 +48,7 @@
                 circle
               />
               <el-button
-                @click.stop="handelDel(node, data)"
+                @click.stop="handleDel(node, data)"
                 class="ex-mgl-10"
                 icon="Minus"
                 type="danger"
@@ -61,7 +61,7 @@
       </el-scrollbar>
       <template #footer>
         <span>
-          <el-button @click="handelAdd" size="default" type="primary">
+          <el-button @click="handleAdd" size="default" type="primary">
             添加选项
           </el-button>
           <el-button @click="openImport" size="default" type="primary">
@@ -137,7 +137,7 @@ const getOptions = (value: string | number) => {
   return item;
 };
 
-const handelAddChild = (data: TreeData) => {
+const handleAddChild = (data: TreeData) => {
   if (!data[options.value.children]) data[options.value.children] = [];
   let children = data[options.value.children];
   let value = data[options.value.value];
@@ -146,12 +146,12 @@ const handelAddChild = (data: TreeData) => {
   children.push(getOptions(text));
 };
 
-const handelAdd = () => {
+const handleAdd = () => {
   let len = settingOptions.value.length + 1;
   settingOptions.value.push(getOptions(len));
 };
 
-const handelDel = (node: Node, data: TreeData) => {
+const handleDel = (node: Node, data: TreeData) => {
   const parent = node.parent;
   let parentChildren = parent.data[options.value.children] as TreeData[];
   const children = parentChildren || parent.data;

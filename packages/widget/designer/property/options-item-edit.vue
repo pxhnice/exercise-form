@@ -34,7 +34,7 @@
                 <ex-icon-drag />
               </el-icon>
               <el-button
-                @click="handelDel(index)"
+                @click="handleDel(index)"
                 class="options-btn"
                 icon="Minus"
                 type="danger"
@@ -44,14 +44,14 @@
             </li>
           </template>
         </draggable>
-        <el-button @click="handelAdd" class="options-btn" type="primary" link>
+        <el-button @click="handleAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
-        <el-button @click="handelReset" class="options-btn" type="primary" link>
+        <el-button @click="handleReset" class="options-btn" type="primary" link>
           重置选中项
         </el-button>
         <el-button
-          @click="handelImport"
+          @click="handleImport"
           class="options-btn"
           type="primary"
           link
@@ -85,7 +85,7 @@
                 <ex-icon-drag />
               </el-icon>
               <el-button
-                @click="handelDel(index)"
+                @click="handleDel(index)"
                 class="options-btn"
                 icon="Minus"
                 type="danger"
@@ -95,14 +95,14 @@
             </li>
           </template>
         </draggable>
-        <el-button @click="handelAdd" class="options-btn" type="primary" link>
+        <el-button @click="handleAdd" class="options-btn" type="primary" link>
           添加选项
         </el-button>
-        <el-button @click="handelReset" class="options-btn" type="primary" link>
+        <el-button @click="handleReset" class="options-btn" type="primary" link>
           重置选中项
         </el-button>
         <el-button
-          @click="handelImport"
+          @click="handleImport"
           class="options-btn"
           type="primary"
           link
@@ -161,13 +161,13 @@ const isMultipleType = computed(() => {
 watch(
   () => props.optionsModel.multiple,
   () => {
-    handelReset();
+    handleReset();
   }
 );
 
 const { label, value } = useOptions(props.settingData);
 
-const handelAdd = () => {
+const handleAdd = () => {
   let { optionsItem } = props.optionsModel;
   let len = optionsItem.length;
   let item: { [key: string]: any } = {};
@@ -176,7 +176,7 @@ const handelAdd = () => {
   selectWidget.value.options.optionsItem.push(item);
 };
 
-const handelDel = (index: number) => {
+const handleDel = (index: number) => {
   let { optionsItem } = props.optionsModel;
   let len = optionsItem.length;
   if (len == 1) {
@@ -186,7 +186,7 @@ const handelDel = (index: number) => {
   selectWidget.value.options.optionsItem.splice(index, 1);
 };
 
-const handelReset = () => {
+const handleReset = () => {
   if (isRadioType.value) {
     selectWidget.value.options.modelDefaultValue = null;
   } else {
@@ -194,7 +194,7 @@ const handelReset = () => {
   }
 };
 
-const handelImport = () => {
+const handleImport = () => {
   codeValue.value = JSON.stringify(props.optionsModel, null, 2);
   isShowData.value = true;
 };

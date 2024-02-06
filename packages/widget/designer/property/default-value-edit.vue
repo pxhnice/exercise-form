@@ -1,6 +1,6 @@
 <template>
   <el-form-item v-if="isShow(settingData)" label="默认值">
-    <!-- <component
+    <component
       :is="`el-${settingData.type}`"
       v-model="optionsModel.modelDefaultValue"
       :type="optionsModel.type"
@@ -10,16 +10,7 @@
       :is-range="optionsModel.isRange"
       placement="left"
       clearable
-    >
-      <template v-if="settingData.type === 'select'">
-        <el-option
-          v-for="item in optionsModel.optionsItem"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </template>
-    </component> -->
+    />
   </el-form-item>
 </template>
 
@@ -30,7 +21,7 @@ import type { DesWidget } from "@exercise-form/constants";
 defineProps(desPropertyProps);
 
 const isShow = (widget: DesWidget) => {
-  if (["radio", "checkbox"].includes(widget.type)) return false;
+  if (["radio", "checkbox", "select"].includes(widget.type)) return false;
   return true;
 };
 </script>

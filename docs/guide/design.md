@@ -13,38 +13,41 @@ Exercise Form提供了丰富的组件属性设置、表单交互事件和API方�
 
 > 由于该组件基于Element Plus搭建，使用前请先安装[Element Plus](https://element-plus.org/zh-CN/guide/installation.html)、
 > 组件[图标](https://element-plus.org/zh-CN/component/icon.html)，再安装该组件，安装如下。
+> 目前项目处于开发阶段仅用于当前测试使用
 
 ::: code-group
+
 ```bash [npm]
  npm install exercise-form
 ```
+
 ```bash [pnpm]
  pnpm add exercise-form
 ```
+
 :::
 
 ## 开始
 
-
 ```ts
 //main.ts
-import { createApp } from 'vue'
+import { createApp } from "vue";
 // 组件引入
-import ElementPlus from 'element-plus'
-import ExerciseForm from "exercise-form"
+import ElementPlus from "element-plus";
+import ExerciseForm from "exercise-form";
 // 样式引入
-import 'element-plus/dist/index.css'
-import 'exercise-form/dist/index.css'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import App from './App.vue'
+import "element-plus/dist/index.css";
+import "exercise-form/dist/index.css";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import App from "./App.vue";
 
-const app = createApp(App)
+const app = createApp(App);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
+  app.component(key, component);
 }
 
-app.use(ElementPlus)
-app.use(ExerciseForm)
-app.mount('#app')
+app.use(ElementPlus);
+app.use(ExerciseForm);
+app.mount("#app");
 ```

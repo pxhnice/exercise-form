@@ -19,25 +19,33 @@ const formJson = reactive<DesFormJson>({
 ```
 
 ::: warning
-使用时注意构建器高度问题，默认高度`100v`，自定义高度更改`style`即可。
+使用时注意构建器高度问题，默认高度`100vh`，自定义高度更改`style`即可。
 :::
 
 ## 主题
 
-> 该组件主题基于[Element Plus](https://element-plus.org/zh-CN/guide/theming.html)搭建,可以根据改变Element全局 `--el-color-primary`实现，
-> 当项目有实现Element Plus主题业务时，就无需使用该`themeColor`属性。
+> 该组件主题基于[Element Plus](https://element-plus.org/zh-CN/guide/theming.html)主题设置配建使用,可以根据改变Element全局 `--el-color-primary`实现。
 
-#### 如何使用
+##### 注意事项
 
-```html
-<ex-form-designer :theme-color="color" />
+其中组件库中含有富文本组件，该组件基于`WangEditor`，其主题配置请参考[文档](https://www.wangeditor.com/v5/theme.html)进行处理。其中已修改的配置如下。
+
+```css
+html.dark {
+  --w-e-textarea-bg-color: var(--el-bg-color);
+  --w-e-textarea-color: #fff;
+  --w-e-toolbar-bg-color: var(--el-bg-color);
+  --w-e-toolbar-border-color: var(--el-border-color);
+  --w-e-toolbar-color: var(--el-text-color-regular);
+  --w-e-toolbar-active-bg-color: var(--el-fill-color);
+  --w-e-toolbar-active-color: var(--el-text-color-regular);
+}
 ```
 
 ## 黑夜模式
 
-> 由于部分Element Plus组件使用Teleport被插入到body下，导致无法修改样式，当组件`teleport`属性设置`false`会导致页面组件显示不全，
-> 所以推荐使用[Element Plus](https://element-plus.org/zh-CN/guide/dark-mode.html)黑夜模式设置。
-> 因[vue-codemirror](https://www.npmjs.com/package/vue-codemirror)编辑器插件黑夜模式与Element Plus无关，还需开启组件黑夜模式。
+> 基于[Element Plus](https://element-plus.org/zh-CN/guide/dark-mode.html)黑夜模式进行设置。
+> 因[vue-codemirror](https://www.npmjs.com/package/vue-codemirror)编辑器插件黑夜模式与Element Plus无关，还需开启组件黑夜模式。也自行进行样式覆盖处理。
 
 ```html
 <ex-form-designer dark />
@@ -45,18 +53,17 @@ const formJson = reactive<DesFormJson>({
 
 ## 属性参数
 
-| 属性名           | 描述           |  类型   |  默认值   |
-| ---------------- | -------------- | :-----: | :-------: |
-| `form-data`      | 表单数据       | object  |     -     |
-| `form-json`      | 构建器数据     | object  |     -     |
-| `options-data`   | 构造器按钮配置 | object  |     -     |
-| `banned-widgets` | 禁用组件       |  array  |     -     |
-| `theme-color`    | 主题颜色       | string  | `#409eff` |
-| `dark`           | 黑夜模式       | boolean |   false   |
+| 属性名           | 描述           |  类型   | 默认值 |
+| ---------------- | -------------- | :-----: | :----: |
+| `form-data`      | 表单数据       | object  |   -    |
+| `form-json`      | 构建器数据     | object  |   -    |
+| `options-data`   | 构造器按钮配置 | object  |   -    |
+| `banned-widgets` | 禁用组件       |  array  |   -    |
+| `dark`           | 黑夜模式       | boolean | false  |
 
 #### formConfig
 
-下面是formConfig自定义参数说明，已有参数请参考[el-form](https://element-plus.org/zh-CN/component/form.html#form-attributes)属性配置。
+下面是formConfig参数说明，已有参数请参考[el-form](https://element-plus.org/zh-CN/component/form.html#form-attributes)属性配置。
 
 | 参数          | 描述            |  类型  | 默认值 |
 | ------------- | --------------- | :----: | :----: |
@@ -64,6 +71,7 @@ const formJson = reactive<DesFormJson>({
 | `isPageType`  | 页面类型        | string |  page  |
 | `cssCode`     | 样式代码片段    | string |   -    |
 | `customClass` | `className`列表 | array  |   -    |
+| `dataSources` | 数据源列表      | array  |   -    |
 
 #### optionsData
 

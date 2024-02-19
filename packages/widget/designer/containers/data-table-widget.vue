@@ -78,14 +78,15 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        v-if="widgetData.options.showPagination"
-        :small="widgetData.options.small"
-        :class="paginationAlign"
-        :page-sizes="[100, 200, 300, 400]"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
-      />
+      <el-scrollbar v-if="widgetData.options.showPagination">
+        <el-pagination
+          :small="widgetData.options.small"
+          :class="paginationAlign"
+          :page-sizes="[100, 200, 300, 400]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        />
+      </el-scrollbar>
     </div>
   </container-wrapper>
 </template>

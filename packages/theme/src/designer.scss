@@ -299,6 +299,8 @@
 .ex-designer-forms {
   width: 100%;
   height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 
   .el-card__header {
     padding: 0;
@@ -367,10 +369,10 @@
         height: 100%;
       }
 
-      .el-scrollbar__view {
-        padding: 10px;
-        box-sizing: border-box;
-      }
+      // .el-scrollbar__view {
+      //   padding: 10px;
+      //   box-sizing: border-box;
+      // }
     }
   }
 }

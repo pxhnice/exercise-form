@@ -5,7 +5,8 @@ const customExternal = [
   "prettier/plugins/html",
   "prettier/plugins/postcss",
   "prettier/plugins/babel",
-  "prettier/plugins/estree"
+  "prettier/plugins/estree",
+  "@wangeditor/editor/dist/css/style.css"
 ];
 
 export const getPackageManifest = (pkgPath: string) => {

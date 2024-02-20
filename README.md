@@ -2,7 +2,7 @@
 
 ### 立即体验
 
-![](./play/src/assets/demo.png)
+![](./play/src/assets/demo.jpg)
 
 [项目演示](https://pxhnice.github.io/exercise-form.github.io/)
 

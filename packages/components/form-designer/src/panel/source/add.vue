@@ -212,10 +212,12 @@ interface Params {
   dataSources: DesSourceForm[];
 }
 
-interface optionsKeys {
+interface OptionsKeys {
   key: string;
   value: string;
 }
+
+type DataKeys = { [key: string]: any };
 
 const dark = inject(darkKeys);
 const formRef = ref<FormInstance>();
@@ -224,7 +226,7 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollbarMultiDataRef = ref<InstanceType<typeof ElScrollbar>>();
 const showAddData = ref(false);
 const form = ref<DesSourceForm>(getSourceForm()); //编辑数据源
-const sources = ref<{ [key: string]: any }>(); //原数据源
+const sources = ref<DataKeys>(); //原数据源
 const rules = reactive<FormRules<DesSourceForm>>({
   name: [
     {
@@ -251,14 +253,14 @@ const multiDataRules = {
     }
   ]
 };
-const optionsList = ref<optionsKeys[]>([]);
+const optionsList = ref<OptionsKeys[]>([]);
 const dataSources = ref<DesSourceForm[]>([]);
 const active = ref("headers");
 const oldActive = ref("headers");
 const isEdit = ref(false);
 
-const getKeys = (data: { [key: string]: any }) => {
-  let keysArr: optionsKeys[] = [];
+const getKeys = (data: DataKeys) => {
+  let keysArr: OptionsKeys[] = [];
   for (const key in data) {
     keysArr.push({ key, value: data[key] });
   }
@@ -266,8 +268,8 @@ const getKeys = (data: { [key: string]: any }) => {
   return keysArr;
 };
 
-const setKeys = (list: optionsKeys[]) => {
-  let keys: { [key: string]: any } = {};
+const setKeys = (list: OptionsKeys[]) => {
+  let keys: DataKeys = {};
   list.forEach((item) => {
     if (item.key) keys[item.key] = item.value;
   });
@@ -333,6 +335,7 @@ const handleDelete = (index: number) => {
 };
 
 const handleAddMultiData = () => {
+  if (!form.value.multiData) form.value.multiData = [];
   form.value.multiData.push({ name: "", remark: "" });
   nextTick(() => {
     let wrapRef = scrollbarMultiDataRef.value!.wrapRef;
@@ -363,7 +366,7 @@ const handleAddConfirm = async (formEl: FormInstance | undefined) => {
         return;
       }
       if (isEdit.value) {
-        let formData = form.value as { [key: string]: any };
+        let formData = form.value as DataKeys;
         for (const key in formData) {
           if (sources.value) {
             sources.value[key] = formData[key];

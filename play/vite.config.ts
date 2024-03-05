@@ -4,5 +4,8 @@ import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   base: "./",
-  plugins: [vue(), svgLoader()]
+  plugins: [vue(), svgLoader()],
+  server: {
+    open: true
+  }
 });

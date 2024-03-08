@@ -21,7 +21,8 @@ import type { DesWidget } from "@exercise-form/constants";
 defineProps(desPropertyProps);
 
 const isShow = (widget: DesWidget) => {
-  if (["radio", "checkbox", "select"].includes(widget.type)) return false;
+  if (["radio", "checkbox", "select", "tabs"].includes(widget.type))
+    return false;
   return true;
 };
 </script>

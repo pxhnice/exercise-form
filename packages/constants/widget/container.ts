@@ -69,6 +69,7 @@ export const containers: DesWidgetList = [
       hidden: false,
       isPane: true,
       name: "",
+      modelDefaultValue: null,
       type: "border-card"
     }
   },

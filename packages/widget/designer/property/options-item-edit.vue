@@ -177,13 +177,26 @@ const handleAdd = () => {
 };
 
 const handleDel = (index: number) => {
-  let { optionsItem } = props.optionsModel;
+  let { optionsItem, modelDefaultValue } = props.optionsModel;
   let len = optionsItem.length;
   if (len == 1) {
     onMessageWarning("至少保留一个选项卡");
     return;
   }
+  let item = optionsItem[index];
   selectWidget.value.options.optionsItem.splice(index, 1);
+  if (isRadioType.value) {
+    if (item.value == modelDefaultValue) {
+      selectWidget.value.options.modelDefaultValue = null;
+    }
+  } else {
+    if (modelDefaultValue) {
+      let i = modelDefaultValue.indexOf(item.value);
+      if (i != -1) {
+        selectWidget.value.options.modelDefaultValue.splice(i, 1);
+      }
+    }
+  }
 };
 
 const handleReset = () => {

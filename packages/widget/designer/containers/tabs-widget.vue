@@ -7,7 +7,7 @@
     :designer="designer"
   >
     <el-tabs
-      v-model="activate"
+      v-model="selectValue"
       class="ex-widget-tabs"
       v-bind="widgetData.options"
       @click.stop="onClickTabs"
@@ -69,11 +69,22 @@ import { DRAG_DISABLE_LIST, DesWidget } from "@exercise-form/constants";
 
 const props = defineProps(desContainerProps);
 
-const activate = ref("tab1");
+const selectValue = ref("tab1");
 const componentKey = ref(0);
 const dragTarget = props.designer.dragTarget;
 const isDrag = computed(() =>
   DRAG_DISABLE_LIST.includes(dragTarget.value.type)
+);
+
+watch(
+  () => props.widgetData.options.modelDefaultValue,
+  (val) => {
+    if (val) {
+      selectValue.value = val;
+    } else {
+      getActivateName();
+    }
+  }
 );
 
 watch(
@@ -86,6 +97,14 @@ watch(
   { deep: true }
 );
 
+const getActivateName = () => {
+  let { children } = props.widgetData;
+  if (children && children[0]) {
+    let { name } = children[0].options;
+    selectValue.value = name;
+  }
+};
+
 const onClickTabs = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
@@ -97,4 +116,6 @@ const onDragAdd = (e: any, parent: DesWidget) => {
     props.designer.emitHistoryChange();
   }
 };
+
+getActivateName();
 </script>

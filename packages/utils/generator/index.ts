@@ -3,6 +3,7 @@ import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
 import { buildContainerWidget } from "./container";
 import { buildFieldWidget } from "./field";
 import { getOuterTemplate } from "./outer";
+import { getStyleTemplate } from "./style";
 
 function buildHtmlTemplate(
   widgetList: DesWidgetList,
@@ -66,8 +67,7 @@ export function getSFCGenerator(
 ) {
   let html = buildFieldTemplate(widgetList, formConfig);
   let js = genVue3JS(formConfig, widgetList);
-
-  let localStyle = "";
+  let style = getStyleTemplate(widgetList);
   let sfcTemplate = `
   <template>
   ${html}
@@ -82,7 +82,7 @@ export function getSFCGenerator(
   </style> 
 
   <style lang="scss" scoped>
-  ${localStyle}
+  ${style}
   </style>`;
   return sfcTemplate;
 }

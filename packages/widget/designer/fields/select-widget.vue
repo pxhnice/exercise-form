@@ -1,5 +1,6 @@
 <template>
   <el-form-item
+    class="ex-widget-form_item"
     :label="widgetData.options.label"
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"

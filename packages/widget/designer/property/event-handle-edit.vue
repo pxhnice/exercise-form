@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item :label="eventName">
+    <el-form-item :label="eventName" label-width="180">
       <el-button @click="handleEventCode" type="primary" icon="Edit" round>
         编写代码
       </el-button>
@@ -34,6 +34,7 @@
 import { ref, computed, inject } from "vue";
 import ExCodeEditor from "@exercise-form/components/code-editor";
 import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
+import { eventParamsName } from "@exercise-form/constants";
 
 interface EventEditType {
   settingData: any;
@@ -44,10 +45,13 @@ const props = withDefaults(defineProps<EventEditType>(), {
   eventName: ""
 });
 
+const eventParamsNames = eventParamsName as { [key: string]: string };
 const dark = inject(darkKeys);
 const isShowEvent = ref(false);
 const code = ref("");
-const fnName = ref(`${props.eventName}(){}`);
+const fnName = ref(
+  `${props.eventName}(${eventParamsNames[props.eventName]}){}`
+);
 const settingOptions = computed({
   get: () => props.settingData.options,
   set: (val) => val

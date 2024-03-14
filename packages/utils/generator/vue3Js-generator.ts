@@ -1,6 +1,7 @@
 import { getRegExp, MODEL_LIST } from "@exercise-form/constants";
 import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
 import { getOuterTemplate } from "./outer";
+import { globalWidgetEvent } from "./event";
 import { isArray, isObject, isNumber } from "../types";
 
 // 数据参数属性
@@ -81,15 +82,32 @@ function buildDataParams(dataParamsList: string[]) {
   };
 }
 
+function buildWidgetEvent(eventFnList: string[]) {
+  return function (widget: DesWidget) {
+    let options = widget.options;
+    for (const key in options) {
+      if (
+        options[key] &&
+        Object.prototype.hasOwnProperty.call(globalWidgetEvent, key)
+      ) {
+        let eventFn = globalWidgetEvent[key](widget);
+        eventFnList.push(eventFn);
+      }
+    }
+  };
+}
+
 export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
   let defaultValueList: string[] = [];
   let rulesList: string[] = [];
   let dataParamsList: string[] = [];
+  let eventFnList: string[] = [];
   let { formName, modelName, rulesName } = formConfig;
   traverseFieldWidget(widgetList, (widget) => {
     buildDefaultValueListFn(defaultValueList)(widget);
     buildRulesListFn(rulesList)(widget);
     buildDataParams(dataParamsList)(widget);
+    buildWidgetEvent(eventFnList)(widget);
   });
   let { outerDefaultValueList } = getOuterTemplate(widgetList, formConfig);
   let vue3JSTemplate = `import { ref, reactive } from 'vue';
@@ -112,6 +130,7 @@ export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
       ? "const open = (params) => {dialogVisible.value=true};const close=()=>{dialogVisible.value=false};"
       : ""
   }
+  ${eventFnList.join("\n")}
   const handleSubmit = () => {
     if (!${formName}.value) return;
     ${formName}.value.validate((valid) => {

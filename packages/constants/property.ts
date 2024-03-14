@@ -72,9 +72,37 @@ export const ADVANCED_PROPERTIES = {};
 export const EVENT_PROPERTIES = {
   onCreated: "event-handle-edit",
   onMounted: "event-handle-edit",
+  onClick: "event-handle-edit",
   onInput: "event-handle-edit",
   onChange: "event-handle-edit",
   onFocus: "event-handle-edit",
   onBlur: "event-handle-edit",
-  onValidate: "event-handle-edit"
+  onValidate: "event-handle-edit",
+  // tabs
+  onTabClick: "event-handle-edit",
+  // tree
+  onNodeClick: "event-handle-edit",
+  onNodeCheck: "event-handle-edit",
+  onCheckChange: "event-handle-edit",
+  // dialog or drawer
+  onCancelButtonClick: "event-handle-edit",
+  onConfirmButtonClick: "event-handle-edit",
+  //dialog
+  onDialogClose: "event-handle-edit",
+  onDialogOpened: "event-handle-edit",
+  // drawer
+  onDrawerClose: "event-handle-edit",
+  onDrawerOpened: "event-handle-edit",
+  //data-table
+  onSelect: "event-handle-edit",
+  onSelectAll: "event-handle-edit",
+  onSelectionChange: "event-handle-edit",
+  onCellClick: "event-handle-edit",
+  onRowClick: "event-handle-edit",
+  onHeaderClick: "event-handle-edit",
+  onSortChange: "event-handle-edit",
+  onFilterChange: "event-handle-edit",
+  onExpandChange: "event-handle-edit",
+  onPageSizeChange: "event-handle-edit",
+  onCurrentPageChange: "event-handle-edit"
 };

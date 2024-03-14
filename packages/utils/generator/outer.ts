@@ -10,7 +10,13 @@ type DesTemplateMethod = {
 
 const outerTemplate: DesTemplateMethod = {
   "side-drawer": (widget, formConfig) => {
-    let { name } = widget.options;
+    let { name, onDrawerClose, onDrawerOpened } = widget.options;
+
+    let onDrawerCloseEvent = onDrawerClose ? `@click="${name}DrawerClose` : "";
+    let onDrawerOpenedEvent = onDrawerOpened
+      ? `@click="${name}DrawerOpened`
+      : "";
+
     let {
       closeOnClickModal,
       closeOnPressEscape,
@@ -22,7 +28,8 @@ const outerTemplate: DesTemplateMethod = {
     let modelValue = `v-model="${name}"`;
     let footerHtml = footerTemplate(widget);
     return `
-    <el-drawer ${title} ${modelValue} ${size} ${showClose} ${modal} ${closeOnClickModal} ${closeOnPressEscape}>
+    <el-drawer ${title} ${modelValue} ${size} ${showClose} ${modal} ${closeOnClickModal} 
+    ${closeOnPressEscape} ${onDrawerOpenedEvent} ${onDrawerCloseEvent}>
     ${
       widget.children &&
       widget.children
@@ -72,13 +79,26 @@ const outerTemplate: DesTemplateMethod = {
 };
 
 function footerTemplate(widget: DesWidget) {
-  let { cancelText, confirmText, showConfirmButton, showCancelButton } =
-    widget.options;
+  let {
+    name,
+    cancelText,
+    confirmText,
+    showConfirmButton,
+    showCancelButton,
+    onConfirmButtonClick,
+    onCancelButtonClick
+  } = widget.options;
+  let onConfirmButtonClickEvent = onConfirmButtonClick
+    ? `@click="${name}ConfirmButtonClick`
+    : "";
+  let onCancelButtonClickEvent = onCancelButtonClick
+    ? `@click="${name}CancelButtonClick`
+    : "";
   let confirmButtonHtml = showConfirmButton
-    ? `<el-button type="primary">${confirmText}</el-button>`
+    ? `<el-button type="primary" ${onConfirmButtonClickEvent}>${confirmText}</el-button>`
     : "";
   let cancelButtonHtml = showCancelButton
-    ? `<el-button>${cancelText}</el-button>`
+    ? `<el-button ${onCancelButtonClickEvent}>${cancelText}</el-button>`
     : "";
   let footerHtml =
     showConfirmButton || showCancelButton

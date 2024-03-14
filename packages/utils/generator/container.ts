@@ -100,7 +100,9 @@ const containerTemplate: DesTemplateMethod = {
     </el-card>`;
   },
   tabs: (widget, formConfig) => {
-    return `<el-tabs>
+    let { onTabClick, name } = widget.options;
+    let onTabClickEvent = onTabClick ? `@click="${name}TabClick"` : "";
+    return `<el-tabs ${onTabClickEvent}>
       ${
         widget.children &&
         widget.children
@@ -132,7 +134,19 @@ const containerTemplate: DesTemplateMethod = {
       showCheckBox,
       showIndex,
       small,
-      showPagination
+      showPagination,
+      name,
+      onSelect,
+      onSelectAll,
+      onSelectionChange,
+      onCellClick,
+      onRowClick,
+      onHeaderClick,
+      onSortChange,
+      onFilterChange,
+      onExpandChange,
+      onPageSizeChange,
+      onCurrentPageChange
     } = widget.options;
     let {
       tableWidth,
@@ -146,6 +160,33 @@ const containerTemplate: DesTemplateMethod = {
       operationFixed,
       operationAlign
     } = getElAttr(widget, formConfig);
+    // 事件
+    let onSelectEvent = onSelect ? `@select="${name}Select "` : "";
+    let onSelectAllEvent = onSelectAll ? `@select-all="${name}SelectAll"` : "";
+    let onSelectionChangeEvent = onSelectionChange
+      ? `@selection-change="${name}SelectionChange"`
+      : "";
+    let onCellClickEvent = onCellClick ? `@cell-click="${name}CellClick"` : "";
+    let onRowClickEvent = onRowClick ? `@row-click="${name}RowClick"` : "";
+    let onHeaderClickEvent = onHeaderClick
+      ? `@header-click="${name}ClickEvent"`
+      : "";
+    let onSortChangeEvent = onSortChange
+      ? `@sort-change="${name}SortChange"`
+      : "";
+    let onFilterChangeEvent = onFilterChange
+      ? `@filter-change="${name}FilterChange"`
+      : "";
+    let onExpandChangeEvent = onExpandChange
+      ? `@expand-change="${name}ExpandChange"`
+      : "";
+    let onPageSizeChangeEvent = onPageSizeChange
+      ? `@size-change="${name}PageSizeChange"`
+      : "";
+    let onCurrentPageChangeEvent = onCurrentPageChange
+      ? `@current-change="${name}CurrentPageChange"`
+      : "";
+
     let colIndexHtml = showIndex
       ? ` <el-table-column type="index" width="50" align="center"></el-table-column>`
       : "";
@@ -173,10 +214,13 @@ const containerTemplate: DesTemplateMethod = {
     let smallAttr = small ? "small" : "";
     let paginationHtml = showPagination
       ? `<el-pagination ${smallAttr}:page-sizes="[100, 200, 300, 400]"
+      ${onPageSizeChangeEvent} ${onCurrentPageChangeEvent}
       layout="total, sizes, prev, pager, next, jumper" :total="400" />`
       : "";
     return `
-    <el-table :data="tableData" ${tableWidth} ${border} ${fit} ${height} ${showHeader} ${highlightCurrentRow}>
+    <el-table :data="tableData" ${tableWidth} ${border} ${fit} ${height} ${showHeader} ${highlightCurrentRow}
+    ${onSelectEvent} ${onSelectAllEvent} ${onSelectionChangeEvent} ${onCellClickEvent} ${onRowClickEvent}
+    ${onHeaderClickEvent} ${onSortChangeEvent} ${onFilterChangeEvent} ${onExpandChangeEvent}>
     ${colIndexHtml}
     ${colCheckBoxHtml}
     ${tableColumns
@@ -199,7 +243,22 @@ const containerTemplate: DesTemplateMethod = {
     `;
   },
   "data-tree": (widget, formConfig) => {
-    let { showCheckbox, showCheckAllOrCancelAll, showFilter } = widget.options;
+    let {
+      name,
+      showCheckbox,
+      showCheckAllOrCancelAll,
+      showFilter,
+      onNodeClick,
+      onNodeCheck,
+      onCheckChange
+    } = widget.options;
+
+    let onNodeClickEvent = onNodeClick ? `@node-click="${name}NodeClick"` : "";
+    let onNodeCheckEvent = onNodeCheck ? `@check="${name}NodeCheck"` : "";
+    let onCheckChangeEvent = onCheckChange
+      ? `@check-change="${name}CheckChange"`
+      : "";
+
     let { nodeKey, draggable, defaultExpandAll, lazy, props, showLinkage } =
       getElAttr(widget, formConfig);
     const searchInputHtml = showFilter ? "" : "showFilter";
@@ -217,7 +276,8 @@ const containerTemplate: DesTemplateMethod = {
     ${expandOrRetractHtml}
     ${selectAllHtml}
     <el-tree
-      ref="treeRef" :data="treeData" ${nodeKey} ${draggable} ${defaultExpandAll} ${lazy} ${props} ${showLinkage}>
+      ref="treeRef" :data="treeData" ${nodeKey} ${draggable} ${defaultExpandAll} ${lazy} ${props} 
+      ${showLinkage} ${onNodeClickEvent} ${onCheckChangeEvent} ${onNodeCheckEvent}>
       ${treeDefaultTemplateHtml}
     </el-tree>
     `;

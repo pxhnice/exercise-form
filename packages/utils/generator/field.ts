@@ -6,15 +6,14 @@ import { getElAttr } from "./property";
 const staticTypeList = ["text", "alert", "divider", "slot"];
 
 export function buildFieldWidget(widget: DesWidget, formConfig: DesFormConfig) {
-  let { customClass, label, labelWidth, align, required } = getElAttr(
-    widget,
-    formConfig
-  );
+  let { customClass, label, labelWidth, align, required, onValidate } =
+    getElAttr(widget, formConfig);
   let template = buildBasicsTemplate(widget, formConfig);
   if (staticTypeList.includes(widget.type)) {
     return template;
   } else {
     let propAttr = required ? `prop= "${widget.id}"` : "";
-    return `<el-form-item ${customClass} ${label} ${propAttr} ${required} ${labelWidth} ${align}>${template}</el-form-item>`;
+    return `<el-form-item ${customClass} ${label} ${propAttr} ${required} 
+    ${labelWidth} ${align} ${onValidate}>${template}</el-form-item>`;
   }
 }

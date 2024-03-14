@@ -107,6 +107,14 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     customClass:
       wop.customClass && wop.customClass.length > 0
         ? `class="${wop.customClass.join(" ")}"`
-        : ""
+        : "",
+    // 事件
+    onClick: wop.onClick ? `@click="${wop.name}Click"` : "",
+    onInput: wop.onInput ? `@input="${wop.name}Input"` : "",
+    onChange: wop.onChange ? `@change="${wop.name}Change"` : "",
+    onFocus: wop.onFocus ? `@focus="${wop.name}Focus"` : "",
+    onBlur: wop.onBlur ? `@blur="${wop.name}Blur"` : "",
+    onClear: wop.onClear ? `@clear="${wop.name}Clear"` : "",
+    onValidate: wop.onValidate ? `:validate="${wop.name}Validate"` : ""
   };
 }

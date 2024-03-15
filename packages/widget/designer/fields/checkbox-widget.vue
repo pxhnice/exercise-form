@@ -16,6 +16,7 @@
       </template>
       <template v-else>
         <el-checkbox
+          :style="{ display: widgetData.options.displayStyle ?? 'inline-flex' }"
           :border="widgetData.options.border"
           :disabled="widgetData.options.disabled"
           v-for="item in options"

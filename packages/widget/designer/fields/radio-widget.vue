@@ -4,7 +4,11 @@
     :required="widgetData.options.required"
     :label-width="widgetData.options.labelWidth"
   >
-    <el-radio-group @click.stop v-model="selectValue">
+    <el-radio-group
+      :style="{ display: widgetData.options.displayStyle ?? 'inline-flex' }"
+      @click.stop
+      v-model="selectValue"
+    >
       <template v-if="widgetData.options.buttonMode">
         <el-radio-button
           v-for="item in options"
@@ -16,6 +20,7 @@
       </template>
       <template v-else>
         <el-radio
+          :style="{ display: widgetData.options.displayStyle ?? 'inline-flex' }"
           :border="widgetData.options.border"
           :disabled="widgetData.options.disabled"
           v-for="item in options"

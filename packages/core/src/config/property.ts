@@ -11,6 +11,7 @@ export const COMMON_PROPERTIES = {
   modelDefaultValue: "default-value-edit",
   labelWidth: "label-width-edit",
   contentPosition: "content-position-edit",
+  displayStyle: "display-style-edit",
   placeholder: "placeholder-edit",
   startPlaceholder: "start-placeholder-edit",
   endPlaceholder: "end-placeholder-edit",

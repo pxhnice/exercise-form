@@ -50,9 +50,10 @@ const basicsTemplates = {
 
   radio: (params) => {
     let { widget } = params;
-    let { modelValue, disabled, size, border, onChange } = getElAttr(params);
+    let { modelValue, disabled, size, border, displayStyle, onChange } =
+      getElAttr(params);
     let childTemplate = buildRadioChildren(widget);
-    return `<el-radio-group ${modelValue} ${size} ${disabled} 
+    return `<el-radio-group ${displayStyle} ${modelValue} ${size} ${disabled} 
     ${border} ${onChange}>${childTemplate}</el-radio-group>`;
   },
 
@@ -211,18 +212,22 @@ const basicsTemplates = {
 } as DesFormWidgetMethods;
 
 function buildRadioChildren(widget: DesFormWidget) {
-  let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
+  let { buttonMode, border, optionsLabel, optionsValue, displayStyle } =
+    widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-radio-button" : "el-radio";
-  return `<${tag} v-for="item in ${widget.options.name}optionsItem" 
+  let displayStyleAttr = displayStyle ? `style="display:${displayStyle};"` : "";
+  return `<${tag} ${displayStyleAttr} v-for="item in ${widget.options.name}optionsItem" 
   :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
 function buildCheckboxChildren(widget: DesFormWidget) {
-  let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
+  let { buttonMode, border, optionsLabel, optionsValue, displayStyle } =
+    widget.options;
+  let displayStyleAttr = displayStyle ? `style="display:${displayStyle};"` : "";
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-checkbox-button" : "el-checkbox";
-  return `<${tag} v-for="item in ${widget.options.name}optionsItem" 
+  return `<${tag} ${displayStyleAttr} v-for="item in ${widget.options.name}optionsItem" 
   :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 

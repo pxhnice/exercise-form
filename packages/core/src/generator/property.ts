@@ -112,6 +112,9 @@ export function getElAttr(params: DesFormWidgetParams) {
       wop.customClass && wop.customClass.length > 0
         ? `class="${wop.customClass.join(" ")}"`
         : "",
+    displayStyle: wop.displayStyle
+      ? `style="display:${wop.displayStyle};"`
+      : "",
     // 事件
     onClick: wop.onClick ? `@click="${wop.name}Click"` : "",
     onInput: wop.onInput ? `@input="${wop.name}Input"` : "",

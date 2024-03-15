@@ -230,7 +230,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, inject } from "vue";
 import { darkKeys } from "../form-designer";
-import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/constants";
+import { COMMON_PROPERTIES, EVENT_PROPERTIES } from "@exercise-form/core";
 import { getGlobalCss } from "@exercise-form/utils";
 import { desPanelProps } from "./panel";
 import ExDataSource from "./source/index.vue";

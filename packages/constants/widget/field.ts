@@ -1,6 +1,6 @@
-import type { DesWidgetList } from "./container";
+import { DesFormWidget } from "@exercise-form/core";
 
-export const baseFields: DesWidgetList = [
+export const baseFields = [
   {
     name: "单行输入框",
     iconName: "input",
@@ -437,4 +437,4 @@ export const baseFields: DesWidgetList = [
       validationHint: ""
     }
   }
-];
+] as DesFormWidget[];

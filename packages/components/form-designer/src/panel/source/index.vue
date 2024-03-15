@@ -65,10 +65,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { ElMessageBox } from "element-plus";
+import { DesFormSource } from "@exercise-form/core";
 import ExSourceAdd from "./add.vue";
 import ExSourceImport from "./import.vue";
 import ExSourceExport from "./export.vue";
-import { desSourceProps, DesSourceForm } from "./source";
+import { desSourceProps } from "./source";
 
 const props = defineProps(desSourceProps);
 const dataSources = props.formConfig.dataSources;
@@ -79,7 +80,7 @@ const isShow = computed(
   () => props.formConfig.dataSources && props.formConfig.dataSources.length > 0
 );
 
-const handleEdit = (item: DesSourceForm) => {
+const handleEdit = (item: DesFormSource) => {
   exSourceAddRef.value!.handleOpen({ sources: item, dataSources });
 };
 

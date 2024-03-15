@@ -35,6 +35,9 @@ importers:
       '@exercise-form/constants':
         specifier: workspace:^
         version: link:packages/constants
+      '@exercise-form/core':
+        specifier: workspace:^
+        version: link:packages/core
       '@exercise-form/directives':
         specifier: workspace:^
         version: link:packages/directives
@@ -226,6 +229,8 @@ importers:
   packages/components: {}
 
   packages/constants: {}
+
+  packages/core: {}
 
   packages/directives: {}
 

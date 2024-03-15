@@ -34,7 +34,7 @@
 import { ref, computed, inject } from "vue";
 import ExCodeEditor from "@exercise-form/components/code-editor";
 import { darkKeys } from "@exercise-form/components/form-designer/src/form-designer";
-import { eventParamsName } from "@exercise-form/constants";
+import { EVENT_PARAMS_NAME } from "@exercise-form/core";
 
 interface EventEditType {
   settingData: any;
@@ -45,12 +45,12 @@ const props = withDefaults(defineProps<EventEditType>(), {
   eventName: ""
 });
 
-const eventParamsNames = eventParamsName as { [key: string]: string };
+const EVENT_PARAMS_NAMEs = EVENT_PARAMS_NAME as { [key: string]: string };
 const dark = inject(darkKeys);
 const isShowEvent = ref(false);
 const code = ref("");
 const fnName = ref(
-  `${props.eventName}(${eventParamsNames[props.eventName]}){}`
+  `${props.eventName}(${EVENT_PARAMS_NAMEs[props.eventName]}){}`
 );
 const settingOptions = computed({
   get: () => props.settingData.options,

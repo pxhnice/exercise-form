@@ -1,19 +1,8 @@
+import { DesFormWidget } from "@exercise-form/core";
 import { operationButtons, tableColumns, tableData } from "./table";
 import { treeData } from "./tree";
 
-export type DesWidget = {
-  name: string;
-  iconName?: string;
-  category?: string;
-  type: string;
-  children?: DesWidget[];
-  options: { [key: string]: any };
-  [key: string]: any;
-};
-
-export type DesWidgetList = Array<DesWidget>;
-
-export const containers: DesWidgetList = [
+export const containers = [
   {
     name: "栅格",
     iconName: "grid",
@@ -252,4 +241,4 @@ export const containers: DesWidgetList = [
       label: "tab1"
     }
   }
-];
+] as DesFormWidget[];

@@ -1,33 +1,30 @@
-import { getRegExp, MODEL_LIST } from "@exercise-form/constants";
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
+import { DesFormWidget, DesFormParams } from "../interface";
 import { getOuterTemplate } from "./outer";
 import { globalWidgetEvent } from "./event";
-import { isArray, isObject, isNumber } from "../types";
+import { isArray, isObject, isNumber } from "@exercise-form/utils";
+import { getRegExp } from "@exercise-form/constants";
+import { MODEL_LIST, HAVE_DATA_KEYS } from "../config";
 
-// 数据参数属性
-const paramsKeys = [
-  "data",
-  "headers",
-  "tableData",
-  "treeData",
-  "optionsItem",
-  "options"
-];
+interface traverseWidgetParams extends DesFormParams {
+  cb: (wt: DesFormWidget) => void;
+}
 
-export function traverseFieldWidget(
-  widgetList: DesWidget[],
-  cd: (wt: DesWidget) => void
-) {
-  widgetList.forEach((widget: DesWidget) => {
-    cd(widget);
+export function traverseFieldWidget(params: traverseWidgetParams) {
+  let { widgetList, formConfig, cb } = params;
+  widgetList.forEach((widget) => {
+    cb(widget);
     if (widget.category === "container") {
-      traverseFieldWidget(widget?.children || [], cd);
+      traverseFieldWidget({
+        widgetList: widget?.children || [],
+        formConfig,
+        cb
+      });
     }
   });
 }
 
 export function buildDefaultValueListFn(defaultValueList: string[]) {
-  return function (widget: DesWidget) {
+  return function (widget: DesFormWidget) {
     if (MODEL_LIST.includes(widget.type)) {
       let modelDefaultValue = widget.options.modelDefaultValue;
       let value;
@@ -46,7 +43,7 @@ export function buildDefaultValueListFn(defaultValueList: string[]) {
 }
 
 function buildRulesListFn(rulesList: string[]) {
-  return function (widget: DesWidget) {
+  return function (widget: DesFormWidget) {
     if (widget.category != "container") {
       let { required, validation, validationHint } = widget.options;
       if (required || validation) {
@@ -69,11 +66,11 @@ function buildRulesListFn(rulesList: string[]) {
   };
 }
 
-function buildDataParams(dataParamsList: string[]) {
-  return function (widget: DesWidget) {
+function buildWidgetDataFn(dataParamsList: string[]) {
+  return function (widget: DesFormWidget) {
     let options = widget.options;
     for (const key in options) {
-      if (paramsKeys.includes(key)) {
+      if (HAVE_DATA_KEYS.includes(key)) {
         dataParamsList.push(
           `const ${options.name}${key}=${JSON.stringify(options[key])}`
         );
@@ -82,8 +79,8 @@ function buildDataParams(dataParamsList: string[]) {
   };
 }
 
-function buildWidgetEvent(eventFnList: string[]) {
-  return function (widget: DesWidget) {
+function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
+  return function (widget: DesFormWidget) {
     let options = widget.options;
     for (const key in options) {
       if (
@@ -97,20 +94,26 @@ function buildWidgetEvent(eventFnList: string[]) {
   };
 }
 
-export function genVue3JS(formConfig: DesFormConfig, widgetList: DesWidget[]) {
+export function genVue3JS(params: DesFormParams) {
+  let { widgetList, formConfig } = params;
   let defaultValueList: string[] = [];
   let rulesList: string[] = [];
   let dataParamsList: string[] = [];
   let eventFnList: string[] = [];
+  let lifeCycleList: string[] = [];
   let { formName, modelName, rulesName } = formConfig;
-  traverseFieldWidget(widgetList, (widget) => {
-    buildDefaultValueListFn(defaultValueList)(widget);
-    buildRulesListFn(rulesList)(widget);
-    buildDataParams(dataParamsList)(widget);
-    buildWidgetEvent(eventFnList)(widget);
+  traverseFieldWidget({
+    widgetList,
+    formConfig,
+    cb: (widget) => {
+      buildDefaultValueListFn(defaultValueList)(widget);
+      buildRulesListFn(rulesList)(widget);
+      buildWidgetDataFn(dataParamsList)(widget);
+      buildWidgetEventFn(eventFnList, lifeCycleList)(widget);
+    }
   });
-  let { outerDefaultValueList } = getOuterTemplate(widgetList, formConfig);
-  let vue3JSTemplate = `import { ref, reactive } from 'vue';
+  let { outerDefaultValueList } = getOuterTemplate({ widgetList, formConfig });
+  let vue3JSTemplate = `import { ref, reactive, watch } from 'vue';
   const ${formName}=ref();${
     formConfig.isPageType === "dialog" ? "const dialogVisible=ref(false);" : ""
   }

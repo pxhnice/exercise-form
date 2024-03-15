@@ -34,16 +34,16 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 import { darkKeys } from "../../form-designer";
-import { DesSourceForm } from "./source";
+import { DesFormSource } from "@exercise-form/core";
 import { onMessageError } from "@exercise-form/utils";
 
 const dark = inject(darkKeys);
 const showTestData = ref(false);
 const codeValue = ref("");
-const sources = ref<DesSourceForm>();
+const sources = ref<DesFormSource>();
 const resultCode = ref("");
 
-const handleOpen = (form: DesSourceForm) => {
+const handleOpen = (form: DesFormSource) => {
   let { requestUrl, method, headers, data, params } = form;
   sources.value = form;
   codeValue.value = JSON.stringify(

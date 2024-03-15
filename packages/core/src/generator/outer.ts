@@ -1,15 +1,21 @@
+/**
+ * @description 构建弹窗抽屉模板
+ */
+
+import {
+  DesFormWidget,
+  DesFormParams,
+  DesFormWidgetParams,
+  DesFormWidgetMethods
+} from "../interface";
 import { buildFieldWidget } from "./field";
 import { getElAttr } from "./property";
 import { buildContainerWidget } from "./container";
+import { traverseFieldWidget } from "./vue3Js";
 
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
-
-type DesTemplateMethod = {
-  [key: string]: (widget: DesWidget, formConfig: DesFormConfig) => string;
-};
-
-const outerTemplate: DesTemplateMethod = {
-  "side-drawer": (widget, formConfig) => {
+const outerTemplate = {
+  "side-drawer": (params) => {
+    let { widget, formConfig } = params;
     let { name, onDrawerClose, onDrawerOpened } = widget.options;
 
     let onDrawerCloseEvent = onDrawerClose ? `@click="${name}DrawerClose` : "";
@@ -24,7 +30,7 @@ const outerTemplate: DesTemplateMethod = {
       showClose,
       title,
       size
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     let modelValue = `v-model="${name}"`;
     let footerHtml = footerTemplate(widget);
     return `
@@ -35,9 +41,9 @@ const outerTemplate: DesTemplateMethod = {
       widget.children
         .map((child) => {
           if (child.category === "container") {
-            return buildContainerWidget(child, formConfig);
+            return buildContainerWidget({ widget: child, formConfig });
           } else {
-            return buildFieldWidget(child, formConfig);
+            return buildFieldWidget({ widget: child, formConfig });
           }
         })
         .join("\n")
@@ -46,7 +52,8 @@ const outerTemplate: DesTemplateMethod = {
     </el-drawer>
     `;
   },
-  "popup-box": (widget, formConfig) => {
+  "popup-box": (params) => {
+    let { widget, formConfig } = params;
     let { name } = widget.options;
     let {
       closeOnClickModal,
@@ -55,7 +62,7 @@ const outerTemplate: DesTemplateMethod = {
       showClose,
       title,
       width
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     let modelValue = `v-model="${name}"`;
     let footerHtml = footerTemplate(widget);
     return `
@@ -65,9 +72,9 @@ const outerTemplate: DesTemplateMethod = {
       widget.children
         .map((child) => {
           if (child.category === "container") {
-            return buildContainerWidget(child, formConfig);
+            return buildContainerWidget({ widget: child, formConfig });
           } else {
-            return buildFieldWidget(child, formConfig);
+            return buildFieldWidget({ widget: child, formConfig });
           }
         })
         .join("\n")
@@ -76,9 +83,9 @@ const outerTemplate: DesTemplateMethod = {
     </el-dialog>
     `;
   }
-};
+} as DesFormWidgetMethods;
 
-function footerTemplate(widget: DesWidget) {
+function footerTemplate(widget: DesFormWidget) {
   let {
     name,
     cancelText,
@@ -112,50 +119,40 @@ function footerTemplate(widget: DesWidget) {
   return footerHtml;
 }
 
-function buildOuterWidget(
-  widget: DesWidget,
-  formConfig: DesFormConfig
-): string {
-  return outerTemplate[widget.type] &&
-    outerTemplate[widget.type](widget, formConfig)
-    ? outerTemplate[widget.type](widget, formConfig)
+function buildOuterWidget(params: DesFormWidgetParams): string {
+  let { widget } = params;
+  return outerTemplate[widget.type] && outerTemplate[widget.type](params)
+    ? outerTemplate[widget.type](params)
     : "";
 }
 
-function traverseOuterWidget(
-  widgetList: DesWidget[],
-  formConfig: DesFormConfig,
-  cd: (wt: DesWidget, formConfig: DesFormConfig) => void
+function buildOuterTemplateFn(
+  templateList: string[],
+  defaultValueList: string[]
 ) {
-  widgetList.forEach((widget) => {
+  return function (params: DesFormWidgetParams) {
+    let { widget } = params;
     if (["popup-box", "side-drawer"].includes(widget.type)) {
-      cd(widget, formConfig);
+      let template = buildOuterWidget(params);
+      templateList.push(template);
+      defaultValueList.push(`const ${widget.options.name}=ref(false);`);
     }
-  });
-}
-
-function buildOuterTemplate(templateList: string[]) {
-  return function (widget: DesWidget, formConfig: DesFormConfig) {
-    let template = buildOuterWidget(widget, formConfig);
-    templateList.push(template);
   };
 }
 
-function buildOuterDefaultValue(defaultValueList: string[]) {
-  return function (widget: DesWidget) {
-    defaultValueList.push(`const ${widget.options.name}=ref(false);`);
-  };
-}
-
-export function getOuterTemplate(
-  widgetList: DesWidget[],
-  formConfig: DesFormConfig
-) {
+export function getOuterTemplate(params: DesFormParams) {
+  let { widgetList, formConfig } = params;
   let outerTemplateList: string[] = [];
   let outerDefaultValueList: string[] = [];
-  traverseOuterWidget(widgetList, formConfig, (widget) => {
-    buildOuterTemplate(outerTemplateList)(widget, formConfig);
-    buildOuterDefaultValue(outerDefaultValueList)(widget);
+  traverseFieldWidget({
+    widgetList,
+    formConfig,
+    cb: (widget) => {
+      buildOuterTemplateFn(
+        outerTemplateList,
+        outerDefaultValueList
+      )({ widget, formConfig });
+    }
   });
   return { outerTemplateList, outerDefaultValueList };
 }

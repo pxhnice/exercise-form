@@ -1,10 +1,15 @@
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
+/**
+ * @description 组件属性构建
+ */
+
+import { DesFormWidgetParams } from "../interface";
 
 const getAccept = (fileTypes: string[]) => {
   return fileTypes.map((t: string) => "." + t).join(",");
 };
 
-export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
+export function getElAttr(params: DesFormWidgetParams) {
+  let { widget, formConfig } = params;
   let wop = widget.options;
   return {
     modelValue: `v-model="${formConfig.modelName}.${wop.name}"`,
@@ -59,7 +64,6 @@ export function getElAttr(widget: DesWidget, formConfig: DesFormConfig) {
     offset: wop.offset ? `:offset="${wop.offset}"` : "",
     push: wop.push ? `:push="${wop.push}"` : "",
     pull: wop.pull ? `:pull="${wop.pull}"` : "",
-
     colspan: wop.colspan > 1 ? `:colspan="${wop.colspan}"` : "",
     rowspan: wop.rowspan > 1 ? `:rowspan="${wop.rowspan}"` : "",
 

@@ -1,4 +1,4 @@
-export const eventParamsName = {
+export const EVENT_PARAMS_NAME = {
   // common
   onClick: "e",
   onInput: "value",

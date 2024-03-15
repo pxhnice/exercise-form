@@ -140,7 +140,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { DRAG_DISABLE_LIST, DesWidget } from "@exercise-form/constants";
+import { DRAG_DISABLE_LIST, DesFormWidget } from "@exercise-form/core";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);
@@ -153,7 +153,7 @@ const isSelect = computed(
   () => props.designer.selectWidgetId.value == props.widgetData.id
 );
 
-const onDragAdd = (e: any, parent: DesWidget) => {
+const onDragAdd = (e: any, parent: DesFormWidget) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);

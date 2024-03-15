@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { SHADOW_LIST } from "@exercise-form/constants";
+import { SHADOW_LIST } from "@exercise-form/core";
 import { desPropertyProps } from "../property";
 
 defineProps(desPropertyProps);

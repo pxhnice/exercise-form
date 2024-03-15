@@ -45,8 +45,9 @@
 import { ref, onMounted } from "vue";
 import type { FormInstance } from "element-plus";
 import { deepClone } from "@exercise-form/utils";
-import { traverseFieldWidget } from "@exercise-form/utils/generator/vue3Js-generator";
-import { MODEL_LIST, DesWidget } from "@exercise-form/constants";
+import { MODEL_LIST, DesFormWidget } from "@exercise-form/core";
+import { traverseFieldWidget } from "@exercise-form/core/src/generator/vue3Js";
+
 import { formRenderProps } from "./form-render";
 
 defineOptions({ name: "ExFormRender" });
@@ -58,7 +59,7 @@ const originalData = ref<{ [key: string]: any }>({});
 const disabled = ref(false);
 
 const buildDefaultValueListFn = () => {
-  return function (widget: DesWidget) {
+  return function (widget: DesFormWidget) {
     if (MODEL_LIST.includes(widget.type)) {
       let { modelDefaultValue, name } = widget.options;
       formData.value[name] = modelDefaultValue ?? null;
@@ -67,8 +68,13 @@ const buildDefaultValueListFn = () => {
 };
 
 const addFormName = () => {
-  traverseFieldWidget(props.widgetList, (widget) => {
-    buildDefaultValueListFn()(widget);
+  let { widgetList, formConfig } = props;
+  traverseFieldWidget({
+    widgetList,
+    formConfig,
+    cb: (widget) => {
+      buildDefaultValueListFn()(widget);
+    }
   });
   originalData.value = deepClone(formData.value);
 };
@@ -96,3 +102,4 @@ defineExpose({
   originalData
 });
 </script>
+@exercise-form/core/src/generator/vue3Js

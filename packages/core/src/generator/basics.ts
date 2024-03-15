@@ -1,12 +1,16 @@
+/**
+ * @description 构建基础组件模板
+ */
+
 import { getElAttr } from "./property";
+import {
+  DesFormWidget,
+  DesFormWidgetMethods,
+  DesFormWidgetParams
+} from "../interface";
 
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
-type DesTemplateMethod = {
-  [key: string]: (widget: DesWidget, formConfig: DesFormConfig) => string;
-};
-
-const elTemplates: DesTemplateMethod = {
-  input: (widget, formConfig) => {
+const basicsTemplates = {
+  input: (params) => {
     let {
       modelValue,
       disabled,
@@ -23,13 +27,13 @@ const elTemplates: DesTemplateMethod = {
       onChange,
       onBlur,
       onClear
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     return `<el-input ${modelValue} ${type} ${disabled} ${maxLength} 
       ${minLength} ${size} ${rows} ${readonly} ${placeholder} 
       ${clearable} ${onInput} ${onFocus} ${onBlur} ${onChange} ${onClear}/>`;
   },
 
-  "input-number": (widget, formConfig) => {
+  "input-number": (params) => {
     let {
       modelValue,
       disabled,
@@ -39,32 +43,29 @@ const elTemplates: DesTemplateMethod = {
       onFocus,
       onChange,
       onBlur
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     return `<el-input-number ${modelValue} ${disabled} ${size} 
     ${readonly} ${placeholder} ${onFocus} ${onBlur} ${onChange} />`;
   },
 
-  radio: (widget, formConfig) => {
-    let { modelValue, disabled, size, border, onChange } = getElAttr(
-      widget,
-      formConfig
-    );
+  radio: (params) => {
+    let { widget } = params;
+    let { modelValue, disabled, size, border, onChange } = getElAttr(params);
     let childTemplate = buildRadioChildren(widget);
     return `<el-radio-group ${modelValue} ${size} ${disabled} 
     ${border} ${onChange}>${childTemplate}</el-radio-group>`;
   },
 
-  checkbox: (widget, formConfig) => {
-    let { modelValue, disabled, size, border, onChange } = getElAttr(
-      widget,
-      formConfig
-    );
+  checkbox: (params) => {
+    let { widget } = params;
+    let { modelValue, disabled, size, border, onChange } = getElAttr(params);
     let childTemplate = buildCheckboxChildren(widget);
     return `<el-checkbox-group ${modelValue} ${size} ${disabled} 
     ${border} ${onChange}>${childTemplate}</el-checkbox-group>`;
   },
 
-  select: (widget, formConfig) => {
+  select: (params) => {
+    let { widget } = params;
     let {
       modelValue,
       disabled,
@@ -76,13 +77,13 @@ const elTemplates: DesTemplateMethod = {
       onChange,
       onBlur,
       onClear
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     let childTemplate = buildSelectChildren(widget);
     return `<el-select ${modelValue} ${size} ${disabled} ${multiple} ${multipleLimit} 
     ${clearable}  ${onFocus} ${onBlur} ${onChange} ${onClear}>${childTemplate}</el-select>`;
   },
 
-  "date-picker": (widget, formConfig) => {
+  "date-picker": (params) => {
     let {
       modelValue,
       type,
@@ -98,13 +99,13 @@ const elTemplates: DesTemplateMethod = {
       onFocus,
       onChange,
       onBlur
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     return `<el-date-picker ${modelValue} ${type} ${size} ${disabled} ${editable} 
     ${format} ${clearable} ${placeholder} ${readonly} ${startPlaceholder} 
     ${endPlaceholder} ${onFocus} ${onBlur} ${onChange}/>`;
   },
 
-  "time-picker": (widget, formConfig) => {
+  "time-picker": (params) => {
     let {
       modelValue,
       type,
@@ -120,21 +121,18 @@ const elTemplates: DesTemplateMethod = {
       onFocus,
       onChange,
       onBlur
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     return `<el-time-picker ${modelValue} ${type} ${size} ${disabled} ${editable} ${format} 
       ${clearable} ${placeholder} ${readonly} ${startPlaceholder} 
       ${endPlaceholder} ${onFocus} ${onBlur} ${onChange}/>`;
   },
 
-  switch: (widget, formConfig) => {
-    let { modelValue, disabled, size, onChange } = getElAttr(
-      widget,
-      formConfig
-    );
+  switch: (params) => {
+    let { modelValue, disabled, size, onChange } = getElAttr(params);
     return `<el-switch ${modelValue} ${disabled} ${size} ${onChange}/>`;
   },
 
-  cascader: (widget, formConfig) => {
+  cascader: (params) => {
     let {
       modelValue,
       disabled,
@@ -144,86 +142,75 @@ const elTemplates: DesTemplateMethod = {
       onFocus,
       onChange,
       onBlur
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     return `<el-autocomplete ${modelValue} ${disabled} ${size} ${clearable} 
     ${placeholder} ${onFocus} ${onBlur} ${onChange}/>`;
   },
 
-  rate: (widget, formConfig) => {
+  rate: (params) => {
     let { modelValue, allowHalf, max, disabled, size, clearable, onChange } =
-      getElAttr(widget, formConfig);
+      getElAttr(params);
     return `<el-rate ${modelValue} ${max} ${disabled} ${size} ${clearable} ${allowHalf} ${onChange}/>`;
   },
 
-  button: (widget, formConfig) => {
-    let { disabled, size, onClick } = getElAttr(widget, formConfig);
+  button: (params) => {
+    let { widget } = params;
+    let { disabled, size, onClick } = getElAttr(params);
     return `<el-button ${disabled} ${size} ${onClick}>${widget.options.label}</el-button>`;
   },
 
-  divider: (widget, formConfig) => {
-    let { borderStyle, contentPosition, direction } = getElAttr(
-      widget,
-      formConfig
-    );
+  divider: (params) => {
+    let { borderStyle, contentPosition, direction } = getElAttr(params);
     return `<el-divider ${borderStyle} ${contentPosition} ${direction} />`;
   },
 
-  slider: (widget, formConfig) => {
+  slider: (params) => {
     let { modelValue, disabled, step, showStops, onInput, onChange } =
-      getElAttr(widget, formConfig);
+      getElAttr(params);
     return `<el-slider ${modelValue} ${disabled} ${showStops} ${step} ${onInput} ${onChange}/>`;
   },
 
-  "color-picker": (widget, formConfig) => {
-    let { modelValue, disabled, size, onFocus, onChange, onBlur } = getElAttr(
-      widget,
-      formConfig
-    );
+  "color-picker": (params) => {
+    let { modelValue, disabled, size, onFocus, onChange, onBlur } =
+      getElAttr(params);
     return `<el-color-picker ${modelValue} ${disabled} ${size} ${onFocus} ${onBlur} ${onChange}/>`;
   },
 
-  alert: (widget, formConfig) => {
-    let { closable, showIcon, title, type } = getElAttr(widget, formConfig);
+  alert: (params) => {
+    let { closable, showIcon, title, type } = getElAttr(params);
     return `<el-alert ${type} ${closable} ${showIcon} ${title}  />`;
   },
 
-  text: (widget, formConfig) => {
-    let { fontSize, size, tag, truncated, customClass } = getElAttr(
-      widget,
-      formConfig
-    );
+  text: (params) => {
+    let { widget } = params;
+    let { fontSize, size, tag, truncated, customClass } = getElAttr(params);
     return `<el-text ${fontSize} ${customClass} ${size} ${tag} ${truncated} >${widget.options.content}</el-text>`;
   },
 
-  slot: (widget, formConfig) => {
+  slot: (params) => {
+    let { widget } = params;
     let name = widget.options.label ? `name="${widget.options.label}"` : "";
     return `<slot ${name}></slot>`;
   },
 
-  "upload-image": (widget, formConfig) => {
-    let { action, accept, headers, data, method } = getElAttr(
-      widget,
-      formConfig
-    );
+  "upload-image": (params) => {
+    let { action, accept, headers, data, method } = getElAttr(params);
     return `<el-upload v-model:file-list="fileList" ${action} ${accept} ${headers} 
     ${data} ${method} list-type="picture-card"> <el-icon><Plus /></el-icon></el-upload>`;
   },
 
-  "upload-file": (widget, formConfig) => {
-    let { action, accept, headers, data, method } = getElAttr(
-      widget,
-      formConfig
-    );
+  "upload-file": (params) => {
+    let { action, accept, headers, data, method } = getElAttr(params);
     return `<el-upload 
     v-model:file-list="fileList" ${action} ${accept} ${headers} ${data} ${method}></el-upload>`;
   },
 
-  "rich-text": (widget, formConfig) => {
+  "rich-text": (params) => {
     return ``;
   }
-};
+} as DesFormWidgetMethods;
 
-function buildRadioChildren(widget: DesWidget) {
+function buildRadioChildren(widget: DesFormWidget) {
   let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-radio-button" : "el-radio";
@@ -231,7 +218,7 @@ function buildRadioChildren(widget: DesWidget) {
   :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
-function buildCheckboxChildren(widget: DesWidget) {
+function buildCheckboxChildren(widget: DesFormWidget) {
   let { buttonMode, border, optionsLabel, optionsValue } = widget.options;
   let borderAttr = border && !buttonMode ? `:border` : "";
   let tag = buttonMode ? "el-checkbox-button" : "el-checkbox";
@@ -239,18 +226,15 @@ function buildCheckboxChildren(widget: DesWidget) {
   :key="item.${optionsValue}" :label="item.${optionsValue}" ${borderAttr}>{{item.${optionsLabel}}}</${tag}>`;
 }
 
-function buildSelectChildren(widget: DesWidget) {
+function buildSelectChildren(widget: DesFormWidget) {
   let { optionsLabel, optionsValue } = widget.options;
   return `<el-option v-for="item in ${widget.options.name}optionsItem" 
   :key="item.${optionsValue}" :label="item.${optionsLabel}" :value="item.${optionsValue}"/>`;
 }
 
-export function buildBasicsTemplate(
-  widget: DesWidget,
-  formConfig: DesFormConfig
-) {
-  return elTemplates[widget.type] &&
-    elTemplates[widget.type](widget, formConfig)
-    ? elTemplates[widget.type](widget, formConfig)
+export function buildBasicsTemplate(params: DesFormWidgetParams) {
+  let { widget } = params;
+  return basicsTemplates[widget.type] && basicsTemplates[widget.type](params)
+    ? basicsTemplates[widget.type](params)
     : "";
 }

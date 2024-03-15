@@ -38,15 +38,15 @@
 import { ref, inject } from "vue";
 import { onMessageError } from "@exercise-form/utils";
 import { darkKeys } from "../../form-designer";
-import { DesSourceForm } from "./source";
+import { DesFormSource } from "@exercise-form/core";
 
 const dark = inject(darkKeys);
-const dataSources = ref<DesSourceForm[]>([]);
+const dataSources = ref<DesFormSource[]>([]);
 const showImportData = ref(false);
 const codeValue = ref("");
 const isAdd = ref(false);
 
-const handleOpen = (params: DesSourceForm[]) => {
+const handleOpen = (params: DesFormSource[]) => {
   isAdd.value = false;
   codeValue.value = "";
   dataSources.value = params;

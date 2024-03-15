@@ -1,28 +1,19 @@
-import { definePropType } from "@exercise-form/utils";
 import { InjectionKey, Ref } from "vue";
-import type { DesFormJson, DesTemplateData } from "@exercise-form/constants";
+import { definePropType } from "@exercise-form/utils";
+import {
+  DesFormParams,
+  DesFormTemplateData,
+  DesFormToolbarOptions
+} from "@exercise-form/core";
 
-export type DesOptions = {
-  templateButton: boolean;
-  previewFormButton: boolean;
-  treeFormButton: boolean;
-  exportJsonButton: boolean;
-  exportCodeButton: boolean;
-  generateSFCButton: boolean;
-  pageTypeButton: boolean;
-  copyDataButton: boolean;
-  saveFileButton: boolean;
-  resetFormJson: boolean;
-};
-
-export const optionsKeys: InjectionKey<Ref<DesOptions>> = Symbol();
+export const optionsKeys: InjectionKey<Ref<DesFormToolbarOptions>> = Symbol();
 
 export const bannedWidgetKeys: InjectionKey<Ref<Array<string>>> = Symbol();
 
 export const darkKeys: InjectionKey<Ref<boolean>> = Symbol();
 
 export const formDesignerEmits = {
-  change: (desData: DesFormJson) => desData
+  change: (desData: DesFormParams) => desData
 };
 
 export const formDesignerProps = {
@@ -39,7 +30,7 @@ export const formDesignerProps = {
    * @description 构建数据
    */
   formJson: {
-    type: definePropType<DesFormJson>(Object),
+    type: definePropType<DesFormParams>(Object),
     default() {
       return {};
     }
@@ -48,7 +39,7 @@ export const formDesignerProps = {
    * @description 构造器显示配置项
    */
   options: {
-    type: definePropType<DesOptions>(Object),
+    type: definePropType<DesFormToolbarOptions>(Object),
     default() {
       return {};
     }
@@ -62,29 +53,29 @@ export const formDesignerProps = {
       return [];
     }
   },
-  /**
-   * @description 自定义添加组件[cname]
-   */
-  customWidgets: {
-    type: Array,
-    default() {
-      return [];
-    }
-  },
-  /**
-   * @description 自定义属性设置组件
-   */
-  settingProperty: {
-    type: Array,
-    default() {
-      return [];
-    }
-  },
+  // /**
+  //  * @description 自定义添加组件[cname]
+  //  */
+  // customWidgets: {
+  //   type: Array,
+  //   default() {
+  //     return [];
+  //   }
+  // },
+  // /**
+  //  * @description 自定义属性设置组件
+  //  */
+  // settingProperty: {
+  //   type: Array,
+  //   default() {
+  //     return [];
+  //   }
+  // },
   /**
    * @description 模板列表
    */
   templateList: {
-    type: definePropType<Array<DesTemplateData>>(Array),
+    type: definePropType<Array<DesFormTemplateData>>(Array),
     default() {
       return [];
     }
@@ -95,8 +86,6 @@ export const formDesignerProps = {
   themeColor: String,
   /**
    * @description  主题模式
-   * ？？？ 由于部分element组件使用Teleport被插入到body下，导致无法修改样式
-   * 推荐使用element=> <html class="dark">
    * vue-codemirror需要dark为true
    */
   dark: Boolean

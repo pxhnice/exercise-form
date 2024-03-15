@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { CUSTOM_LIST } from "@exercise-form/constants";
+import { CUSTOM_LIST } from "@exercise-form/core";
 import { desContainerProps } from "./container";
 
 const props = defineProps(desContainerProps);

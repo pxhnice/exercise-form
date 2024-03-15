@@ -242,7 +242,7 @@ const formOptions = {
   labelWidth: "130px",
   labelPosition: "left"
 };
-const formConfig = props.formConfig as { [key: string]: any };
+const formConfig = props.formConfig;
 const dark = inject(darkKeys);
 const formComRef = ref();
 const groupValue = ref("bd");

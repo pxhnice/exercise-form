@@ -16,13 +16,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { dateOptions, dateRangeOptions } from "@exercise-form/constants";
-import type { DesWidget } from "@exercise-form/constants";
+import { DesFormWidget } from "@exercise-form/core";
 import { desPropertyProps } from "./property";
 
 const props = defineProps(desPropertyProps);
 const options: any = ref([]);
 
-const initType = (params: DesWidget) => {
+const initType = (params: DesFormWidget) => {
   let types = ["date-picker"];
   let is = types.includes(params.type);
   if (is) {

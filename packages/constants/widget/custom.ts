@@ -1,6 +1,6 @@
-import type { DesWidgetList } from "./container";
+import { DesFormWidget } from "@exercise-form/core";
 
-export const customs: DesWidgetList = [
+export const customs = [
   {
     name: "提示",
     iconName: "alert",
@@ -30,4 +30,4 @@ export const customs: DesWidgetList = [
       type: ""
     }
   }
-];
+] as DesFormWidget[];

@@ -16,11 +16,11 @@
 
 <script setup lang="ts">
 import { desPropertyProps } from "./property";
-import type { DesWidget } from "@exercise-form/constants";
+import { DesFormWidget } from "@exercise-form/core";
 
 defineProps(desPropertyProps);
 
-const isShow = (widget: DesWidget) => {
+const isShow = (widget: DesFormWidget) => {
   if (["radio", "checkbox", "select", "tabs"].includes(widget.type))
     return false;
   return true;

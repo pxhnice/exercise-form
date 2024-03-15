@@ -1,11 +1,15 @@
-import { DesWidget } from "@exercise-form/constants";
+/**
+ * @description 存放默认导出的样式
+ */
 
-type DesTemplateMethod = {
-  [key: string]: () => string;
-};
+import {
+  DesFormWidget,
+  DesFormParams,
+  DesFormWidgetStyleMethods
+} from "../interface";
+import { traverseFieldWidget } from "./vue3Js";
 
-// 存放组件默认导出的样式
-const globalWidgetStyle: DesTemplateMethod = {
+const globalWidgetStyle = {
   grid: () => {
     return ``;
   },
@@ -104,7 +108,7 @@ const globalWidgetStyle: DesTemplateMethod = {
   "rich-text": () => {
     return ``;
   }
-};
+} as DesFormWidgetStyleMethods;
 
 function buildStyleTemplate(type: string) {
   return globalWidgetStyle[type] && globalWidgetStyle[type]()
@@ -112,23 +116,28 @@ function buildStyleTemplate(type: string) {
     : "";
 }
 
-function traverseWidget(widgetList: DesWidget[]) {
-  let styleList: string[] = [];
-  let types: Set<string> = new Set([]);
-  widgetList.forEach((widget: DesWidget) => {
+function buildStyleTemplateFn(
+  styleList: string[],
+  types: Set<string> = new Set([])
+) {
+  return function (widget: DesFormWidget) {
     if (!types.has(widget.type)) {
       let style = buildStyleTemplate(widget.type);
       styleList.push(style);
       types.add(widget.type);
     }
-    if (widget.category === "container") {
-      traverseWidget(widget?.children || []);
-    }
-  });
-  return styleList;
+  };
 }
 
-export function getStyleTemplate(widgetList: DesWidget[]) {
-  let styleList = traverseWidget(widgetList);
+export function getStyleTemplate(params: DesFormParams) {
+  let { widgetList, formConfig } = params;
+  let styleList: string[] = [];
+  traverseFieldWidget({
+    widgetList,
+    formConfig,
+    cb: (widget) => {
+      buildStyleTemplateFn(styleList)(widget);
+    }
+  });
   return `${styleList.join("\n")}`;
 }

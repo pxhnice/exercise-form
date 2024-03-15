@@ -1,37 +1,33 @@
+/**
+ * @description 构建容器组件模板
+ */
+
+import { DesTableColumns, DesOperationButton } from "@exercise-form/constants";
 import { buildFieldWidget } from "./field";
 import { getElAttr } from "./property";
+import { DesFormWidgetMethods, DesFormWidgetParams } from "../interface";
 
-import type {
-  DesWidget,
-  DesFormConfig,
-  DesTableColumns,
-  DesOperationButton
-} from "@exercise-form/constants";
-
-type DesTemplateMethod = {
-  [key: string]: (widget: DesWidget, formConfig: DesFormConfig) => string;
-};
-
-const containerTemplate: DesTemplateMethod = {
-  grid: (widget, formConfig) => {
+const containerTemplate = {
+  grid: (params) => {
+    let { widget, formConfig } = params;
     return `<el-row>
       ${
         widget.children &&
         widget.children
           .map((col) => {
-            let { span, md, sm, xs, offset, push, pull } = getElAttr(
-              col,
+            let { span, md, sm, xs, offset, push, pull } = getElAttr({
+              widget: col,
               formConfig
-            );
+            });
             return `<el-col ${span} ${md} ${sm} ${xs} ${offset} ${push} ${pull}>
           ${
             col.children &&
             col.children
               .map((child) => {
                 if (child.category === "container") {
-                  return buildContainerWidget(child, formConfig);
+                  return buildContainerWidget({ widget: child, formConfig });
                 } else {
-                  return buildFieldWidget(child, formConfig);
+                  return buildFieldWidget({ widget: child, formConfig });
                 }
               })
               .join("\n")
@@ -42,7 +38,8 @@ const containerTemplate: DesTemplateMethod = {
       }
     </el-row>`;
   },
-  table: (widget, formConfig) => {
+  table: (params) => {
+    let { widget, formConfig } = params;
     return `<table><tbody>
     ${
       widget.children &&
@@ -53,16 +50,16 @@ const containerTemplate: DesTemplateMethod = {
         rows.children &&
         rows.children
           .map((col) => {
-            let { colspan, rowspan } = getElAttr(col, formConfig);
+            let { colspan, rowspan } = getElAttr({ widget: col, formConfig });
             return ` <td ${colspan} ${rowspan}>
             ${
               col.children &&
               col.children
                 .map((child) => {
                   if (child.category === "container") {
-                    return buildContainerWidget(child, formConfig);
+                    return buildContainerWidget({ widget: child, formConfig });
                   } else {
-                    return buildFieldWidget(child, formConfig);
+                    return buildFieldWidget({ widget: child, formConfig });
                   }
                 })
                 .join("\n")
@@ -77,8 +74,9 @@ const containerTemplate: DesTemplateMethod = {
     }
    </tbody></table>`;
   },
-  card: (widget, formConfig) => {
-    let { label, shadow, cardWidth } = getElAttr(widget, formConfig);
+  card: (params) => {
+    let { widget, formConfig } = params;
+    let { label, shadow, cardWidth } = getElAttr(params);
     return `<el-card ${cardWidth} ${shadow}>
     <template #header>
       <div class="card-header">
@@ -89,9 +87,9 @@ const containerTemplate: DesTemplateMethod = {
         widget.children
           .map((child) => {
             if (child.category === "container") {
-              return buildContainerWidget(child, formConfig);
+              return buildContainerWidget({ widget: child, formConfig });
             } else {
-              return buildFieldWidget(child, formConfig);
+              return buildFieldWidget({ widget: child, formConfig });
             }
           })
           .join("\n")
@@ -99,7 +97,8 @@ const containerTemplate: DesTemplateMethod = {
       </template>
     </el-card>`;
   },
-  tabs: (widget, formConfig) => {
+  tabs: (params) => {
+    let { widget, formConfig } = params;
     let { onTabClick, name } = widget.options;
     let onTabClickEvent = onTabClick ? `@click="${name}TabClick"` : "";
     return `<el-tabs ${onTabClickEvent}>
@@ -107,16 +106,16 @@ const containerTemplate: DesTemplateMethod = {
         widget.children &&
         widget.children
           .map((tab) => {
-            let { label, disabled } = getElAttr(widget, formConfig);
+            let { label, disabled } = getElAttr(params);
             return `<el-tabs-pane ${label} ${disabled}>
           ${
             tab.children &&
             tab.children
               .map((child) => {
                 if (child.category === "container") {
-                  return buildContainerWidget(child, formConfig);
+                  return buildContainerWidget({ widget: child, formConfig });
                 } else {
-                  return buildFieldWidget(child, formConfig);
+                  return buildFieldWidget({ widget: child, formConfig });
                 }
               })
               .join("\n")
@@ -127,7 +126,8 @@ const containerTemplate: DesTemplateMethod = {
       }
     </el-tabs>`;
   },
-  "data-table": (widget, formConfig) => {
+  "data-table": (params) => {
+    let { widget } = params;
     let {
       tableColumns,
       operationButtons,
@@ -159,7 +159,7 @@ const containerTemplate: DesTemplateMethod = {
       operationWidth,
       operationFixed,
       operationAlign
-    } = getElAttr(widget, formConfig);
+    } = getElAttr(params);
     // 事件
     let onSelectEvent = onSelect ? `@select="${name}Select "` : "";
     let onSelectAllEvent = onSelectAll ? `@select-all="${name}SelectAll"` : "";
@@ -242,7 +242,8 @@ const containerTemplate: DesTemplateMethod = {
     ${paginationHtml}
     `;
   },
-  "data-tree": (widget, formConfig) => {
+  "data-tree": (params) => {
+    let { widget } = params;
     let {
       name,
       showCheckbox,
@@ -260,7 +261,7 @@ const containerTemplate: DesTemplateMethod = {
       : "";
 
     let { nodeKey, draggable, defaultExpandAll, lazy, props, showLinkage } =
-      getElAttr(widget, formConfig);
+      getElAttr(params);
     const searchInputHtml = showFilter ? "" : "showFilter";
     const expandOrRetractHtml = showCheckbox ? "" : "";
     const selectAllHtml = showCheckAllOrCancelAll ? "" : "";
@@ -282,14 +283,12 @@ const containerTemplate: DesTemplateMethod = {
     </el-tree>
     `;
   }
-};
+} as DesFormWidgetMethods;
 
-export function buildContainerWidget(
-  widget: DesWidget,
-  formConfig: DesFormConfig
-): string {
+export function buildContainerWidget(params: DesFormWidgetParams): string {
+  let { widget } = params;
   return containerTemplate[widget.type] &&
-    containerTemplate[widget.type](widget, formConfig)
-    ? containerTemplate[widget.type](widget, formConfig)
+    containerTemplate[widget.type](params)
+    ? containerTemplate[widget.type](params)
     : "";
 }

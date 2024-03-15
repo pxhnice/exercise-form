@@ -1,9 +1,9 @@
-import type { DesWidget } from "@exercise-form/constants";
+import { DesFormWidget } from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const desFieldsProps = {
   widgetData: {
-    type: definePropType<DesWidget>(Object),
+    type: definePropType<DesFormWidget>(Object),
     default() {
       return {};
     }

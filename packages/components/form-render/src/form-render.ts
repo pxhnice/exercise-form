@@ -1,4 +1,4 @@
-import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
+import { DesFormWidget, DesFormConfig } from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const formRenderProps = {
@@ -6,7 +6,7 @@ export const formRenderProps = {
    * @description 构造组件列表
    */
   widgetList: {
-    type: definePropType<DesWidgetList>(Array),
+    type: definePropType<DesFormWidget[]>(Array),
     default() {
       return [];
     }

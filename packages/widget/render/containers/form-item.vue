@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { CUSTOM_LIST } from "@exercise-form/constants";
+import { CUSTOM_LIST } from "@exercise-form/core";
 import { renContainerProps } from "./container";
 
 defineProps(renContainerProps);

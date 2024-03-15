@@ -1,35 +1,35 @@
-import { genVue3JS } from "./vue3Js-generator";
-import type { DesWidgetList, DesFormConfig } from "@exercise-form/constants";
+/**
+ * @description 导出SFC模板
+ */
+
+import { genVue3JS } from "./vue3Js";
+import { DesFormParams } from "../interface";
 import { buildContainerWidget } from "./container";
 import { buildFieldWidget } from "./field";
 import { getOuterTemplate } from "./outer";
 import { getStyleTemplate } from "./style";
 
-function buildHtmlTemplate(
-  widgetList: DesWidgetList,
-  formConfig: DesFormConfig,
-  templateList: string[] = []
-) {
+function buildHtmlTemplate(params: DesFormParams) {
+  let { widgetList, formConfig } = params;
+  let templateList: string[] = [];
   widgetList.forEach((widget) => {
     if (widget.category === "container") {
-      let template = buildContainerWidget(widget, formConfig);
+      let template = buildContainerWidget({ widget, formConfig });
       templateList.push(template);
     } else {
-      let template = buildFieldWidget(widget, formConfig);
+      let template = buildFieldWidget({ widget, formConfig });
       templateList.push(template);
     }
   });
   return templateList;
 }
 
-function buildFormTemplate(
-  widgetList: DesWidgetList,
-  formConfig: DesFormConfig
-) {
+function buildFormTemplate(params: DesFormParams) {
+  let { formConfig } = params;
   let { modelName, formName, size, labelPosition, rulesName, labelWidth } =
     formConfig;
-  let html = buildHtmlTemplate(widgetList, formConfig);
-  let { outerTemplateList } = getOuterTemplate(widgetList, formConfig);
+  let html = buildHtmlTemplate(params);
+  let { outerTemplateList } = getOuterTemplate(params);
   let sizeAttr = size !== "default" ? `size="${size}"` : "";
   let labelPositionAttr =
     labelPosition && labelPosition != "right"
@@ -41,11 +41,9 @@ function buildFormTemplate(
   </el-form> `;
 }
 
-function buildFieldTemplate(
-  widgetList: DesWidgetList,
-  formConfig: DesFormConfig
-) {
-  let formTemplate = buildFormTemplate(widgetList, formConfig);
+function buildFieldTemplate(params: DesFormParams) {
+  let { formConfig } = params;
+  let formTemplate = buildFormTemplate(params);
   if (formConfig.isPageType === "page") {
     return `${formTemplate}`;
   } else {
@@ -61,13 +59,11 @@ function buildFieldTemplate(
   }
 }
 
-export function getSFCGenerator(
-  formConfig: DesFormConfig,
-  widgetList: DesWidgetList
-) {
-  let html = buildFieldTemplate(widgetList, formConfig);
-  let js = genVue3JS(formConfig, widgetList);
-  let style = getStyleTemplate(widgetList);
+export function getSFCGenerator(params: DesFormParams) {
+  let { formConfig } = params;
+  let html = buildFieldTemplate(params);
+  let js = genVue3JS(params);
+  let style = getStyleTemplate(params);
   let sfcTemplate = `
   <template>
   ${html}

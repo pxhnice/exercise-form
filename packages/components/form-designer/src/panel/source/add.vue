@@ -201,15 +201,15 @@
 <script setup lang="ts">
 import { ref, reactive, inject, nextTick } from "vue";
 import type { FormInstance, FormRules, ElScrollbar } from "element-plus";
-import { METHOD_LIST } from "@exercise-form/constants";
+import { METHOD_LIST, DesFormSource } from "@exercise-form/core";
 import { onMessageError, isObject, deepClone } from "@exercise-form/utils";
 import { darkKeys } from "../../form-designer";
 import ExSourceTest from "./test.vue";
-import { DesSourceForm, getSourceForm } from "./source";
+import { getSourceForm } from "./source";
 
 interface Params {
-  sources: DesSourceForm;
-  dataSources: DesSourceForm[];
+  sources: DesFormSource;
+  dataSources: DesFormSource[];
 }
 
 interface OptionsKeys {
@@ -225,9 +225,9 @@ const exSourceTestRef = ref();
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
 const scrollbarMultiDataRef = ref<InstanceType<typeof ElScrollbar>>();
 const showAddData = ref(false);
-const form = ref<DesSourceForm>(getSourceForm()); //编辑数据源
+const form = ref<DesFormSource>(getSourceForm()); //编辑数据源
 const sources = ref<DataKeys>(); //原数据源
-const rules = reactive<FormRules<DesSourceForm>>({
+const rules = reactive<FormRules<DesFormSource>>({
   name: [
     {
       required: true,
@@ -254,7 +254,7 @@ const multiDataRules = {
   ]
 };
 const optionsList = ref<OptionsKeys[]>([]);
-const dataSources = ref<DesSourceForm[]>([]);
+const dataSources = ref<DesFormSource[]>([]);
 const active = ref("headers");
 const oldActive = ref("headers");
 const isEdit = ref(false);

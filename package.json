@@ -75,6 +75,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@exercise-form/components": "workspace:^",
     "@exercise-form/constants": "workspace:^",
+    "@exercise-form/core": "workspace:^",
     "@exercise-form/directives": "workspace:^",
     "@exercise-form/hooks": "workspace:^",
     "@exercise-form/theme": "workspace:^",

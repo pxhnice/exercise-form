@@ -141,7 +141,7 @@
 import { ref, nextTick } from "vue";
 import { ElScrollbar } from "element-plus";
 import { desPropertyProps } from "../property";
-import { METHOD_LIST } from "@exercise-form/constants";
+import { METHOD_LIST } from "@exercise-form/core";
 
 interface optionsKeys {
   key: string;

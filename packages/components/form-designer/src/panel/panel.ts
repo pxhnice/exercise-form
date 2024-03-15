@@ -1,9 +1,8 @@
 import {
-  DesWidget,
-  DesWidgetList,
-  DesFormConfig
-} from "@exercise-form/constants";
-import type { DesTemplateData } from "@exercise-form/constants";
+  DesFormWidget,
+  DesFormConfig,
+  DesFormTemplateData
+} from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const desPanelProps = {
@@ -20,13 +19,13 @@ export const desPanelProps = {
     }
   },
   widgetList: {
-    type: definePropType<DesWidgetList>(Array),
+    type: definePropType<DesFormWidget[]>(Array),
     default() {
       return [];
     }
   },
   selectWidget: {
-    type: definePropType<DesWidget>(Object),
+    type: definePropType<DesFormWidget>(Object),
     default() {
       return {};
     }
@@ -36,7 +35,7 @@ export const desPanelProps = {
     default: " "
   },
   templateList: {
-    type: definePropType<Array<DesTemplateData>>(Array),
+    type: definePropType<DesFormTemplateData[]>(Array),
     default() {
       return [];
     }

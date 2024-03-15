@@ -5,4 +5,3 @@ export * from "./options";
 export * from "./advanced";
 export * from "./table";
 export * from "./tree";
-export * from "./event";

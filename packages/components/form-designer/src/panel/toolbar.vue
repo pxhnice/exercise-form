@@ -230,12 +230,9 @@ import parserHtml from "prettier/plugins/html";
 import parserCss from "prettier/plugins/postcss";
 import parserBabel from "prettier/plugins/babel";
 import parserEstree from "prettier/plugins/estree";
-import {
-  deepClone,
-  getSFCGenerator,
-  onMessageWarning
-} from "@exercise-form/utils";
-import type { DesWidget } from "@exercise-form/constants";
+import { getSFCGenerator } from "@exercise-form/core";
+import { deepClone, onMessageWarning } from "@exercise-form/utils";
+import { DesFormWidget } from "@exercise-form/core";
 import { copy as vCopy } from "@exercise-form/directives";
 import { desPanelProps } from "./panel";
 import { optionsKeys, darkKeys } from "../form-designer";
@@ -314,7 +311,7 @@ const openSFCDialog = async () => {
 const changeRadio = async () => {
   let widgetList = deepClone(props.widgetList);
   let formConfig = deepClone(props.formConfig);
-  let code = getSFCGenerator(formConfig, widgetList);
+  let code = getSFCGenerator({ widgetList, formConfig });
   codeValue.value = await prettierCode(code);
 };
 
@@ -382,11 +379,11 @@ const handleOpen = () => {
   treeRef.value!.filter();
 };
 
-const filterNode = (value: string, data: DesWidget) => {
+const filterNode = (value: string, data: DesFormWidget) => {
   return !(data.type === "table-td" && !data.merged);
 };
 
-const handleNodeClick = (data: DesWidget) => {
+const handleNodeClick = (data: DesFormWidget) => {
   if (["tab-pane", "table-tr"].includes(data.type)) {
     onMessageWarning("该节点不可选中");
     return;

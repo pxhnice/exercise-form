@@ -58,22 +58,22 @@
 import { ref, inject } from "vue";
 import { copy as vCopy } from "@exercise-form/directives";
 import { darkKeys } from "../../form-designer";
-import { DesSourceForm } from "./source";
+import { DesFormSource } from "@exercise-form/core";
 
 const dark = inject(darkKeys);
-const dataSources = ref<DesSourceForm[]>([]);
+const dataSources = ref<DesFormSource[]>([]);
 const showExportData = ref(false);
 const codeValue = ref("");
 const checkList = ref([]);
 
-const handleOpen = (params: DesSourceForm[]) => {
+const handleOpen = (params: DesFormSource[]) => {
   checkList.value = [];
   dataSources.value = params;
   showExportData.value = true;
 };
 
 const changeCheckbox = (value: number[]) => {
-  let arr: DesSourceForm[] = [];
+  let arr: DesFormSource[] = [];
   for (var i = 0; i < value.length; i++) {
     arr.push(dataSources.value[value[i]]);
   }

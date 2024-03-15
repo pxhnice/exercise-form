@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
 import { desContainerProps } from "./container";
-import { DRAG_DISABLE_LIST, DesWidget } from "@exercise-form/constants";
+import { DRAG_DISABLE_LIST, DesFormWidget } from "@exercise-form/core";
 
 const props = defineProps(desContainerProps);
 
@@ -109,7 +109,7 @@ const onClickTabs = () => {
   props.designer.setSelectWidget(props.widgetData);
 };
 
-const onDragAdd = (e: any, parent: DesWidget) => {
+const onDragAdd = (e: any, parent: DesFormWidget) => {
   let i = e.newIndex;
   if (parent.children) {
     props.designer.setSelectWidget(parent.children[i]);

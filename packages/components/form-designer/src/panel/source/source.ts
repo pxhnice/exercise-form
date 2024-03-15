@@ -1,28 +1,5 @@
 import { definePropType, getRandomNumber } from "@exercise-form/utils";
-import { DesFormConfig } from "@exercise-form/constants";
-
-type RequestData = { [key: string]: any };
-
-type DesMultiData = {
-  name: string;
-  remark: string;
-};
-
-export interface DesSourceForm {
-  sourceId: number;
-  name: string;
-  describe: string;
-  requestUrl: string;
-  method: string;
-  headers: RequestData;
-  params: RequestData;
-  data: RequestData;
-  configHandlerCode: string;
-  dataHandlerCode: string;
-  errorHandlerCode: string;
-  showMultiData: boolean;
-  multiData: DesMultiData[];
-}
+import { DesFormConfig } from "@exercise-form/core";
 
 export const getSourceForm = () => {
   return {

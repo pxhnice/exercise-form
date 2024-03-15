@@ -1,9 +1,9 @@
-import type { DesWidget, DesFormConfig } from "@exercise-form/constants";
+import { DesFormWidget, DesFormConfig } from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const renContainerProps = {
   widgetData: {
-    type: definePropType<DesWidget>(Object),
+    type: definePropType<DesFormWidget>(Object),
     default() {
       return {};
     }

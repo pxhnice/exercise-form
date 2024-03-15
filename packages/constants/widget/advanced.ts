@@ -1,6 +1,6 @@
-import type { DesWidgetList } from "./container";
+import { DesFormWidget } from "@exercise-form/core";
 
-export const advanced: DesWidgetList = [
+export const advanced = [
   {
     name: "级联选择",
     iconName: "cascader",
@@ -109,4 +109,4 @@ export const advanced: DesWidgetList = [
       label: "slot"
     }
   }
-];
+] as DesFormWidget[];

@@ -49,8 +49,8 @@
 <script setup lang="ts">
 import { ref, watch, provide } from "vue";
 import { isArray, isObject } from "@exercise-form/utils";
-import { MODEL_LIST, DesWidget, DesWidgetList } from "@exercise-form/constants";
-import { traverseFieldWidget } from "@exercise-form/utils/generator/vue3Js-generator";
+import { MODEL_LIST, DesFormWidget, useDesigner } from "@exercise-form/core";
+import { traverseFieldWidget } from "@exercise-form/core/src/generator/vue3Js";
 import ExFormWidget from "./widget/forms.vue";
 import ExSettingPanel from "./panel/setting.vue";
 import ExToolbarPanel from "./panel/toolbar.vue";
@@ -62,7 +62,6 @@ import {
   bannedWidgetKeys,
   darkKeys
 } from "./form-designer";
-import useDesigner from "./designer";
 
 defineOptions({ name: "ExFormDesigner" });
 const emits = defineEmits(formDesignerEmits);
@@ -111,7 +110,7 @@ const initData = () => {
 };
 
 const buildDefaultValueListFn = () => {
-  return function (widget: DesWidget) {
+  return function (widget: DesFormWidget) {
     if (MODEL_LIST.includes(widget.type)) {
       let { modelDefaultValue, name } = widget.options;
       formData.value[name] = modelDefaultValue ?? null;
@@ -119,13 +118,17 @@ const buildDefaultValueListFn = () => {
   };
 };
 
-const getFormData = (val: DesWidgetList) => {
+const getFormData = (val: DesFormWidget[]) => {
   //触发响应式清除空
   for (const key in formData.value) {
     delete formData.value[key];
   }
-  traverseFieldWidget(val, (widget) => {
-    buildDefaultValueListFn()(widget);
+  traverseFieldWidget({
+    widgetList: val,
+    formConfig: desFormConfig.value,
+    cb: (widget) => {
+      buildDefaultValueListFn()(widget);
+    }
   });
 };
 
@@ -156,3 +159,4 @@ defineExpose({
   formJson
 });
 </script>
+@exercise-form/core/src/generator/vue3Js

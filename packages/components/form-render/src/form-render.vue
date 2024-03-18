@@ -102,4 +102,3 @@ defineExpose({
   originalData
 });
 </script>
-@exercise-form/core/src/generator/vue3Js

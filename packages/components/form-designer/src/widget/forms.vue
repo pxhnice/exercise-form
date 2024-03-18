@@ -58,10 +58,10 @@
 
 <script setup lang="ts">
 import { desFormsProps } from "./forms";
-import type { DesWidget } from "@exercise-form/constants";
+import { DesFormWidget } from "@exercise-form/core";
 const props = defineProps(desFormsProps);
 
-const onDragAdd = (e: any, widgetList: DesWidget[]) => {
+const onDragAdd = (e: any, widgetList: DesFormWidget[]) => {
   props.designer.setSelectWidget(widgetList[e.newIndex]);
   props.designer.emitHistoryChange();
 };

@@ -1,7 +1,17 @@
-import { DesFormWidget, DesFormConfig } from "@exercise-form/core";
+import {
+  DesFormWidget,
+  DesFormConfig,
+  DesUseWidgetMethods
+} from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const renContainerProps = {
+  designer: {
+    type: definePropType<DesUseWidgetMethods>(Object),
+    default() {
+      return {};
+    }
+  },
   widgetData: {
     type: definePropType<DesFormWidget>(Object),
     default() {
@@ -10,12 +20,6 @@ export const renContainerProps = {
   },
   formData: {
     type: definePropType<DesFormConfig>(Object),
-    default() {
-      return {};
-    }
-  },
-  designer: {
-    type: Object,
     default() {
       return {};
     }

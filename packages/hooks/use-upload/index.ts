@@ -1,9 +1,9 @@
 import { reactive, toRefs, computed } from "vue";
-import type { DesWidget } from "@exercise-form/constants";
-import type { UploadProps } from "element-plus";
+import { DesFormWidget } from "@exercise-form/core";
+import { UploadProps } from "element-plus";
 import { onMessageError, onLoading, closeLoading } from "@exercise-form/utils";
 
-export const useUpload = (widget: DesWidget) => {
+export const useUpload = (widget: DesFormWidget) => {
   const state = reactive({
     dialogVisible: false,
     dialogImageUrl: ""

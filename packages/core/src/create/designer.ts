@@ -9,21 +9,24 @@ import {
   deepClone,
   getUniqueId
 } from "@exercise-form/utils";
-import { DesFormWidget, DesFormConfig, DesFormHistory } from "../interface";
+import { DesFormWidget, DesFormConfig } from "../interface";
+import { DesUseWidgetMethods } from "./interface";
 
-export interface Designer {
-  desFormConfig: DesFormConfig; //表单配置
-  desHistory: DesFormHistory; //历史记录
-  widgetList: DesFormWidget[]; //表单列表
-  selectWidgetId: string; //选中ID
-  selectWidget: DesFormWidget; //当前选中组件
-  dragTarget: DesFormWidget; //当前拖动组件
+function getContainerTableData(): DesFormWidget {
+  return {
+    name: "tr",
+    type: "table-tr",
+    id: "tabletr" + getUniqueId(),
+    category: "container",
+    options: {},
+    children: []
+  };
 }
 
-export function useDesigner() {
+export function useDesigner(): DesUseWidgetMethods {
   return {
     ...toRefs(
-      reactive<Designer>({
+      reactive({
         desFormConfig: {
           size: "default",
           labelPosition: "left",
@@ -65,7 +68,7 @@ export function useDesigner() {
       }
     },
 
-    setSelectWidget(widget: DesFormWidget) {
+    setSelectWidget(widget) {
       if (!widget) {
         this.clearSelectWidget();
         return;
@@ -80,7 +83,7 @@ export function useDesigner() {
       this.selectWidget.value = {} as DesFormWidget;
     },
 
-    getContainerType(type: string) {
+    getContainerType(type) {
       let allWidgets = [...containers, ...baseFields, ...customs];
       let widgetData = {} as DesFormWidget;
       allWidgets.forEach((widget) => {
@@ -89,7 +92,7 @@ export function useDesigner() {
       return widgetData;
     },
 
-    cloneWidget(widget: DesFormWidget) {
+    cloneWidget(widget) {
       let newWidget = deepClone(widget);
       this.dragTarget.value = widget;
       newWidget.id = newWidget.type + getUniqueId();
@@ -103,14 +106,7 @@ export function useDesigner() {
           newWidget.children?.push(colWidget);
         }
       } else if (newWidget.type == "table") {
-        let newRows: DesFormWidget = {
-          name: "tr",
-          type: "table-tr",
-          id: "tabletr" + getUniqueId(),
-          category: "container",
-          options: {},
-          children: []
-        };
+        let newRows = getContainerTableData();
         let newCol = deepClone(this.getContainerType("table-td"));
         newCol.id = newCol.type + getUniqueId();
         newCol.options.name = newCol.id;
@@ -125,7 +121,7 @@ export function useDesigner() {
       return newWidget;
     },
 
-    copyContainerWidget(widget: DesFormWidget) {
+    copyContainerWidget(widget) {
       if (widget.type == "grid") {
         let colWidget = deepClone(this.getContainerType("grid-col"));
         colWidget.id = colWidget.type + getUniqueId();
@@ -141,7 +137,7 @@ export function useDesigner() {
       }
     },
 
-    copyDeepWidget(widget: DesFormWidget) {
+    copyDeepWidget(widget) {
       if (widget.category === "container") {
         widget.id = widget.type + getUniqueId();
         widget.options.name = widget.id;
@@ -156,13 +152,13 @@ export function useDesigner() {
       return widget;
     },
 
-    copyWidget(parentList: DesFormWidget[], widget: DesFormWidget) {
+    copyWidget(parentList, widget) {
       let newWidget = this.copyDeepWidget(deepClone(widget));
       parentList.push(newWidget);
       this.emitHistoryChange();
     },
 
-    moveUpWidget(parentList: DesFormWidget[], sub: number) {
+    moveUpWidget(parentList, sub) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub - 1, 0, item);
@@ -170,7 +166,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    moveDownWidget(parentList: DesFormWidget[], sub: number) {
+    moveDownWidget(parentList, sub) {
       let item = parentList[sub];
       parentList.splice(sub, 1);
       parentList.splice(sub + 1, 0, item);
@@ -178,7 +174,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    deleteWidget(parentList: DesFormWidget[], sub: number) {
+    deleteWidget(parentList, sub) {
       parentList.splice(sub, 1);
       this.clearSelectWidget();
 
@@ -192,7 +188,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    insertCell(parentList: DesFormWidget[], cell: number, type: string) {
+    insertCell(parentList, cell, type) {
       parentList.forEach((child) => {
         let colWidget = deepClone(this.getContainerType("table-td"));
         colWidget.id = colWidget.type + getUniqueId();
@@ -207,15 +203,8 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    insertRow(parentList: DesFormWidget[], row: number, type: string) {
-      let newRows: DesFormWidget = {
-        name: "tr",
-        type: "table-tr",
-        id: "tabletr" + getUniqueId(),
-        category: "container",
-        options: {},
-        children: []
-      };
+    insertRow(parentList, row, type) {
+      let newRows = getContainerTableData();
       parentList[row].children?.forEach(() => {
         let colWidget = deepClone(this.getContainerType("table-td"));
         colWidget.id = colWidget.type + getUniqueId();
@@ -230,7 +219,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    getMergeTarget(parentList: DesFormWidget[]) {
+    getMergeTarget(parentList) {
       let deepList = deepClone(parentList);
       return deepList.map((tr) => {
         tr.children = tr.children?.filter((item) => item.merged);
@@ -238,22 +227,13 @@ export function useDesigner() {
       });
     },
 
-    getMergeTargetSub(
-      mergeList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number
-    ) {
+    getMergeTargetSub(mergeList, widgetData, rowsub) {
       let rows = mergeList[rowsub].children || [];
       let index = rows.findIndex((item) => item.id == widgetData.id);
       return index;
     },
 
-    mergeRightCell(
-      parentList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number,
-      cellsub: number
-    ) {
+    mergeRightCell(parentList, widgetData, rowsub, cellsub) {
       let mergeList = this.getMergeTarget(parentList);
       let tableRows = mergeList[rowsub].children || [];
       let mergesub = this.getMergeTargetSub(mergeList, widgetData, rowsub);
@@ -280,11 +260,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    mergeLeftCell(
-      parentList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number
-    ) {
+    mergeLeftCell(parentList, widgetData, rowsub) {
       let mergeList = this.getMergeTarget(parentList);
       let mergesub = this.getMergeTargetSub(mergeList, widgetData, rowsub);
       let tableRows = mergeList[rowsub].children || [];
@@ -311,12 +287,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    mergeUpCell(
-      parentList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number,
-      cellsub: number
-    ) {
+    mergeUpCell(parentList, widgetData, rowsub, cellsub) {
       let { rowspan, colspan } = widgetData.options;
       let parentRows = parentList[rowsub - 1].children || [];
       let topSpan = parentRows[cellsub].options.rowspan;
@@ -338,12 +309,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    mergeDownCell(
-      parentList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number,
-      cellsub: number
-    ) {
+    mergeDownCell(parentList, widgetData, rowsub, cellsub) {
       let { rowspan, colspan } = widgetData.options;
       let parentRows = parentList[rowsub + rowspan].children || [];
       let targetSpan = parentRows[cellsub].options.rowspan;
@@ -364,7 +330,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    mergeEntireRow(parentList: DesFormWidget[], rowsub: number) {
+    mergeEntireRow(parentList, rowsub) {
       let children = parentList[rowsub].children || [];
       for (let i = 0; i < children.length; i++) {
         if (i == 0) {
@@ -378,7 +344,7 @@ export function useDesigner() {
 
       this.emitHistoryChange();
     },
-    mergeEntireCol(parentList: DesFormWidget[], cellsub: number) {
+    mergeEntireCol(parentList, cellsub) {
       let len = parentList.length;
       parentList.forEach((p, index) => {
         if (p.children) {
@@ -396,14 +362,14 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    deleteEntireRow(parentList: DesFormWidget[], rowsub: number) {
+    deleteEntireRow(parentList, rowsub) {
       parentList.splice(rowsub, 1);
 
       this.clearSelectWidget();
       this.emitHistoryChange();
     },
 
-    deleteEntireCol(parentList: DesFormWidget[], rowsub: number) {
+    deleteEntireCol(parentList, rowsub) {
       parentList.forEach((p) => {
         p.children?.splice(rowsub, 1);
       });
@@ -412,12 +378,7 @@ export function useDesigner() {
       this.emitHistoryChange();
     },
 
-    revocationMerge(
-      parentList: DesFormWidget[],
-      widgetData: DesFormWidget,
-      rowsub: number,
-      cellsub: number
-    ) {
+    revocationMerge(parentList, widgetData, rowsub, cellsub) {
       let { rowspan, colspan } = widgetData.options;
       for (let index = 0; index < rowspan; index++) {
         let rows = parentList[rowsub + index].children || [];
@@ -510,11 +471,11 @@ export function useDesigner() {
       if (form) this.desFormConfig.value = form as DesFormConfig;
     },
 
-    setDragTarget(widget: DesFormWidget) {
+    setDragTarget(widget) {
       this.dragTarget.value = widget;
     },
 
-    loadWidget(list: DesFormWidget[]) {
+    loadWidget(list) {
       this.widgetList.value = list;
 
       this.emitHistoryChange();

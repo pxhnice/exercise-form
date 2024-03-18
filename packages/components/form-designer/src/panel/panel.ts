@@ -1,13 +1,14 @@
 import {
   DesFormWidget,
   DesFormConfig,
-  DesFormTemplateData
+  DesFormTemplateData,
+  DesUseWidgetMethods
 } from "@exercise-form/core";
 import { definePropType } from "@exercise-form/utils";
 
 export const desPanelProps = {
   designer: {
-    type: Object,
+    type: definePropType<DesUseWidgetMethods>(Object),
     default() {
       return {};
     }

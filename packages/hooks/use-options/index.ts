@@ -1,7 +1,7 @@
-import { DesWidget } from '@exercise-form/constants';
-import { computed, ref, watch } from 'vue';
+import { DesFormWidget } from "@exercise-form/core";
+import { computed, ref, watch } from "vue";
 
-export const useOptions = (widget: DesWidget) => {
+export const useOptions = (widget: DesFormWidget) => {
   const selectValue = ref(widget.options.modelDefaultValue);
 
   const options = computed(() => {

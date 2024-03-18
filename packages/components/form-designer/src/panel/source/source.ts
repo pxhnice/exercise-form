@@ -1,5 +1,5 @@
 import { definePropType, getRandomNumber } from "@exercise-form/utils";
-import { DesFormConfig } from "@exercise-form/core";
+import { DesFormConfig, DesUseWidgetMethods } from "@exercise-form/core";
 
 export const getSourceForm = () => {
   return {
@@ -21,7 +21,7 @@ export const getSourceForm = () => {
 
 export const desSourceProps = {
   designer: {
-    type: Object,
+    type: definePropType<DesUseWidgetMethods>(Object),
     default() {
       return {};
     }

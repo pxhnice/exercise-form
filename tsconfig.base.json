@@ -1,6 +1,6 @@
 {
   "include": ["packages","typings/env.d.ts","typings/custom-types.d.ts"],
-  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist"],
+  "exclude": ["**/__tests__/**", "**/tests/**", "**/dist","**/theme"],
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,

@@ -10,6 +10,7 @@
       v-model="selectValue"
       class="ex-widget-tabs"
       v-bind="widgetData.options"
+      :hidden="false"
       @click.stop="onClickTabs"
     >
       <div style="display: flex" :key="componentKey">

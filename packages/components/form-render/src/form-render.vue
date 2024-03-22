@@ -20,6 +20,7 @@
             <template v-for="item in widgetList" :key="item.id">
               <template v-if="item.category === 'container'">
                 <component
+                  v-if="!item.options.hidden"
                   :is="`${item.type}-item`"
                   :widget-data="item"
                   :form-data="formData"

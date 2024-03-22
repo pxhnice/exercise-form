@@ -11,6 +11,7 @@
         :style="{ width: widgetData.options.tableWidth }"
         :data="widgetData.options.tableData"
         v-bind="widgetData.options"
+        :hidden="false"
         class="ex-data-table"
         @selection-change="changeSelection"
       >
@@ -82,9 +83,10 @@
         <el-pagination
           :small="widgetData.options.small"
           :class="paginationAlign"
-          :page-sizes="[100, 200, 300, 400]"
+          v-model:page-size="widgetData.options.pagination.pageSize"
+          :page-sizes="widgetData.options.pagination.pageSizes"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="widgetData.options.pagination.total"
         />
       </el-scrollbar>
     </div>

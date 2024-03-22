@@ -14,6 +14,7 @@
       :label-width="widgetData.options.labelWidth"
       @click.stop="onClickItem"
     >
+      <!-- 一直使hidden为false 处理原生属性导致元素消失-->
       <component
         v-if="widgetData.type"
         @click.stop
@@ -21,6 +22,7 @@
         v-model="fieldValue"
         :teleported="false"
         v-bind="widgetData.options"
+        :hidden="false"
       />
       <slot v-else></slot>
     </el-form-item>

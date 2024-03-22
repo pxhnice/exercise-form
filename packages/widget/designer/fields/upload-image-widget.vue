@@ -7,6 +7,7 @@
     <el-upload
       v-model:file-list="fileList"
       v-bind="widgetData.options"
+      :hidden="false"
       :accept="accept"
       list-type="picture-card"
       :on-preview="handlePreview"

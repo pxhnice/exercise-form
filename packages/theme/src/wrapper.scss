@@ -13,11 +13,14 @@
 }
 
 .ex-title {
-  top: -1px;
+  display: flex;
+  align-items: center;
+  top: 0;
   left: 0;
   cursor: move;
   z-index: 11;
   font-size: 12px;
+  line-height: 20px;
 }
 
 .ex-title::before {

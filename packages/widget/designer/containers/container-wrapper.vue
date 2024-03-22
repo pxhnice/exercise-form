@@ -5,6 +5,9 @@
         <ex-icon-widget-drag />
       </el-icon>
       <span class="ex-title-name">{{ widgetData.name }}</span>
+      <el-icon class="ex-mgl-10" v-if="widgetData.options?.hidden">
+        <Hide />
+      </el-icon>
     </div>
     <div :class="{ 'ex-is-container-drag': isSelect }">
       <slot></slot>
@@ -111,7 +114,7 @@ const insertNewCol = () => {
 };
 
 const insertNewRow = () => {
-  let parentList = props.widgetData.children;
+  let parentList = props.widgetData.children ?? [];
   let row = parentList?.length || 1;
   props.designer.insertRow(parentList, row - 1, "down");
 };

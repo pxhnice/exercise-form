@@ -7,6 +7,7 @@
     <el-upload
       v-model:file-list="fileList"
       v-bind="widgetData.options"
+      :hidden="false"
       :accept="accept"
       :on-preview="handlePreview"
       :on-remove="handleRemove"

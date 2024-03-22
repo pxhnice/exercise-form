@@ -10,6 +10,7 @@
       <el-card
         :style="{ width: widgetData.options.cardWidth }"
         v-bind="widgetData.options"
+        :hidden="false"
         @click.stop="onClickTabs"
       >
         <template #header>

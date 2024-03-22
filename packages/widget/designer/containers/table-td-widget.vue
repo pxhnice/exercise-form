@@ -3,6 +3,7 @@
     class="ex-widget-td"
     :class="{ 'ex-is-drag': isSelect }"
     v-bind="widgetData.options"
+    :hidden="false"
     @click.stop="onClickCol"
   >
     <div style="width: 100%; height: 100%">

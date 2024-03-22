@@ -71,7 +71,7 @@ export const containers = [
     children: [],
     options: {
       customClass: "",
-      hidden: false,
+      // hidden: false,
       name: "",
       span: 12,
       offset: 0,
@@ -90,7 +90,7 @@ export const containers = [
       cellHeight: "",
       colspan: 1,
       customClass: "",
-      hidden: false,
+      // hidden: false,
       name: "",
       rowspan: 1
     }
@@ -110,6 +110,7 @@ export const containers = [
       fit: true,
       height: "300px",
       highlightCurrentRow: false,
+      hidden: false,
       name: "",
       onSelect: "",
       onSelectAll: "",
@@ -128,6 +129,12 @@ export const containers = [
       operationLabel: "操作",
       operationWidth: 150,
       paginationAlign: "left",
+      pagination: {
+        currentPage: 1,
+        pageSizes: [10, 15, 20, 30, 50, 100, 200],
+        pageSize: 20,
+        total: 400
+      },
       showCheckBox: true,
       showDataSource: false,
       showHeader: true,
@@ -210,6 +217,7 @@ export const containers = [
       dataSourceSetName: "",
       draggable: true,
       defaultExpandAll: true,
+      hidden: false,
       lazy: false,
       name: "",
       nodeKey: "id",

@@ -1,28 +1,30 @@
 <template>
-  <el-form-item
-    v-if="!isWidget(widgetData.type)"
-    class="ex-widget-form_item"
-    :label="widgetData.options.label"
-    :required="widgetData.options.required"
-    :label-width="widgetData.options.labelWidth"
-    @click.prevent
-  >
+  <template v-if="!widgetData.options.hidden">
+    <el-form-item
+      v-if="!isWidget(widgetData.type)"
+      class="ex-widget-form_item"
+      :label="widgetData.options.label"
+      :required="widgetData.options.required"
+      :label-width="widgetData.options.labelWidth"
+      @click.prevent
+    >
+      <component
+        v-if="widgetData.type"
+        @click.stop
+        :is="`el-${widgetData.type}`"
+        v-model="formData[widgetData.id]"
+        v-bind="widgetData.options"
+        :teleported="false"
+      />
+      <slot v-else></slot>
+    </el-form-item>
     <component
-      v-if="widgetData.type"
+      v-else
+      :is="`${widgetData.type}-widget`"
+      :widget-data="widgetData"
       @click.stop
-      :is="`el-${widgetData.type}`"
-      v-model="formData[widgetData.id]"
-      v-bind="widgetData.options"
-      :teleported="false"
     />
-    <slot v-else></slot>
-  </el-form-item>
-  <component
-    v-else
-    :is="`${widgetData.type}-widget`"
-    :widget-data="widgetData"
-    @click.stop
-  />
+  </template>
 </template>
 
 <script setup lang="ts">

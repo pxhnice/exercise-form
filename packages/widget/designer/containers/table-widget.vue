@@ -9,6 +9,7 @@
     <table
       class="ex-widget-table"
       v-bind="widgetData.options"
+      :hidden="false"
       @click.stop="onClickRow"
     >
       <tbody>

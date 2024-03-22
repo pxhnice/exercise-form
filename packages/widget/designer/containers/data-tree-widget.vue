@@ -37,6 +37,7 @@
         :check-strictly="!checkStrictly"
         :data="treeData"
         v-bind="widgetData.options"
+        :hidden="false"
         :filter-node-method="filterNode"
       >
         <template #default="{ node }">

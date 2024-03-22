@@ -3,6 +3,7 @@
     class="ex-widget-grid_col"
     :class="{ 'ex-is-drag': isSelect }"
     v-bind="widgetData.options"
+    :hidden="false"
     @click.stop="onClickCol"
   >
     <draggable

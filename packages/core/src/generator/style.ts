@@ -13,6 +13,7 @@ const globalWidgetStyle = {
   grid: () => {
     return ``;
   },
+
   table: () => {
     return `
     table{
@@ -30,81 +31,107 @@ const globalWidgetStyle = {
       }
     }`;
   },
+
   card: () => {
     return ``;
   },
+
   tabs: () => {
     return ``;
   },
+
   "data-table": () => {
     return ``;
   },
+
   "data-tree": () => {
     return ``;
   },
+
   "side-drawer": () => {
     return ``;
   },
+
   "popup-box": () => {
     return ``;
   },
+
   input: () => {
     return ``;
   },
+
   "input-number": () => {
     return ``;
   },
+
   radio: () => {
     return ``;
   },
+
   checkbox: () => {
     return ``;
   },
+
   select: () => {
     return ``;
   },
+
   "date-picker": () => {
     return ``;
   },
+
   "time-picker": () => {
     return ``;
   },
+
   switch: () => {
     return ``;
   },
+
   cascader: () => {
     return ``;
   },
+
   rate: () => {
     return ``;
   },
+
   button: () => {
     return ``;
   },
+
   divider: () => {
     return ``;
   },
+
   slider: () => {
     return ``;
   },
+
   "color-picker": () => {
     return ``;
   },
+
   alert: () => {
     return ``;
   },
+
   text: () => {
     return ``;
   },
+
   slot: () => {
     return ``;
   },
+
   "upload-image": () => {
     return ``;
   },
+
   "upload-file": () => {
     return ``;
   },
+
   "rich-text": () => {
     return ``;
   }

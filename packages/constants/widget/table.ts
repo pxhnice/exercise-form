@@ -1,31 +1,6 @@
-export type DesTableColumns = {
-  align: string;
-  columnsId: number;
-  children?: DesTableColumns[];
-  format?: string;
-  headerFlag?: boolean;
-  label: string;
-  minWidth?: number;
-  prop: string;
-  render?: string;
-  show?: boolean;
-  sortable?: boolean;
-  fixed?: boolean;
-};
+import { DesOperationButton, DesTableColumns } from "./interface";
 
-export type DesOperationButton = {
-  disabled: boolean;
-  label: string;
-  link: boolean;
-  name: string;
-  round: boolean;
-  size: string;
-  text: boolean;
-  type: string;
-  circle: boolean;
-};
-
-export const tableColumns: DesTableColumns[] = [
+export const tableColumns = [
   {
     align: "center",
     columnsId: 1,
@@ -116,7 +91,7 @@ export const tableColumns: DesTableColumns[] = [
     show: true,
     sortable: true
   }
-];
+] as DesTableColumns[];
 
 export const tableData = [
   {

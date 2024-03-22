@@ -52,6 +52,7 @@ const outerTemplate = {
     </el-drawer>
     `;
   },
+
   "popup-box": (params) => {
     let { widget, formConfig } = params;
     let { name } = widget.options;

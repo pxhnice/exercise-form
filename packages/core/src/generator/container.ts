@@ -38,6 +38,7 @@ const containerTemplate = {
       }
     </el-row>`;
   },
+
   table: (params) => {
     let { widget, formConfig } = params;
     return `<table><tbody>
@@ -74,6 +75,7 @@ const containerTemplate = {
     }
    </tbody></table>`;
   },
+
   card: (params) => {
     let { widget, formConfig } = params;
     let { label, shadow, cardWidth } = getElAttr(params);
@@ -97,6 +99,7 @@ const containerTemplate = {
       </template>
     </el-card>`;
   },
+
   tabs: (params) => {
     let { widget, formConfig } = params;
     let { onTabClick, name } = widget.options;
@@ -126,6 +129,7 @@ const containerTemplate = {
       }
     </el-tabs>`;
   },
+
   "data-table": (params) => {
     let { widget } = params;
     let {
@@ -242,6 +246,7 @@ const containerTemplate = {
     ${paginationHtml}
     `;
   },
+
   "data-tree": (params) => {
     let { widget } = params;
     let {

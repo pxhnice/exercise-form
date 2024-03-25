@@ -53,3 +53,6 @@ export const HAVE_DATA_KEYS = [
   "optionsItem",
   "options"
 ];
+
+// 外部组件
+export const OUTER_WIDGET = ["popup-box", "side-drawer"];

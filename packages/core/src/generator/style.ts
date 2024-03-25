@@ -8,6 +8,7 @@ import {
   DesFormWidgetStyleMethods
 } from "../interface";
 import { traverseFieldWidget } from "./vue3Js";
+import { globalStyleProperty } from "./style-property";
 
 const globalWidgetStyle = {
   grid: () => {
@@ -40,8 +41,20 @@ const globalWidgetStyle = {
     return ``;
   },
 
-  "data-table": () => {
-    return ``;
+  "data-table": (widget) => {
+    let { showPagination, paginationAlign } = widget.options;
+    let paginationAlignStyle = globalStyleProperty.justifyContentCenter;
+    let paginationAlignClass = "";
+    if (paginationAlign == "left")
+      paginationAlignStyle = globalStyleProperty.justifyContentFlexStart;
+    if (paginationAlign == "right")
+      paginationAlignStyle = globalStyleProperty.justifyContentFlexEnd;
+    if (showPagination) {
+      paginationAlignClass = `:deep(.el-pagination){
+        ${paginationAlignStyle}
+      }`;
+    }
+    return `${paginationAlignClass}`;
   },
 
   "data-tree": () => {
@@ -137,9 +150,10 @@ const globalWidgetStyle = {
   }
 } as DesFormWidgetStyleMethods;
 
-function buildStyleTemplate(type: string) {
-  return globalWidgetStyle[type] && globalWidgetStyle[type]()
-    ? globalWidgetStyle[type]()
+function buildStyleTemplate(widget: DesFormWidget) {
+  return globalWidgetStyle[widget.type] &&
+    globalWidgetStyle[widget.type](widget)
+    ? globalWidgetStyle[widget.type](widget)
     : "";
 }
 
@@ -149,7 +163,7 @@ function buildStyleTemplateFn(
 ) {
   return function (widget: DesFormWidget) {
     if (!types.has(widget.type)) {
-      let style = buildStyleTemplate(widget.type);
+      let style = buildStyleTemplate(widget);
       styleList.push(style);
       types.add(widget.type);
     }

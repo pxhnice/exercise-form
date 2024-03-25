@@ -97,7 +97,7 @@ export interface DesFormWidgetEventMethods {
 
 //样式构建方法
 export interface DesFormWidgetStyleMethods {
-  [key: string]: () => string;
+  [key: string]: (widget: DesFormWidget) => string;
 }
 
 // 表格数据

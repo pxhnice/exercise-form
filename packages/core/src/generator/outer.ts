@@ -11,7 +11,7 @@ import {
 import { buildFieldWidget } from "./field";
 import { getElAttr } from "./property";
 import { buildContainerWidget } from "./container";
-import { traverseFieldWidget } from "./vue3Js";
+import { OUTER_WIDGET } from "../config";
 
 const outerTemplate = {
   "side-drawer": (params) => {
@@ -120,39 +120,22 @@ function footerTemplate(widget: DesFormWidget) {
   return footerHtml;
 }
 
-function buildOuterWidget(params: DesFormWidgetParams): string {
+export function buildOuterWidget(params: DesFormWidgetParams): string {
   let { widget } = params;
   return outerTemplate[widget.type] && outerTemplate[widget.type](params)
     ? outerTemplate[widget.type](params)
     : "";
 }
 
-function buildOuterTemplateFn(
-  templateList: string[],
-  defaultValueList: string[]
-) {
-  return function (params: DesFormWidgetParams) {
-    let { widget } = params;
-    if (["popup-box", "side-drawer"].includes(widget.type)) {
-      let template = buildOuterWidget(params);
-      templateList.push(template);
-      defaultValueList.push(`const ${widget.options.name}=ref(false);`);
-    }
-  };
-}
-
 export function getOuterTemplate(params: DesFormParams) {
   let { widgetList, formConfig } = params;
   let outerTemplateList: string[] = [];
   let outerDefaultValueList: string[] = [];
-  traverseFieldWidget({
-    widgetList,
-    formConfig,
-    cb: (widget) => {
-      buildOuterTemplateFn(
-        outerTemplateList,
-        outerDefaultValueList
-      )({ widget, formConfig });
+  widgetList.forEach((widget) => {
+    if (OUTER_WIDGET.includes(widget.type)) {
+      let template = buildOuterWidget({ widget, formConfig });
+      outerTemplateList.push(template);
+      outerDefaultValueList.push(`const ${widget.options.name}=ref(false);`);
     }
   });
   return { outerTemplateList, outerDefaultValueList };

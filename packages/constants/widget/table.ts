@@ -132,6 +132,7 @@ export const operationButtons = [
     round: false,
     size: "small",
     text: true,
+    onTableColumnClick: "",
     type: "primary"
   },
   {
@@ -142,6 +143,7 @@ export const operationButtons = [
     round: false,
     size: "small",
     text: true,
+    onTableColumnClick: "",
     type: "primary"
   }
 ] as DesOperationButton[];

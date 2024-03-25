@@ -232,7 +232,12 @@
       title="表格JSON数据编辑"
       @close="cancel"
     >
-      <ex-code-editor v-model="codeValue" lang="json" :dark="dark" />
+      <ex-code-editor
+        v-model="codeValue"
+        height="500"
+        lang="json"
+        :dark="dark"
+      />
       <template #footer>
         <div style="display: flex; justify-content: center">
           <el-button type="primary" size="default" @click="confirmDataTable">
@@ -243,7 +248,7 @@
       </template>
     </el-dialog>
     <el-dialog
-      width="1200"
+      width="1000"
       v-model="isShowOperation"
       v-bind="dialogOptions"
       title="操作按钮编辑"
@@ -295,17 +300,17 @@
                       <ex-icon-drag />
                     </el-icon>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="6">
                     <el-form-item label="名称" required>
                       <el-input v-model="element.name" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="6">
                     <el-form-item label="文字">
                       <el-input v-model="element.label" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="6">
                     <el-form-item label="类型">
                       <el-select v-model="element.type">
                         <el-option label="default" value="" />
@@ -317,7 +322,7 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="5">
                     <el-form-item label="大小">
                       <el-select v-model="element.size">
                         <el-option value="large" label="large" />
@@ -326,7 +331,8 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="1"></el-col>
+                  <el-col :span="3">
                     <el-form-item label="文字">
                       <el-switch
                         v-model="element.text"
@@ -334,7 +340,7 @@
                       />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="3">
                     <el-form-item label="链接">
                       <el-switch
                         v-model="element.link"
@@ -342,7 +348,7 @@
                       />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="3">
                     <el-form-item label="圆角">
                       <el-switch
                         v-model="element.round"
@@ -350,7 +356,7 @@
                       />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="3">
                     <el-form-item label="圆形">
                       <el-switch
                         v-model="element.circle"
@@ -358,12 +364,27 @@
                       />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="2">
+                  <el-col :span="3">
                     <el-form-item label="禁用">
                       <el-switch v-model="element.disabled" />
                     </el-form-item>
                   </el-col>
-                  <el-col :span="1">
+                  <el-col :span="5">
+                    <el-form-item label="点击事件" label-width="65">
+                      <el-button
+                        @click="
+                          handleEventCode(element.onTableColumnClick, index)
+                        "
+                        size="small"
+                        type="primary"
+                        icon="Edit"
+                        round
+                      >
+                        编写代码
+                      </el-button>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="3">
                     <el-button
                       icon="Delete"
                       @click="handleDeleteButton(index)"
@@ -415,6 +436,28 @@
             关闭
           </el-button>
         </div>
+      </template>
+    </el-dialog>
+    <el-dialog
+      v-model="isShowEvent"
+      width="800"
+      title="按钮点击事件编辑"
+      @close="handleEventCancel"
+      destroy-on-close
+      :close-on-click-modal="false"
+    >
+      <div class="ex-dialog-box">
+        <div class="name-front">onClick(row){</div>
+        <ex-code-editor v-model="eventCode" :dark="dark" />
+        <div class="name-back">}</div>
+      </div>
+      <template #footer>
+        <span>
+          <el-button size="default" @click="handleEventCancel">取消</el-button>
+          <el-button size="default" type="primary" @click="handleConfirm">
+            确认
+          </el-button>
+        </span>
       </template>
     </el-dialog>
   </div>
@@ -469,6 +512,9 @@ const dialogOptions = {
   destroyOnClose: true,
   closeOnClickModal: false
 };
+const eventCode = ref("");
+const isShowEvent = ref(false);
+const buttonSub = ref(-1);
 
 const opened = () => {
   drag();
@@ -681,6 +727,7 @@ const handleAddButton = () => {
     round: false,
     size: "small",
     text: true,
+    onTableColumnClick: "",
     circle: false,
     type: ""
   });
@@ -688,6 +735,23 @@ const handleAddButton = () => {
     let wrapRef = scrollbarRef.value!.wrapRef;
     scrollbarRef.value!.setScrollTop(wrapRef!.scrollHeight);
   });
+};
+
+const handleEventCode = (content: string, index: number) => {
+  isShowEvent.value = true;
+  eventCode.value = content;
+  buttonSub.value = index;
+};
+
+const handleConfirm = () => {
+  operationButtons[buttonSub.value].onTableColumnClick = eventCode.value;
+  handleEventCancel();
+};
+
+const handleEventCancel = () => {
+  isShowEvent.value = false;
+  buttonSub.value = -1;
+  eventCode.value = "";
 };
 
 const handleDeleteButton = (index: number) => {

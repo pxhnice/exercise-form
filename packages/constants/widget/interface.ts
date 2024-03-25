@@ -21,6 +21,7 @@ export interface DesOperationButton {
   round: boolean;
   size: string;
   text: boolean;
+  onTableColumnClick: string;
   type: string;
   circle: boolean;
 }

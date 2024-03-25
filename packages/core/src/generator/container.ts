@@ -202,14 +202,27 @@ const containerTemplate = {
       <template #default>
       ${operationButtons
         .map((btn: DesOperationButton) => {
-          let { disabled, label, round, size, text, type, link } = btn;
+          let {
+            disabled,
+            label,
+            round,
+            size,
+            text,
+            type,
+            link,
+            onTableColumnClick
+          } = btn;
+          let onTableColumnClickEvent = onTableColumnClick
+            ? `@click="${btn.name}TableColumnClick"`
+            : "";
           let sizeAttr = size !== "default" ? `size="${size}"` : "";
           let typeAttr = type ? `type="${type}"` : "";
           let disabledAttr = disabled ? "disable" : "";
           let textAttr = text ? "text" : "";
           let roundAttr = round ? "round" : "";
           let linkAttr = link ? "link" : "";
-          return `<el-button ${typeAttr} ${sizeAttr} ${linkAttr} ${textAttr} ${roundAttr} ${disabledAttr}>${label}</el-button> `;
+          return `<el-button ${typeAttr} ${sizeAttr} ${linkAttr} ${textAttr} ${roundAttr}
+          ${disabledAttr} ${onTableColumnClickEvent} >${label}</el-button> `;
         })
         .join("\n")}
       </template>

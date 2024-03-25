@@ -82,6 +82,7 @@ function buildWidgetDataFn(dataParamsList: string[]) {
 function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
   return function (widget: DesFormWidget) {
     let options = widget.options;
+    let { operationButtons } = options;
     for (const key in options) {
       if (
         options[key] &&
@@ -89,6 +90,18 @@ function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
       ) {
         let eventFn = globalWidgetEvent[key](widget);
         eventFnList.push(eventFn);
+      }
+    }
+    if (widget.type === "data-table") {
+      if (isArray(operationButtons)) {
+        operationButtons.forEach((button) => {
+          let { name, onTableColumnClick } = button;
+          if (onTableColumnClick) {
+            eventFnList.push(
+              `const ${name}TableColumnClick=(row)=>{${onTableColumnClick}}`
+            );
+          }
+        });
       }
     }
   };

@@ -6,7 +6,7 @@
       :width="cols.width"
       :align="cols.align"
     >
-      <table-column
+      <index
         v-for="(child, index) in cols.children"
         :key="index"
         :cols="child"

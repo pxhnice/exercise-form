@@ -48,14 +48,14 @@
               :index="scope.$index"
             ></slot>
           </el-table-column>
-          <data-table-column-widget
+          <ex-data-table-column
             v-else-if="!cols.type && cols.show"
             :cols="cols"
           >
             <template v-for="slot in Object.keys($slots)" #[slot]="scope">
               <slot :name="slot" v-bind="scope"></slot>
             </template>
-          </data-table-column-widget>
+          </ex-data-table-column>
         </template>
         <el-table-column
           v-if="widgetData.options.showOperation"
@@ -96,6 +96,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { desContainerProps } from "./container";
+import ExDataTableColumn from "../../components/data-table-column/index.vue";
 
 const props = defineProps(desContainerProps);
 

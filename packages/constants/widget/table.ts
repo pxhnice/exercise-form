@@ -1,5 +1,3 @@
-import { DesOperationButton, DesTableColumns } from "./interface";
-
 export const tableColumns = [
   {
     align: "center",
@@ -91,7 +89,7 @@ export const tableColumns = [
     show: true,
     sortable: true
   }
-] as DesTableColumns[];
+];
 
 export const tableData = [
   {
@@ -146,4 +144,4 @@ export const operationButtons = [
     onTableColumnClick: "",
     type: "primary"
   }
-] as DesOperationButton[];
+];

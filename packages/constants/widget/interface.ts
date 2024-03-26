@@ -13,7 +13,7 @@ export interface DesTableColumns {
   fixed?: boolean;
 }
 
-export interface DesOperationButton {
+interface DesButtonTypes {
   disabled: boolean;
   label: string;
   link: boolean;
@@ -21,7 +21,14 @@ export interface DesOperationButton {
   round: boolean;
   size: string;
   text: boolean;
-  onTableColumnClick: string;
   type: string;
   circle: boolean;
+}
+
+export interface DesOperationButton extends DesButtonTypes {
+  onTableColumnClick: string;
+}
+
+export interface DesButtonGroup extends DesButtonTypes {
+  onClick: string;
 }

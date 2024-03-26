@@ -2,7 +2,11 @@
  * @description 构建容器组件模板
  */
 
-import { DesTableColumns, DesOperationButton } from "@exercise-form/constants";
+import {
+  DesTableColumns,
+  DesOperationButton,
+  DesButtonGroup
+} from "@exercise-form/constants";
 import { buildFieldWidget } from "./field";
 import { getElAttr } from "./property";
 import { DesFormWidgetMethods, DesFormWidgetParams } from "../interface";
@@ -300,6 +304,45 @@ const containerTemplate = {
       ${treeDefaultTemplateHtml}
     </el-tree>
     `;
+  },
+
+  "button-group": (params) => {
+    let { widget } = params;
+    let { buttonGroups } = widget.options;
+    return `<el-button-group>
+    ${buttonGroups
+      .map((btn: DesButtonGroup) => {
+        let { disabled, label, round, text, type, link, onClick } = btn;
+        let onClickEvent = onClick ? `@click="${btn.name}Click"` : "";
+        let typeAttr = type ? `type="${type}"` : "";
+        let disabledAttr = disabled ? "disable" : "";
+        let textAttr = text ? "text" : "";
+        let roundAttr = round ? "round" : "";
+        let linkAttr = link ? "link" : "";
+        return `<el-button ${typeAttr} ${linkAttr} ${textAttr} ${roundAttr}
+        ${disabledAttr} ${onClickEvent} >${label}</el-button> `;
+      })
+      .join("\n")}
+    </el-button-group>`;
+  },
+
+  "object-group": (params) => {
+    let { widget, formConfig } = params;
+    // TODO:模板待处理
+    return `<div>
+    ${
+      widget.children &&
+      widget.children
+        .map((child) => {
+          if (child.category === "container") {
+            return buildContainerWidget({ widget: child, formConfig });
+          } else {
+            return buildFieldWidget({ widget: child, formConfig });
+          }
+        })
+        .join("\n")
+    }
+    </div>`;
   }
 } as DesFormWidgetMethods;
 

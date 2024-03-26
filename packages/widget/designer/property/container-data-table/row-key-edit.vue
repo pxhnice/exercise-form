@@ -288,7 +288,7 @@
         <el-divider content-position="left">操作按钮设置</el-divider>
         <el-scrollbar ref="scrollbarRef" max-height="300">
           <draggable
-            :list="operationButtons"
+            :list="selectWidget.options.operationButtons"
             handle=".pane-mover"
             item-key="id"
           >
@@ -493,9 +493,8 @@ type CurrentRowCallBack = (params: CurrentRowData) => void;
 const props = defineProps(desPropertyProps);
 
 const dark = inject(darkKeys);
+const selectWidget = props.designer.selectWidget;
 const tableColumns = props.optionsModel.tableColumns as DesTableColumns[];
-const operationButtons = props.optionsModel
-  .operationButtons as DesOperationButton[];
 const optionsModel = props.optionsModel;
 const codeValue = ref("");
 const renderValue = ref("");
@@ -719,7 +718,7 @@ const deleteRow = (row: DesTableColumns) => {
 
 const handleAddButton = () => {
   let name = getUniqueId();
-  operationButtons.push({
+  selectWidget.value.options.operationButtons.push({
     disabled: false,
     label: "new btn",
     link: false,
@@ -744,7 +743,9 @@ const handleEventCode = (content: string, index: number) => {
 };
 
 const handleConfirm = () => {
-  operationButtons[buttonSub.value].onTableColumnClick = eventCode.value;
+  selectWidget.value.options.operationButtons[
+    buttonSub.value
+  ].onTableColumnClick = eventCode.value;
   handleEventCancel();
 };
 
@@ -755,7 +756,7 @@ const handleEventCancel = () => {
 };
 
 const handleDeleteButton = (index: number) => {
-  operationButtons.splice(index, 1);
+  selectWidget.value.options.operationButtons.splice(index, 1);
 };
 
 const changeText = (value: boolean, element: DesOperationButton) => {

@@ -1,6 +1,7 @@
 // 基础属性
 export const COMMON_PROPERTIES = {
   name: "name-edit",
+  objectName: "object-name-edit",
   label: "label-edit",
   hidden: "hidden-edit",
   type: "type-edit",
@@ -54,6 +55,7 @@ export const COMMON_PROPERTIES = {
   optionsItem: "options-item-edit",
   options: "cascader-options-edit",
   action: "action-edit",
+  buttonGroups: "button-groups-edit",
   // 容器
   colHeight: "col-height-edit",
   cellWidth: "cell-width-edit",

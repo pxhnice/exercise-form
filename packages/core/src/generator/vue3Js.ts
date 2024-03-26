@@ -82,7 +82,7 @@ function buildWidgetDataFn(dataParamsList: string[]) {
 function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
   return function (widget: DesFormWidget) {
     let options = widget.options;
-    let { operationButtons } = options;
+    let { operationButtons, buttonGroups } = options;
     for (const key in options) {
       if (
         options[key] &&
@@ -92,6 +92,7 @@ function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
         eventFnList.push(eventFn);
       }
     }
+    // TODO:待优化
     if (widget.type === "data-table") {
       if (isArray(operationButtons)) {
         operationButtons.forEach((button) => {
@@ -100,6 +101,16 @@ function buildWidgetEventFn(eventFnList: string[], lifeCycleList: string[]) {
             eventFnList.push(
               `const ${name}TableColumnClick=(row)=>{${onTableColumnClick}}`
             );
+          }
+        });
+      }
+    }
+    if (widget.type === "button-group") {
+      if (isArray(buttonGroups)) {
+        buttonGroups.forEach((button) => {
+          let { name, onClick } = button;
+          if (onClick) {
+            eventFnList.push(`const ${name}Click=(e)=>{${onClick}}`);
           }
         });
       }
@@ -126,7 +137,7 @@ export function genVue3JS(params: DesFormParams) {
     }
   });
   let { outerDefaultValueList } = getOuterTemplate({ widgetList, formConfig });
-  let vue3JSTemplate = `import { ref, reactive, watch } from 'vue';
+  let vue3JSTemplate = `import { ref, reactive } from 'vue';
   const ${formName}=ref();${
     formConfig.isPageType === "dialog" ? "const dialogVisible=ref(false);" : ""
   }

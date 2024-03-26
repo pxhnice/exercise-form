@@ -1,0 +1,9 @@
+.ex-object-group {
+  display: table;
+  position: relative;
+  width: 100%;
+  border: 1px dashed var(--el-color-primary);
+  height: 40px;
+  box-sizing: border-box;
+  padding: 4px;
+}

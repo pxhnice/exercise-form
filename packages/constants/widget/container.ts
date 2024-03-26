@@ -239,6 +239,63 @@ export const containers = [
     }
   },
   {
+    name: "按钮组",
+    iconName: "button-group",
+    category: "container",
+    type: "button-group",
+    children: [],
+    options: {
+      buttonGroups: [
+        {
+          disabled: false,
+          label: "新增",
+          link: false,
+          name: "add",
+          round: false,
+          onClick: "",
+          type: ""
+        },
+        {
+          disabled: false,
+          label: "编辑",
+          link: false,
+          name: "edit",
+          round: false,
+          text: false,
+          onClick: "",
+          type: ""
+        },
+        {
+          disabled: false,
+          label: "删除",
+          link: false,
+          name: "delete",
+          round: false,
+          text: false,
+          onClick: "",
+          type: ""
+        }
+      ],
+      customClass: "",
+      hidden: false,
+      name: "",
+      size: "default"
+    }
+  },
+  {
+    name: "对象容器",
+    iconName: "object-group",
+    category: "container",
+    type: "object-group",
+    children: [],
+    options: {
+      customClass: "",
+      hidden: false,
+      objectName: "objectName",
+      name: ""
+    }
+  },
+  {
     name: "标签",
     iconName: "",
     category: "container",
